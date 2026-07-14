@@ -1,9 +1,26 @@
-import React from 'react'
+import React from "react";
+import { useState, useEffect } from "react";
+import { getProducts } from "../Services/api";
 
 const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
+  const [products, setProducts] = useState([]);
 
-export default Home
+  const handleGetProducts = async () => {
+    try {
+      const data = await getProducts();
+      setProducts(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    handleGetProducts();
+  }, []);
+
+  console.log(products);
+
+  return <div>Home Page</div>;
+};
+
+export default Home;
