@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { getProducts } from "../Services/api";
+import FeaturedProducts from "../Components/FeaturedProducts";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -20,7 +21,10 @@ const Home = () => {
 
   console.log(products);
 
-  return <div>Home Page</div>;
+  return <div>
+    <h1>Home Page</h1>
+    <FeaturedProducts products={products} />
+  </div>;
 };
 
 export default Home;
