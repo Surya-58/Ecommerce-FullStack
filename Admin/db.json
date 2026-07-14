@@ -1,0 +1,384 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Aashirvaad Atta",
+      "quantity": 5,
+      "unit": "kg",
+      "price": 310,
+      "category": "Groceries",
+      "image": "https://picsum.photos/100?1",
+      "stock": 49,
+      "featured": true
+    },
+    {
+      "name": "Fortune Sunflower Oil",
+      "quantity": 1,
+      "unit": "L",
+      "price": 185,
+      "category": "Groceries",
+      "image": "https://picsum.photos/100?2",
+      "stock": "55",
+      "id": "2"
+    },
+    {
+      "id": "3",
+      "name": "Amul Milk",
+      "quantity": 500,
+      "unit": "ml",
+      "price": 32,
+      "category": "Beverages",
+      "image": "https://picsum.photos/100?3",
+      "stock": 47,
+      "featured": true
+    },
+    {
+      "id": "4",
+      "name": "Tata Salt",
+      "quantity": 1,
+      "unit": "kg",
+      "price": 28,
+      "category": "Groceries",
+      "image": "https://picsum.photos/100?4",
+      "stock": 46,
+      "featured": true
+    },
+    {
+      "id": "5",
+      "name": "Bru Instant Coffee",
+      "quantity": 200,
+      "unit": "g",
+      "price": 285,
+      "category": "Beverages",
+      "image": "https://picsum.photos/100?5",
+      "stock": 45,
+      "featured": true
+    },
+    {
+      "id": "6",
+      "name": "Red Label Tea",
+      "quantity": 500,
+      "unit": "g",
+      "price": 310,
+      "category": "Beverages",
+      "image": "https://picsum.photos/100?6",
+      "stock": 44,
+      "featured": false
+    },
+    {
+      "id": "7",
+      "name": "Maggi Noodles",
+      "quantity": 70,
+      "unit": "g",
+      "price": 18,
+      "category": "Snacks",
+      "image": "https://picsum.photos/100?7",
+      "stock": 43,
+      "featured": false
+    },
+    {
+      "id": "8",
+      "name": "Parle-G Biscuits",
+      "quantity": 100,
+      "unit": "g",
+      "price": 20,
+      "category": "Snacks",
+      "image": "https://picsum.photos/100?8",
+      "stock": 42,
+      "featured": false
+    },
+    {
+      "id": "9",
+      "name": "Dove Shampoo",
+      "quantity": 340,
+      "unit": "ml",
+      "price": 380,
+      "category": "Personal Care",
+      "image": "https://picsum.photos/100?9",
+      "stock": 41,
+      "featured": false
+    },
+    {
+      "id": "10",
+      "name": "Colgate Toothpaste",
+      "quantity": 200,
+      "unit": "g",
+      "price": 115,
+      "category": "Personal Care",
+      "image": "https://picsum.photos/100?10",
+      "stock": 40,
+      "featured": false
+    },
+    {
+      "id": "11",
+      "name": "Surf Excel Detergent",
+      "quantity": 2,
+      "unit": "kg",
+      "price": 460,
+      "category": "Household",
+      "image": "https://picsum.photos/100?11",
+      "stock": 39,
+      "featured": false
+    },
+    {
+      "id": "12",
+      "name": "Lux Soap",
+      "quantity": 150,
+      "unit": "g",
+      "price": 45,
+      "category": "Personal Care",
+      "image": "https://picsum.photos/100?12",
+      "stock": 38,
+      "featured": false
+    },
+    {
+      "id": "13",
+      "name": "Nescafe Classic",
+      "quantity": 100,
+      "unit": "g",
+      "price": 325,
+      "category": "Beverages",
+      "image": "https://picsum.photos/100?13",
+      "stock": 37,
+      "featured": false
+    },
+    {
+      "id": "14",
+      "name": "Sprite",
+      "quantity": 750,
+      "unit": "ml",
+      "price": 45,
+      "category": "Beverages",
+      "image": "https://picsum.photos/100?14",
+      "stock": 36,
+      "featured": false
+    },
+    {
+      "id": "15",
+      "name": "Coca-Cola",
+      "quantity": 1,
+      "unit": "L",
+      "price": 65,
+      "category": "Beverages",
+      "image": "https://picsum.photos/100?15",
+      "stock": 35,
+      "featured": false
+    },
+    {
+      "id": "16",
+      "name": "Kissan Tomato Ketchup",
+      "quantity": 500,
+      "unit": "g",
+      "price": 130,
+      "category": "Groceries",
+      "image": "https://picsum.photos/100?16",
+      "stock": 34,
+      "featured": false
+    },
+    {
+      "id": "17",
+      "name": "Pepsi",
+      "quantity": 750,
+      "unit": "ml",
+      "price": 45,
+      "category": "Beverages",
+      "image": "https://picsum.photos/100?17",
+      "stock": 33,
+      "featured": false
+    },
+    {
+      "id": "18",
+      "name": "Good Day Biscuits",
+      "quantity": 100,
+      "unit": "g",
+      "price": 35,
+      "category": "Snacks",
+      "image": "https://picsum.photos/100?18",
+      "stock": 32,
+      "featured": false
+    },
+    {
+      "id": "19",
+      "name": "Ponds Face Wash",
+      "quantity": 150,
+      "unit": "ml",
+      "price": 210,
+      "category": "Personal Care",
+      "image": "https://picsum.photos/100?19",
+      "stock": 31,
+      "featured": false
+    },
+    {
+      "id": "20",
+      "name": "Horlicks",
+      "quantity": 500,
+      "unit": "g",
+      "price": 395,
+      "category": "Beverages",
+      "image": "https://picsum.photos/100?20",
+      "stock": 30,
+      "featured": false
+    },
+    {
+      "name": "Milk Arokya",
+      "quantity": "1",
+      "unit": "L",
+      "price": "50",
+      "category": "Groceries",
+      "image": "https://picsum.photos/100?20",
+      "id": "rvobdSSUyCs"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Groceries"
+    },
+    {
+      "id": "2",
+      "name": "Beverages"
+    },
+    {
+      "id": "3",
+      "name": "Snacks"
+    },
+    {
+      "id": "4",
+      "name": "Personal Care"
+    },
+    {
+      "id": "5",
+      "name": "Household"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "name": "Surya",
+      "email": "surya123@gmail.com",
+      "phone": "9876543111",
+      "role": "Admin"
+    },
+    {
+      "id": "2",
+      "name": "Rahul",
+      "email": "rahul@gmail.com",
+      "phone": "9123456789",
+      "role": "Customer"
+    },
+    {
+      "id": "3",
+      "name": "Priya",
+      "email": "priya@gmail.com",
+      "phone": "9988776655",
+      "role": "Customer"
+    },
+    {
+      "id": "4",
+      "name": "Karthik",
+      "email": "karthik@gmail.com",
+      "phone": "9876501234",
+      "role": "Customer"
+    },
+    {
+      "id": "5",
+      "name": "Anitha",
+      "email": "anitha@gmail.com",
+      "phone": "9012345678",
+      "role": "Customer"
+    }
+  ],
+  "orders": [
+    {
+      "id": "1",
+      "customer": "Rahul",
+      "product": "Aashirvaad Atta",
+      "quantity": 2,
+      "price": 310,
+      "total": 620,
+      "status": "Processing"
+    },
+    {
+      "id": "2",
+      "customer": "Priya",
+      "product": "Fortune Sunflower Oil",
+      "quantity": 3,
+      "price": 185,
+      "total": 555,
+      "status": "Shipped"
+    },
+    {
+      "id": "3",
+      "customer": "Karthik",
+      "product": "Amul Milk",
+      "quantity": 4,
+      "price": 32,
+      "total": 128,
+      "status": "Delivered"
+    },
+    {
+      "id": "4",
+      "customer": "Anitha",
+      "product": "Tata Salt",
+      "quantity": 1,
+      "price": 28,
+      "total": 28,
+      "status": "Cancelled"
+    },
+    {
+      "id": "5",
+      "customer": "Surya",
+      "product": "Bru Instant Coffee",
+      "quantity": 2,
+      "price": 285,
+      "total": 570,
+      "status": "Pending"
+    },
+    {
+      "id": "6",
+      "customer": "Rahul",
+      "product": "Red Label Tea",
+      "quantity": 3,
+      "price": 310,
+      "total": 930,
+      "status": "Processing"
+    },
+    {
+      "id": "7",
+      "customer": "Priya",
+      "product": "Maggi Noodles",
+      "quantity": 4,
+      "price": 18,
+      "total": 72,
+      "status": "Shipped"
+    },
+    {
+      "id": "8",
+      "customer": "Karthik",
+      "product": "Parle-G Biscuits",
+      "quantity": 1,
+      "price": 20,
+      "total": 20,
+      "status": "Delivered"
+    },
+    {
+      "id": "9",
+      "customer": "Anitha",
+      "product": "Dove Shampoo",
+      "quantity": 2,
+      "price": 380,
+      "total": 760,
+      "status": "Cancelled"
+    },
+    {
+      "id": "10",
+      "customer": "Surya",
+      "product": "Colgate Toothpaste",
+      "quantity": 3,
+      "price": 115,
+      "total": 345,
+      "status": "Pending"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

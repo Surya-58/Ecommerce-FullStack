@@ -1,0 +1,22 @@
+.sidebar a{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    text-decoration:none;
+    color:black;
+
+    padding:12px;
+    border-radius:8px;
+
+    margin-bottom:8px;
+}
+
+.sidebar a:hover{
+    background:#ececec;
+}
+
+.sidebar .active{
+    background:#E8633C;
+    color:white;
+}

@@ -1,0 +1,162 @@
+.page {
+  min-height: 100vh;
+  background: #FAF9F6;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1C2127;
+  padding: 40px 24px;
+}
+
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  background: #FFFFFF;
+  border: 1px solid #E5E3DC;
+  border-radius: 12px;
+  padding: 24px 32px 32px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0 0 20px;
+  letter-spacing: -0.02em;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6B7280;
+  display: block;
+  margin-top: 14px;
+}
+
+.input {
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid #D7D5CC;
+  font-size: 14px;
+  font-family: inherit;
+  background: #FFFFFF;
+  color: #1C2127;
+  outline: none;
+  width: 260px;
+  margin-top: 6px;
+}
+
+.input:focus {
+  border-color: #E8633C;
+  box-shadow: 0 0 0 3px rgba(232, 99, 60, 0.12);
+}
+
+.btn-primary {
+  background: #E8633C;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 18px;
+  margin-right: 10px;
+}
+
+.btn-primary:hover {
+  background: #D9572F;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #1C2127;
+  border: 1px solid #D7D5CC;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 18px;
+}
+
+.btn-ghost:hover {
+  background: #F5F4EF;
+}
+
+.message {
+  font-size: 13px;
+  color: #6B7B6E;
+  font-weight: 500;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 14px 18px;
+  border-bottom: 1px solid #E5E3DC;
+  background: #FAF9F6;
+}
+
+.td {
+  padding: 14px 18px;
+  font-size: 14px;
+  border-bottom: 1px solid #F0EEE7;
+}
+
+.btn-small {
+  background: transparent;
+  border: 1px solid #D7D5CC;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.btn-small:hover {
+  background: #F5F4EF;
+}
+
+.btn-small-danger {
+  background: transparent;
+  border: 1px solid #F0C4C4;
+  color: #C44545;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.btn-small-danger:hover {
+  background: #FCEBEB;
+}
+.pagination{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-top:20px;
+}
+
+.pagination button{
+    padding:8px 16px;
+    cursor:pointer;
+    border-radius: 1cap;
+}
+
+.pagination button:disabled{
+    opacity:0.5;
+    cursor:not-allowed;
+}
+.active-page {
+  background-color: #E8633C;
+  color: white;
+  font-weight: bold;
+}

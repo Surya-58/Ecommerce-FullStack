@@ -1,0 +1,10 @@
+# Dependencies
+Admin/node_modules
+Customer/node_modules
+
+# Build folders
+Admin/dist
+Customer/dist
+
+# Environment files
+.env
