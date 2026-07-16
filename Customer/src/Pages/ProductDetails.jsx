@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { getProductById } from "../Services/api";
+import { CartContext } from "../Context/CartContext";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const { cart, setCart } = useContext(CartContext);
+  console.log(cart);
+  
   console.log("ID : ", id);
 
   const [product, setProduct] = useState(null);
@@ -25,6 +29,25 @@ const ProductDetails = () => {
     handleGetProduct();
   }, []);
 
+  const handleAddToCart = () => {
+    const existingProduct = cart.find((item) => item.id === product.id);
+
+    if (existingProduct) {
+      const updatedCart = cart.map((item) => {
+        if (item.id === product.id) {
+          return {
+            ...item,
+            cartQuantity: item.cartQuantity + 1,
+          };
+        }
+        return item;
+      });
+      setCart(updatedCart);
+    } else {
+      setCart([...cart,{...product,cartQuantity : 1}])
+    }
+  };
+
   return (
     <div>
       <h1>ProductDetails</h1>
@@ -40,7 +63,9 @@ const ProductDetails = () => {
 
           <p>Stock: {product.stock}</p>
 
-          {product.featured  && <p>Featured Product</p>}
+          {product.featured && <p>Featured Product</p>}
+
+          <button onClick={handleAddToCart}>Add to Cart</button>
         </div>
       )}
     </div>
