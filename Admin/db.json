@@ -286,6 +286,14 @@
       "email": "anitha@gmail.com",
       "phone": "9012345678",
       "role": "Customer"
+    },
+    {
+      "name": "black",
+      "email": "black@123",
+      "phone": "8348736",
+      "password": "ahudnka",
+      "role": "customer",
+      "id": "8fkfeMicH74"
     }
   ],
   "orders": [
