@@ -2,10 +2,12 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { getProductById } from "../Services/api";
 import { CartContext } from "../Context/CartContext";
+import { WishlistContext } from "../Context/WishlistContext";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { addToCart } = useContext(CartContext);
+  const { addToWishlist} = useContext(WishlistContext)
 
   const [product, setProduct] = useState(null);
 
@@ -45,6 +47,7 @@ const ProductDetails = () => {
           {product.featured && <p>Featured Product</p>}
 
           <button onClick={()=>addToCart(product)}>Add to Cart</button>
+          <button onClick={()=>addToWishlist(product)} >Add to wishlist</button>
         </div>
       )}
     </div>

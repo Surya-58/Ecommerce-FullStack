@@ -6,13 +6,34 @@ export const WishlistContext = createContext()
 const WishlistProvider = ({children}) => {
     const [wishlist, setWishlist] = useState([])
 
+    const addToWishlist = (product) => {
+        const existingProduct = wishlist.find((item) => item.id === product.id)
+
+        if(existingProduct){
+            return
+        }
+        setWishlist([
+            ...wishlist,
+            product,
+        ])
+    }
+
+    const removeFromWishlist = (id) => {
+        const updatedWishlist = wishlist.filter((item) => item.id !== id)
+
+        setWishlist(updatedWishlist)
+
+    }
+
   return (
     <WishlistContext.Provider 
     value={{
         wishlist,
         setWishlist,
+        addToWishlist,
+        removeFromWishlist,
     }}
-    >
+    >{children}
 
     </WishlistContext.Provider>
   )
