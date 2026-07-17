@@ -5,10 +5,7 @@ import { CartContext } from "../Context/CartContext";
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const { cart, setCart } = useContext(CartContext);
-  console.log(cart);
-  
-  console.log("ID : ", id);
+  const { addToCart } = useContext(CartContext);
 
   const [product, setProduct] = useState(null);
 
@@ -29,24 +26,6 @@ const ProductDetails = () => {
     handleGetProduct();
   }, []);
 
-  const handleAddToCart = () => {
-    const existingProduct = cart.find((item) => item.id === product.id);
-
-    if (existingProduct) {
-      const updatedCart = cart.map((item) => {
-        if (item.id === product.id) {
-          return {
-            ...item,
-            cartQuantity: item.cartQuantity + 1,
-          };
-        }
-        return item;
-      });
-      setCart(updatedCart);
-    } else {
-      setCart([...cart,{...product,cartQuantity : 1}])
-    }
-  };
 
   return (
     <div>
@@ -65,7 +44,7 @@ const ProductDetails = () => {
 
           {product.featured && <p>Featured Product</p>}
 
-          <button onClick={handleAddToCart}>Add to Cart</button>
+          <button onClick={()=>addToCart(product)}>Add to Cart</button>
         </div>
       )}
     </div>
