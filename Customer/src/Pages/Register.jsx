@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { registerUser } from "../Services/userApi";
+import { useNavigate } from "react-router-dom";
+import { registerUser, getUsers } from "../Services/userApi";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -7,7 +8,29 @@ const Register = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate()
+
+
   const handleRegister = async() => {
+    if (!name || !email || !phone || !password){
+      alert("Please Fill all the fields")
+      return;
+    }
+    const users = await getUsers()
+
+    const existingEmail = users.find((user) => user.email === email)
+
+    if(existingEmail){
+      alert("Email already exists")
+      return
+    }
+    const existingPhone = users.find((user)=> user.phone === phone)
+
+    if(existingPhone){
+      alert("Phone NUmber Already Exists")
+      return
+    }
+
     const user = {
       name,
       email,
@@ -24,9 +47,10 @@ const Register = () => {
       setEmail("")
       setPhone("")
       setPassword("")
+
+      navigate("/login")
     } catch (error) {
       console.log(error);
-      
     }
   }
 

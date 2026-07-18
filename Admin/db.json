@@ -294,6 +294,22 @@
       "password": "ahudnka",
       "role": "customer",
       "id": "8fkfeMicH74"
+    },
+    {
+      "name": "surya",
+      "email": "surya432@gamil.com",
+      "phone": "876579",
+      "password": "surya",
+      "role": "Customer",
+      "id": "T5VRTrooXuo"
+    },
+    {
+      "name": "surya",
+      "email": "surya456@gmail.com",
+      "phone": "12345",
+      "password": "12345",
+      "role": "Customer",
+      "id": "p8XV6orWlR8"
     }
   ],
   "orders": [
