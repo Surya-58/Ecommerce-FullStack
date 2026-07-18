@@ -1,12 +1,17 @@
-import React, { use, useState } from "react";
+import React, { use, useState , useContext } from "react";
 import { getUsers } from "../Services/userApi";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../Context/UserContext";
+
 
 const Login = () => {
+  
+  const navigate = useNavigate();
+
+  const {setCurrentUser} = useContext(UserContext)
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -23,8 +28,11 @@ const Login = () => {
       alert("Invalid Email or Password")
       return;
     }
+    setCurrentUser(user)
+    localStorage.setItem("currentUser",JSON.stringify(user))
     alert("Login Successful")
     navigate("/")
+    
   };
 
   return (
