@@ -1,7 +1,7 @@
 import React from 'react'
 import ProductCard from './ProductCard'
 
-const FeaturedProducts = ({products}) => {
+const ProductGrid = ({products}) => {
   return (
     <div>
         <h2>Featured Products</h2>
@@ -14,4 +14,4 @@ const FeaturedProducts = ({products}) => {
   )
 }
 
-export default FeaturedProducts
+export default ProductGrid
