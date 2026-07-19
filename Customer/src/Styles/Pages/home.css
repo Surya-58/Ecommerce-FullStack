@@ -1,0 +1,204 @@
+/* ==========================================================================
+   ORCHARD — home.css
+   Depends on: variables.css, global.css, utilities.css, animations.css,
+               buttons.css, forms.css
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------
+   Hero banner
+   --------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-bg) 60%);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-top: var(--space-6);
+  padding: var(--space-10) var(--space-8) var(--space-16);
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: var(--space-8);
+}
+.hero__eyebrow {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-accent-50);
+  color: var(--color-accent-600);
+  border-radius: var(--radius-full);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  margin-bottom: var(--space-4);
+}
+.hero__title { max-width: 22ch; margin-bottom: var(--space-4); }
+.hero__title span { color: var(--color-primary-600); }
+.hero__subtitle { color: var(--color-text-secondary); max-width: 42ch; margin-bottom: var(--space-6); font-size: var(--text-body); }
+.hero__ctas { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+
+.hero__image {
+  border-radius: var(--radius-leaf);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  box-shadow: var(--shadow-lg);
+}
+.hero__image img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Search bar overlapping hero bottom edge */
+.hero__search-dock {
+  position: relative;
+  margin-top: calc(-1 * var(--space-10));
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+}
+.hero__search-dock .search-bar {
+  max-width: 720px;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-2);
+}
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; padding: var(--space-8) var(--space-5) var(--space-10); text-align: left; }
+  .hero__image { order: -1; aspect-ratio: 16 / 10; }
+  .hero__search-dock { margin-top: var(--space-6); }
+}
+
+/* ---------------------------------------------------------------------
+   Shop by Categories
+   --------------------------------------------------------------------- */
+.categories { display: flex; gap: var(--space-5); overflow-x: auto; padding-bottom: var(--space-2); scrollbar-width: none; }
+.categories::-webkit-scrollbar { display: none; }
+.category-tile {
+  flex: 0 0 auto;
+  width: 96px;
+  display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
+  text-align: center;
+}
+.category-tile__icon {
+  width: 76px; height: 76px;
+  border-radius: 50%;
+  background: var(--color-primary-50);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform var(--duration-base) var(--ease-spring), background-color var(--duration-base) var(--ease-standard);
+  border: 1px solid var(--color-border);
+}
+.category-tile:hover .category-tile__icon { transform: translateY(-4px); background-color: var(--color-primary-100); }
+.category-tile__label { font-size: var(--text-body-sm); font-weight: var(--weight-medium); color: var(--color-text-primary); }
+
+@media (min-width: 900px) {
+  .categories { overflow: visible; flex-wrap: wrap; justify-content: space-between; }
+}
+
+/* ---------------------------------------------------------------------
+   Deal rail (Today's Deals) — accent-tinted section
+   --------------------------------------------------------------------- */
+.deals-rail {
+  background: linear-gradient(135deg, var(--color-accent-50), var(--color-white));
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+}
+.deals-rail .section-header__link { color: var(--color-accent-600); }
+.deals-rail__timer {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-white);
+  border-radius: var(--radius-full);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-bold);
+  color: var(--color-accent-600);
+}
+
+/* ---------------------------------------------------------------------
+   Scroll-snap product rail (used by Trending, Best Sellers, category rails)
+   --------------------------------------------------------------------- */
+.product-rail {
+  display: flex;
+  gap: var(--space-5);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: var(--space-3);
+  scrollbar-width: thin;
+}
+.product-rail__item { flex: 0 0 auto; width: clamp(180px, 22vw, 232px); scroll-snap-align: start; }
+
+/* ---------------------------------------------------------------------
+   Product card — shared by Home rails, Products grid, Wishlist
+   --------------------------------------------------------------------- */
+.product-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.product-card__media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: var(--color-bg);
+}
+.product-card__media img { width: 100%; height: 100%; object-fit: cover; }
+.product-card__badges { position: absolute; top: var(--space-2); left: var(--space-2); display: flex; flex-direction: column; gap: var(--space-1); }
+.product-card__wishlist { position: absolute; top: var(--space-2); right: var(--space-2); }
+.product-card__quick-add {
+  position: absolute; bottom: var(--space-2); left: var(--space-2); right: var(--space-2);
+  opacity: 0; transform: translateY(6px);
+  transition: opacity var(--duration-base) var(--ease-standard), transform var(--duration-base) var(--ease-standard);
+}
+.product-card:hover .product-card__quick-add { opacity: 1; transform: translateY(0); }
+
+.product-card__body { padding: var(--space-3) var(--space-4) var(--space-4); display: flex; flex-direction: column; gap: var(--space-1); flex: 1; }
+.product-card__meta { display: flex; align-items: center; gap: var(--space-1); font-size: var(--text-caption); color: var(--color-text-muted); }
+.product-card__price-row { display: flex; align-items: baseline; gap: var(--space-2); margin-top: var(--space-1); }
+.product-card__footer { margin-top: auto; padding-top: var(--space-3); }
+
+/* ---------------------------------------------------------------------
+   Brand strip
+   --------------------------------------------------------------------- */
+.brand-strip { display: flex; align-items: center; gap: var(--space-10); flex-wrap: wrap; justify-content: space-between; opacity: 0.75; }
+.brand-strip img { height: 32px; width: auto; filter: grayscale(1); transition: filter var(--duration-base) var(--ease-standard); }
+.brand-strip img:hover { filter: grayscale(0); }
+
+/* ---------------------------------------------------------------------
+   Reviews carousel
+   --------------------------------------------------------------------- */
+.review-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  max-width: 340px;
+}
+.review-card__stars { color: var(--color-accent-500); font-size: var(--text-body-sm); margin-bottom: var(--space-3); }
+.review-card__text { color: var(--color-text-secondary); font-size: var(--text-body-sm); line-height: var(--leading-normal); margin-bottom: var(--space-4); }
+.review-card__author { display: flex; align-items: center; gap: var(--space-3); }
+.review-card__avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+
+/* ---------------------------------------------------------------------
+   Responsive grid overrides for Home sections
+   --------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .hero__title { max-width: 100%; }
+  .deals-rail, .hero { padding: var(--space-6) var(--space-4); }
+  .product-rail__item { width: 62vw; }
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-5);
+}
+
+.section-header__link {
+  color: var(--color-primary-600);
+  font-weight: var(--weight-semibold);
+  transition: color var(--duration-base) var(--ease-standard);
+}
+
+.section-header__link:hover {
+  color: var(--color-primary-700);
+}

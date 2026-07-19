@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import CategorySection from "../Components/CategorySection";
 import { getProducts } from "../Services/api";
 import ProductGrid from "../Components/ProductGrid";
+import "../Styles/Pages/home.css"
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -19,13 +20,14 @@ const Home = () => {
   useEffect(() => {
     handleGetProducts();
   }, []);
+
   return (
     <div className="container">
       <div className="hero">
         <div>
           <p className="hero__eyebrow">🛒 Fresh Grocery • Daily Essentials</p>
 
-          <h1 className="hero__title" text-hero>
+          <h1 className="hero__title text-hero">
             Fresh groceries <span>at your doorstep</span>
           </h1>
 
@@ -38,9 +40,9 @@ const Home = () => {
             <Link to="/products" className="btn btn--primary">
               Shop Now
             </Link>
-            <Link to="/products" className="btn btn--secondary">
+            <a href="#categories" className="btn btn--secondary">
               Browse Categories
-            </Link>
+            </a>
           </div>
         </div>
 
@@ -48,12 +50,33 @@ const Home = () => {
           <img src="/images/hero-grocery.jpg" alt="Fresh Groceries" />
         </div>
       </div>
+      
+      <section id="categories">
+        <CategorySection />
+      </section>
 
-      <CategorySection />
+      
       <section>
-        <h2 className="text-section-title">Featured Products</h2>
+        <div className="section-header">
+          <h2 className="text-section-title">Featured Products</h2>
 
-        <ProductGrid products={products.slice(0,4)} />
+          <Link to="/products" className="section-header__link">
+            View All →
+          </Link>
+        </div>
+        <ProductGrid products={products.slice(0, 4)} />
+      </section>
+
+      <section className="deals-rail">
+        <div className="section-header">
+          <h2 className="text-section title">Today's Deals</h2>
+          <div className="deals-rail__timer">
+            Ends Tonight
+          </div>
+        </div>
+
+        <ProductGrid products={products.slice(4,8)} />
+        
       </section>
     </div>
   );
