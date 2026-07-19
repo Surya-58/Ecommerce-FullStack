@@ -74,7 +74,7 @@
 .navbar__login-btn:hover { background-color: var(--color-primary-50); }
 
 /* Profile dropdown trigger */
-.navbar__profile { display: flex; align-items: center; gap: var(--space-2); }
+.navbar__profile { position: relative; display: flex; align-items: center; gap: var(--space-2); }
 .navbar__avatar { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 2px solid var(--color-primary-100); }
 
 /* ---------------------------------------------------------------------
@@ -173,4 +173,67 @@
   padding: var(--space-4) 0;
   border-bottom: 1px solid var(--color-border);
   font-weight: var(--weight-medium);
+}
+
+.account-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+
+  width: 220px;
+
+  background: var(--color-surface);
+
+  border: 1px solid var(--color-border);
+
+  border-radius: var(--radius-md);
+
+  box-shadow: var(--shadow-lg);
+
+  overflow: hidden;
+
+  z-index: var(--z-dropdown);
+}
+
+.account-dropdown__header {
+  padding: var(--space-4);
+
+  background: var(--color-primary-50);
+
+  border-bottom: 1px solid var(--color-border);
+}
+
+.account-dropdown__body {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.account-dropdown__body a,
+.account-dropdown__body button {
+  display: block;
+  width: 100%;
+
+  padding: var(--space-4);
+
+  text-align: left;
+
+  background: transparent;
+
+  border: none;
+
+  cursor: pointer;
+
+  color: var(--color-text-primary);
+
+  transition: background .2s;
+  box-sizing: border-box;
+
+}
+
+.account-dropdown__body a:hover,
+.account-dropdown__body button:hover {
+
+  background: var(--color-primary-50);
+
 }

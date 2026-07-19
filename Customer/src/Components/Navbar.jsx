@@ -1,80 +1,140 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { useContext } from 'react'
-import { UserContext } from '../Context/UserContext'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { use } from "react";
+import { NavLink } from "react-router-dom";
+import { useContext, useState, useRef, useEffect } from "react";
+import { UserContext } from "../Context/UserContext";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-    const {currentUser , logout} = useContext(UserContext)
+  const { currentUser, logout } = useContext(UserContext);
 
-    const [showMenu, setShowMenu] = useState(false)
+  const [showMenu, setShowMenu] = useState(false);
+
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
-    <nav>
-        <h2>QuickCart</h2>
-        {
-            currentUser ? (
-                <>
-                <h3>Welcome {currentUser.name}</h3>
+    <nav className="navbar">
+      <div className="container navbar__top">
+        <div className="navbar__logo">
+          <div className="navbar__logo-mark"></div>
 
-                <button onClick={logout}>Logout</button>
-                </>
-            ) : (
-                <>
-                <Link to="/login">Login</Link>
-                <Link to="/register">Register</Link>
-                </>
-            )
-        }
-
-        <ul>
-            <li>
-                <NavLink to="/" >Home</NavLink>
-            </li>
-
-            <li>
-                <NavLink to="/products" >Products</NavLink>
-            </li>
-
-            <li>
-                <NavLink to="/wishlist" >Wishlist</NavLink>
-            </li>
-
-            <li>
-                <NavLink to="/cart" >Cart</NavLink>
-            </li>
-
-            <li>
-                <NavLink to="/login" >Login</NavLink>
-            </li>
-            
-        </ul>
-        <div>
-            <button onClick={() => setShowMenu(!showMenu)}>Account</button>
-            {showMenu && (
-                <div>
-                    {
-                        currentUser ? (
-                            <>
-                            <p>Hello, {currentUser.name}</p>
-                            <Link to="/profile">My Profile</Link>
-                            <button>My Orders</button>
-                            <button onClick={logout} >Logout</button>
-                            </>
-                        )  :  (
-                            <>
-                            <button>Login</button>
-                            <button>Register</button>
-                            </>
-                        )
-                    }
-                </div>
-
-            )}
+          <span>QuickCart</span>
         </div>
 
-    </nav>
-  )
-}
+        <div className="navbar__categories">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive
+                ? "navbar__category-link navbar__category-link--active"
+                : "navbar__category-link"
+            }
+          >
+            Home
+          </NavLink>
 
-export default Navbar
+          <NavLink
+            to="/products"
+            className={({ isActive }) =>
+              isActive
+                ? "navbar__category-link navbar__category-link--active"
+                : "navbar__category-link"
+            }
+          >
+            Products
+          </NavLink>
+
+          <NavLink
+            to="/wishlist"
+            className={({ isActive }) =>
+              isActive
+                ? "navbar__category-link navbar__category-link--active"
+                : "navbar__category-link"
+            }
+          >
+            Wishlist
+          </NavLink>
+
+          <NavLink
+            to="/cart"
+            className={({ isActive }) =>
+              isActive
+                ? "navbar__category-link navbar__category-link--active"
+                : "navbar__category-link"
+            }
+          >
+            Cart
+          </NavLink>
+
+          <NavLink to="/login" className="navbar__category-link">
+            Login
+          </NavLink>
+        </div>
+
+        <div className="navbar__actions">
+          <div className="navbar__profile" ref={menuRef}>
+            <button
+              onClick={() => setShowMenu(!showMenu)}
+              className="navbar__login-btn"
+            >
+              Account
+            </button>
+
+            {showMenu && (
+              <div className="account-dropdown">
+                <div className="account-dropdown__header">
+                  <p>Hello, {currentUser?.name || "Guest"}</p>
+                </div>
+                <div className="account-dropdown__body">
+                  {currentUser ? (
+                    <>
+                      <Link to="/profile" onClick={() => setShowMenu(false)}>
+                        My Profile
+                      </Link>
+
+                      <button onClick={() => setShowMenu(false)}>
+                        My Orders
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          logout();
+                          setShowMenu(false);
+                        }}
+                      >
+                        Logout
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link to="/login" onClick={() => setShowMenu(false)}>
+                        Login
+                      </Link>
+
+                      <Link to="/register" onClick={() => setShowMenu(false)}>
+                        Register
+                      </Link>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
