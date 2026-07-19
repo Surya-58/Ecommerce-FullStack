@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import { getProducts } from "../Services/api";
 import FeaturedProducts from "../Components/FeaturedProducts";
+import { UserContext } from "../Context/UserContext";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
+
+  const { logout } = useContext(UserContext)
 
   const handleGetProducts = async () => {
     try {

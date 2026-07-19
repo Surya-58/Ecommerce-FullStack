@@ -1,0 +1,126 @@
+/* ==========================================================================
+   ORCHARD — animations.css
+   Keyframes + reusable animation utility classes. All CSS-only.
+   Depends on: variables.css
+   ========================================================================== */
+
+/* Fade */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.anim-fade-in { animation: fade-in var(--duration-slow) var(--ease-out) both; }
+
+/* Slide up (cards entering viewport, dropdowns) */
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim-slide-up { animation: slide-up var(--duration-slow) var(--ease-out) both; }
+
+/* Slide down (mega menu, mobile menu) */
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim-slide-down { animation: slide-down var(--duration-base) var(--ease-out) both; }
+
+/* Scale in (modals, quick view) */
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.anim-scale-in { animation: scale-in var(--duration-base) var(--ease-spring) both; }
+
+/* Card hover lift — apply transition on the card, trigger on :hover */
+.anim-lift {
+  transition: transform var(--duration-base) var(--ease-standard),
+              box-shadow var(--duration-base) var(--ease-standard);
+}
+.anim-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Image zoom on card hover — wrap image in a container with overflow:hidden */
+.anim-zoom-wrap { overflow: hidden; }
+.anim-zoom-wrap img {
+  transition: transform var(--duration-slow) var(--ease-standard);
+}
+.anim-zoom-wrap:hover img { transform: scale(1.06); }
+
+/* Button press */
+.anim-press {
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+.anim-press:active { transform: scale(0.97); }
+
+/* Wishlist heart pop */
+@keyframes heart-pop {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.35); }
+  60%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+.anim-heart-pop { animation: heart-pop var(--duration-slow) var(--ease-spring); }
+
+/* Cart bump — badge count increment */
+@keyframes cart-bump {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+.anim-cart-bump { animation: cart-bump 320ms var(--ease-spring); }
+
+/* Ripple (buttons) */
+@keyframes ripple-expand {
+  from { transform: scale(0); opacity: 0.45; }
+  to   { transform: scale(2.6); opacity: 0; }
+}
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: currentColor;
+  pointer-events: none;
+  animation: ripple-expand 550ms var(--ease-out);
+}
+
+/* Skeleton shimmer (used by .skeleton in utilities.css) */
+@keyframes skeleton-shimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: 0 0; }
+}
+
+/* Success checkmark draw (add-to-cart confirmation) */
+@keyframes check-draw {
+  from { stroke-dashoffset: 24; }
+  to   { stroke-dashoffset: 0; }
+}
+.anim-check-draw {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: check-draw var(--duration-slow) var(--ease-out) forwards;
+}
+
+/* Offer badge subtle pulse — sparing use, only on flash-sale timers */
+@keyframes soft-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(236, 111, 13, 0.35); }
+  50%      { box-shadow: 0 0 0 6px rgba(236, 111, 13, 0); }
+}
+.anim-pulse-accent { animation: soft-pulse 2.2s var(--ease-standard) infinite; }
+
+/* Page transition wrapper */
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-transition { animation: page-in var(--duration-slow) var(--ease-out) both; }
+
+/* Smooth dropdown expand (accordion filters, mobile menu panels) */
+.anim-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-base) var(--ease-standard);
+}
+.anim-collapse.is-open { grid-template-rows: 1fr; }
+.anim-collapse > * { overflow: hidden; min-height: 0; }

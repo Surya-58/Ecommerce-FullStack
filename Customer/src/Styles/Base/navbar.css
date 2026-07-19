@@ -1,0 +1,176 @@
+/* ==========================================================================
+   ORCHARD — navbar.css
+   Sticky navbar, category strip, mega menu, mobile drawer.
+   Depends on: variables.css, animations.css
+   ========================================================================== */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-navbar);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  transition: height var(--duration-base) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard);
+}
+.navbar.is-scrolled { box-shadow: var(--shadow-sm); }
+
+.navbar__top {
+  height: var(--navbar-height);
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  transition: height var(--duration-base) var(--ease-standard);
+}
+.navbar.is-scrolled .navbar__top { height: var(--navbar-height-scrolled); }
+
+/* Logo */
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-display);
+  font-weight: var(--weight-extrabold);
+  font-size: 1.35rem;
+  color: var(--color-primary-700);
+  flex-shrink: 0;
+}
+.navbar__logo-mark {
+  width: 32px; height: 32px;
+  border-radius: var(--radius-leaf);
+  background: var(--color-primary-500);
+}
+
+/* Search occupies the flexible center */
+.navbar__search { flex: 1; display: flex; justify-content: center; }
+
+/* Right-side icon cluster */
+.navbar__actions { display: flex; align-items: center; gap: var(--space-4); flex-shrink: 0; }
+.navbar__icon-btn { position: relative; color: var(--color-text-secondary); transition: color var(--duration-base) var(--ease-standard); }
+.navbar__icon-btn:hover { color: var(--color-primary-600); }
+.navbar__badge {
+  position: absolute;
+  top: -6px; right: -8px;
+  min-width: 18px; height: 18px;
+  padding-inline: 3px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--color-accent-500);
+  color: var(--color-white);
+  font-size: 10px;
+  font-weight: var(--weight-bold);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-surface);
+}
+
+.navbar__login-btn {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--color-primary-500);
+  color: var(--color-primary-700);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-body-sm);
+  transition: background-color var(--duration-base) var(--ease-standard);
+}
+.navbar__login-btn:hover { background-color: var(--color-primary-50); }
+
+/* Profile dropdown trigger */
+.navbar__profile { display: flex; align-items: center; gap: var(--space-2); }
+.navbar__avatar { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 2px solid var(--color-primary-100); }
+
+/* ---------------------------------------------------------------------
+   Category navigation strip
+   --------------------------------------------------------------------- */
+.navbar__categories {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  height: 46px;
+  border-top: 1px solid var(--color-border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.navbar__categories::-webkit-scrollbar { display: none; }
+.navbar__category-link {
+  display: flex; align-items: center; gap: var(--space-1);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  position: relative;
+  padding-block: var(--space-1);
+}
+.navbar__category-link::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 2px;
+  background: var(--color-primary-500);
+  transform: scaleX(0);
+  transition: transform var(--duration-base) var(--ease-standard);
+}
+.navbar__category-link:hover { color: var(--color-primary-700); }
+.navbar__category-link:hover::after,
+.navbar__category-link--active::after { transform: scaleX(1); }
+.navbar__category-link--active { color: var(--color-primary-700); font-weight: var(--weight-semibold); }
+
+/* ---------------------------------------------------------------------
+   Mega menu (opens beneath a category link)
+   --------------------------------------------------------------------- */
+.mega-menu {
+  position: absolute;
+  left: 0; right: 0;
+  top: 100%;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-6) 0;
+  z-index: var(--z-dropdown);
+}
+.mega-menu__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-6);
+}
+.mega-menu__col-title {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+.mega-menu__link { display: block; padding-block: var(--space-1); font-size: var(--text-body-sm); color: var(--color-text-secondary); }
+.mega-menu__link:hover { color: var(--color-primary-600); }
+
+/* ---------------------------------------------------------------------
+   Mobile menu / drawer
+   --------------------------------------------------------------------- */
+.navbar__mobile-toggle { display: none; }
+
+@media (max-width: 960px) {
+  .navbar__search { display: none; }
+  .navbar__categories { display: none; }
+  .navbar__mobile-toggle { display: inline-flex; }
+  .mega-menu { display: none; }
+}
+
+.mobile-drawer {
+  position: fixed;
+  inset: 0 20% 0 0;
+  background: var(--color-surface);
+  z-index: var(--z-overlay);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-6) var(--space-5);
+  overflow-y: auto;
+}
+.mobile-drawer__backdrop {
+  position: fixed; inset: 0;
+  background: rgba(15, 40, 20, 0.35);
+  z-index: var(--z-overlay);
+}
+.mobile-drawer__item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+  font-weight: var(--weight-medium);
+}

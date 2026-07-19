@@ -1,0 +1,238 @@
+/* ==========================================================================
+   ORCHARD — forms.css
+   Inputs, search bar, checkbox/radio, dropdown, validation.
+   Depends on: variables.css
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------
+   Base field wrapper
+   --------------------------------------------------------------------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.field__label {
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-primary);
+}
+.field__hint { font-size: var(--text-caption); color: var(--color-text-muted); }
+.field__error { font-size: var(--text-caption); color: var(--color-danger); display: none; }
+.field.is-invalid .field__error { display: block; }
+
+/* ---------------------------------------------------------------------
+   Text input / textarea / select — shared base
+   --------------------------------------------------------------------- */
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  font-size: var(--text-body-sm);
+  transition: border-color var(--duration-base) var(--ease-standard),
+              box-shadow var(--duration-base) var(--ease-standard);
+}
+.input::placeholder { color: var(--color-text-muted); }
+.input:hover { border-color: var(--color-border-strong); }
+.input:focus { border-color: var(--color-primary-500); box-shadow: var(--shadow-focus); }
+
+.field.is-invalid .input { border-color: var(--color-danger); }
+.field.is-invalid .input:focus { box-shadow: 0 0 0 3px rgba(216, 72, 58, 0.18); }
+.field.is-valid .input { border-color: var(--color-success); }
+
+.input:disabled { background-color: var(--color-bg); color: var(--color-text-muted); cursor: not-allowed; }
+
+.textarea { min-height: 110px; resize: vertical; }
+
+/* Password strength meter (Register page) */
+.pw-strength { display: flex; gap: 4px; margin-top: var(--space-1); }
+.pw-strength__bar { height: 4px; flex: 1; border-radius: var(--radius-full); background: var(--color-border); }
+.pw-strength[data-level="weak"]   .pw-strength__bar:nth-child(1) { background: var(--color-danger); }
+.pw-strength[data-level="medium"] .pw-strength__bar:nth-child(-n+2) { background: var(--color-warning); }
+.pw-strength[data-level="strong"] .pw-strength__bar { background: var(--color-success); }
+
+/* ---------------------------------------------------------------------
+   Search bar (navbar + product page) with suggestions dropdown
+   --------------------------------------------------------------------- */
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 640px;
+  background-color: var(--color-bg);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding-inline: var(--space-2);
+  transition: border-color var(--duration-base) var(--ease-standard), background-color var(--duration-base) var(--ease-standard);
+}
+.search-bar:focus-within {
+  background-color: var(--color-surface);
+  border-color: var(--color-primary-500);
+  box-shadow: var(--shadow-focus);
+}
+.search-bar__icon { color: var(--color-text-muted); padding-inline: var(--space-2); flex-shrink: 0; }
+.search-bar__input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding-block: 0.65rem;
+  font-size: var(--text-body-sm);
+  color: var(--color-text-primary);
+  outline: none;
+}
+.search-bar__clear {
+  color: var(--color-text-muted);
+  padding: var(--space-1);
+  border-radius: var(--radius-full);
+}
+.search-bar__clear:hover { background: var(--color-border); }
+
+.search-suggestions {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0; right: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-2);
+  z-index: var(--z-dropdown);
+  max-height: 420px;
+  overflow-y: auto;
+}
+.search-suggestions__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+.search-suggestions__item:hover,
+.search-suggestions__item--active { background-color: var(--color-primary-50); }
+.search-suggestions__thumb { width: 36px; height: 36px; border-radius: var(--radius-xs); object-fit: cover; flex-shrink: 0; background: var(--color-bg); }
+.search-suggestions__text { display: flex; flex-direction: column; }
+.search-suggestions__match { font-weight: var(--weight-semibold); }
+
+/* Coupon input — inline apply button */
+.coupon-field { display: flex; gap: var(--space-2); }
+.coupon-field .input { border-style: dashed; text-transform: uppercase; letter-spacing: var(--tracking-wide); }
+
+/* Quantity input (numeric) reuses .qty-stepper from buttons.css */
+
+/* ---------------------------------------------------------------------
+   Checkbox
+   --------------------------------------------------------------------- */
+.checkbox { display: inline-flex; align-items: center; gap: var(--space-2); cursor: pointer; font-size: var(--text-body-sm); }
+.checkbox input { position: absolute; opacity: 0; width: 18px; height: 18px; }
+.checkbox__box {
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--color-border-strong);
+  border-radius: 5px;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: all var(--duration-fast) var(--ease-standard);
+  flex-shrink: 0;
+}
+.checkbox input:checked + .checkbox__box {
+  background-color: var(--color-primary-500);
+  border-color: var(--color-primary-500);
+}
+.checkbox input:checked + .checkbox__box::after {
+  content: "";
+  width: 5px; height: 9px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+.checkbox input:focus-visible + .checkbox__box { box-shadow: var(--shadow-focus); }
+
+/* ---------------------------------------------------------------------
+   Radio
+   --------------------------------------------------------------------- */
+.radio { display: inline-flex; align-items: center; gap: var(--space-2); cursor: pointer; font-size: var(--text-body-sm); }
+.radio input { position: absolute; opacity: 0; width: 18px; height: 18px; }
+.radio__dot {
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--color-border-strong);
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: all var(--duration-fast) var(--ease-standard);
+  flex-shrink: 0;
+}
+.radio input:checked + .radio__dot { border-color: var(--color-primary-500); }
+.radio input:checked + .radio__dot::after {
+  content: "";
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--color-primary-500);
+}
+.radio input:focus-visible + .radio__dot { box-shadow: var(--shadow-focus); }
+
+/* ---------------------------------------------------------------------
+   Dropdown / select
+   --------------------------------------------------------------------- */
+.select-wrap { position: relative; }
+.select {
+  appearance: none;
+  width: 100%;
+  padding: 0.75rem 2.4rem 0.75rem 1rem;
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-body-sm);
+}
+.select-wrap::after {
+  content: "";
+  position: absolute;
+  right: 1rem; top: 50%;
+  width: 8px; height: 8px;
+  border: solid var(--color-text-muted);
+  border-width: 0 2px 2px 0;
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+.select:focus { border-color: var(--color-primary-500); box-shadow: var(--shadow-focus); }
+
+/* Custom dropdown menu (sort by, profile menu) */
+.dropdown-menu {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-2);
+  min-width: 200px;
+}
+.dropdown-menu__item {
+  display: flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-primary);
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+.dropdown-menu__item:hover { background-color: var(--color-bg); }
+.dropdown-menu__item--danger { color: var(--color-danger); }
+
+/* ---------------------------------------------------------------------
+   Filter sidebar accordion controls reuse .anim-collapse from animations.css
+   --------------------------------------------------------------------- */
+.filter-group__title {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-block: var(--space-3);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-body-sm);
+  cursor: pointer;
+}
+
+/* Range slider (price filter) */
+.range-slider {
+  width: 100%;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--color-border);
+  accent-color: var(--color-primary-500);
+}

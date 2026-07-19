@@ -1,0 +1,159 @@
+/* ==========================================================================
+   ORCHARD — buttons.css
+   .btn base + modifiers. Depends on: variables.css, animations.css
+   ========================================================================== */
+
+.btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0.7rem 1.4rem;
+  font-family: var(--font-body);
+  font-size: var(--text-button);
+  font-weight: var(--weight-semibold);
+  line-height: 1;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color var(--duration-base) var(--ease-standard),
+              border-color var(--duration-base) var(--ease-standard),
+              color var(--duration-base) var(--ease-standard),
+              box-shadow var(--duration-base) var(--ease-standard),
+              transform var(--duration-fast) var(--ease-standard);
+  white-space: nowrap;
+  user-select: none;
+}
+.btn:active { transform: scale(0.97); }
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* Sizes */
+.btn--sm { padding: 0.5rem 1rem; font-size: var(--text-body-sm); border-radius: var(--radius-xs); }
+.btn--lg { padding: 0.9rem 1.9rem; font-size: 1rem; border-radius: var(--radius-md); }
+.btn--icon { padding: 0.65rem; border-radius: var(--radius-full); }
+.btn--full { width: 100%; }
+
+/* Primary — main brand CTA (Add to Cart, Buy Now, Login, Create Account) */
+.btn--primary {
+  background-color: var(--color-primary-500);
+  color: var(--color-white);
+  box-shadow: var(--shadow-xs);
+}
+.btn--primary:hover { background-color: var(--color-primary-600); box-shadow: var(--shadow-sm); }
+.btn--primary:focus-visible { box-shadow: var(--shadow-focus); }
+
+/* Secondary — supporting action (Continue Shopping, View Details) */
+.btn--secondary {
+  background-color: var(--color-primary-50);
+  color: var(--color-primary-700);
+}
+.btn--secondary:hover { background-color: var(--color-primary-100); }
+
+/* Outline — Quick Add, Move to Wishlist */
+.btn--outline {
+  background-color: transparent;
+  border-color: var(--color-border-strong);
+  color: var(--color-text-primary);
+}
+.btn--outline:hover { border-color: var(--color-primary-500); color: var(--color-primary-600); background-color: var(--color-primary-50); }
+
+/* Ghost — tertiary, low-emphasis (nav links behaving as buttons) */
+.btn--ghost {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+}
+.btn--ghost:hover { background-color: var(--color-bg); color: var(--color-text-primary); }
+
+/* Offer — flash sale / deal CTAs */
+.btn--offer {
+  background-color: var(--color-accent-500);
+  color: var(--color-white);
+}
+.btn--offer:hover { background-color: var(--color-accent-600); }
+.btn--offer:focus-visible { box-shadow: var(--shadow-accent-focus); }
+
+/* Danger — Remove item, Delete address */
+.btn--danger {
+  background-color: transparent;
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+.btn--danger:hover { background-color: var(--color-danger-bg); }
+
+/* Success — confirmations */
+.btn--success {
+  background-color: var(--color-success);
+  color: var(--color-white);
+}
+.btn--success:hover { background-color: var(--color-primary-600); }
+
+/* Loading */
+.btn--loading { color: transparent !important; pointer-events: none; }
+.btn--loading::after {
+  content: "";
+  position: absolute;
+  width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,0.5);
+  border-top-color: var(--color-white);
+  border-radius: 50%;
+  animation: btn-spin 650ms linear infinite;
+}
+.btn--outline.btn--loading::after,
+.btn--ghost.btn--loading::after {
+  border-color: rgba(31,154,77,0.25);
+  border-top-color: var(--color-primary-600);
+}
+@keyframes btn-spin { to { transform: rotate(360deg); } }
+
+/* Disabled */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+}
+
+/* Icon-only buttons — wishlist heart, cart, quantity +/- */
+.btn-icon-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px; height: 38px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  transition: all var(--duration-base) var(--ease-standard);
+}
+.btn-icon-circle:hover { border-color: var(--color-primary-400); color: var(--color-primary-600); }
+.btn-icon-circle--active { color: var(--color-danger); border-color: var(--color-danger); background: var(--color-danger-bg); }
+
+/* Quantity stepper */
+.qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.qty-stepper__btn {
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-weight: var(--weight-bold);
+  transition: background var(--duration-fast) var(--ease-standard);
+}
+.qty-stepper__btn:hover { background: var(--color-primary-100); }
+.qty-stepper__value {
+  width: 38px;
+  text-align: center;
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-body-sm);
+}

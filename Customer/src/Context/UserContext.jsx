@@ -5,8 +5,13 @@ export const UserContext = createContext();
 const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
 
+  const logout = () => {
+    setCurrentUser(null)
+    localStorage.removeItem("currentUser")
+  }
+
   useEffect(() => {
-    const storedUser = localStorage.getItem("currentItem")
+    const storedUser = localStorage.getItem("currentUser")
     if(storedUser){
         setCurrentUser(JSON.parse(storedUser))
     }
@@ -17,6 +22,7 @@ const UserProvider = ({ children }) => {
       value={{
         currentUser,
         setCurrentUser,
+        logout,
       }}
     >{children}</UserContext.Provider>
   );
