@@ -211,12 +211,16 @@
     {
       "id": "20",
       "name": "Horlicks",
+      "brand" : "Horlicks",
       "quantity": 500,
       "unit": "g",
       "price": 395,
+      "mrp" : 450,
       "category": "Beverages",
       "image": "https://picsum.photos/100?20",
       "stock": 30,
+      "rating" : 4.6,
+      "reviews" : 182,
       "featured": false
     },
     {

@@ -103,6 +103,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; color: inher
   font-weight: var(--weight-medium);
   line-height: var(--leading-snug);
   color: var(--color-text-primary);
+  min-height: 48px; /* 2 lines of text */
 }
 .text-brand {
   font-family: var(--font-body);

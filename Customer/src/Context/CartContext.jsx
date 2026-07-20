@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { createContext } from "react";
+import React, { useState, createContext } from "react";
 
 export const CartContext = createContext();
 
@@ -20,52 +19,53 @@ const CartProvider = ({ children }) => {
   };
 
   const decreaseQuantity = (id) => {
-    const updatedCart = cart.map((item) => {
-      if(item.id === id){
-        if(item.cartQuantity > 1){
-          return{
-            ...item,
-            cartQuantity: item.cartQuantity - 1
+    const updatedCart = cart
+      .map((item) => {
+        if (item.id === id) {
+          if (item.cartQuantity > 1) {
+            return {
+              ...item,
+              cartQuantity: item.cartQuantity - 1,
+            };
           }
+          return null;
         }
-        return null
-      }
-      return item;
-    })
-    .filter((item) => item !== null)
-    setCart(updatedCart)
-  }
+        return item;
+      })
+      .filter((item) => item !== null);
+    setCart(updatedCart);
+  };
 
   const removeFromCart = (id) => {
-    const updatedCart = cart.filter((item)=> item.id !== id)
+    const updatedCart = cart.filter((item) => item.id !== id);
 
-    setCart(updatedCart)
-  }
+    setCart(updatedCart);
+  };
 
-  const addToCart = (product) =>{
-    const existingProduct = cart.find((item => item.id === product.id))
+  const addToCart = (product) => {
+    const existingProduct = cart.find((item) => item.id === product.id);
 
-    if(existingProduct){
-      const updatedCart = cart.map((item)=>{
-        if(item.id === product.id){
+    if (existingProduct) {
+      const updatedCart = cart.map((item) => {
+        if (item.id === product.id) {
           return {
             ...item,
             cartQuantity: item.cartQuantity + 1,
-          }
+          };
         }
-        return item
-      })
-      setCart(updatedCart)
+        return item;
+      });
+      setCart(updatedCart);
     } else {
       setCart([
         ...cart,
         {
           ...product,
-          cartQuantity: 1
-        }
-      ])
+          cartQuantity: 1,
+        },
+      ]);
     }
-  }
+  };
 
   return (
     <CartContext.Provider
