@@ -128,3 +128,6 @@
   animation: skeleton-shimmer 1.4s ease infinite;
   border-radius: var(--radius-sm);
 }
+.section-spacing{
+    margin-top: var(--space-section);
+}

@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import CategorySection from "../Components/CategorySection";
 import { getProducts } from "../Services/api";
 import ProductGrid from "../Components/ProductGrid";
-import "../Styles/Pages/home.css"
+import "../Styles/Pages/home.css";
+import WhyChooseUs from "../Components/WhyChooseUs";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -23,7 +24,7 @@ const Home = () => {
 
   return (
     <div className="container">
-      <div className="hero">
+      <section className="hero">
         <div>
           <p className="hero__eyebrow">🛒 Fresh Grocery • Daily Essentials</p>
 
@@ -49,14 +50,13 @@ const Home = () => {
         <div className="hero__image">
           <img src="/images/hero-grocery.jpg" alt="Fresh Groceries" />
         </div>
-      </div>
-      
+      </section>
+
       <section id="categories">
         <CategorySection />
       </section>
 
-      
-      <section className="home-products">
+      <section className="home-products section-spacing" >
         <div className="section-header">
           <h2 className="text-section-title">Featured Products</h2>
 
@@ -67,17 +67,32 @@ const Home = () => {
         <ProductGrid products={products.slice(0, 4)} />
       </section>
 
-      <section className="deals-rail">
+      <section className="deals-rail section-spacing">
         <div className="section-header">
-          <h2 className="text-section title">Today's Deals</h2>
-          <div className="deals-rail__timer">
-            Ends Tonight
-          </div>
+          <h2 className="text-section-title">Today's Deals</h2>
+          <Link to="/products" className="section-header__link">
+            View All
+          </Link>
+
+          <div className="deals-rail__timer">Ends Tonight</div>
         </div>
 
-        <ProductGrid products={products.slice(4,8)} />
-        
+        <ProductGrid
+          products={products.filter((product) => product.featured)}
+        />
       </section>
+      <section className="best-sellers section-spacing">
+        <div className="section-header">
+          <h2 className="text-section-title">
+            Best Sellers
+          </h2>
+          <Link className="section-header__link">
+          View All</Link>
+        </div>
+        <ProductGrid products={products.slice(8,12)} />
+      </section>
+
+      <WhyChooseUs />
     </div>
   );
 };
