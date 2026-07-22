@@ -209,20 +209,22 @@
       "featured": false
     },
     {
-      "id": "20",
-      "name": "Horlicks",
-      "brand": "Horlicks",
-      "quantity": 500,
-      "unit": "g",
-      "price": 395,
-      "mrp": 450,
-      "category": "Beverages",
-      "image": "https://picsum.photos/100?20",
-      "stock": 30,
-      "rating": 4.6,
-      "reviews": 182,
-      "featured": false
-    },
+      "id": 20,
+      "name": "Horlicks Classic Malt",
+     "brand": "Horlicks",
+  "category": "Groceries",
+  "price": 399,
+  "mrp": 450,
+  "quantity": 5,
+  "unit": "kg",
+  "stock": 15,
+  "rating": 4.6,
+  "reviews": 245,
+  "featured": true,
+  "description": "Horlicks Classic Malt is a nutritious health drink made with malt, wheat and milk solids. It provides essential vitamins and minerals to support daily nutrition for the whole family.",
+  "image": "https://picsum.photos/100?19"
+}
+    ,
     {
       "name": "Milk Arokya",
       "quantity": "1",

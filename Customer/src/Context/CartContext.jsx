@@ -42,7 +42,7 @@ const CartProvider = ({ children }) => {
     setCart(updatedCart);
   };
 
-  const addToCart = (product) => {
+  const addToCart = (product, quantity) => {
     const existingProduct = cart.find((item) => item.id === product.id);
 
     if (existingProduct) {
@@ -50,7 +50,7 @@ const CartProvider = ({ children }) => {
         if (item.id === product.id) {
           return {
             ...item,
-            cartQuantity: item.cartQuantity + 1,
+            cartQuantity: item.cartQuantity + quantity,
           };
         }
         return item;
@@ -61,7 +61,7 @@ const CartProvider = ({ children }) => {
         ...cart,
         {
           ...product,
-          cartQuantity: 1,
+          cartQuantity: quantity,
         },
       ]);
     }
