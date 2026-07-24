@@ -25,6 +25,8 @@ const WishlistProvider = ({ children }) => {
     return wishlist.some((item) => item.id === id)
   }
 
+  
+
   return (
     <WishlistContext.Provider
       value={{

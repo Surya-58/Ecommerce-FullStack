@@ -1,11 +1,15 @@
-import React, { use } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { useContext, useState, useRef, useEffect } from "react";
 import { UserContext } from "../Context/UserContext";
 import { Link } from "react-router-dom";
+import { CartContext } from "../Context/CartContext";
+import { WishlistContext } from "../Context/WishlistContext";
 
 const Navbar = () => {
   const { currentUser, logout } = useContext(UserContext);
+  const { cart } = useContext(CartContext);
+  const { wishlist } = useContext(WishlistContext);
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -64,6 +68,9 @@ const Navbar = () => {
             }
           >
             Wishlist
+            {wishlist.length > 0 && (
+              <span className="navbar__badge">{wishlist.length}</span>
+            )}
           </NavLink>
 
           <NavLink
@@ -75,6 +82,11 @@ const Navbar = () => {
             }
           >
             Cart
+            {cart.length > 0 && (
+              <span className="navbar__badge">
+                {cart.length}
+              </span>
+            )}
           </NavLink>
 
           <NavLink to="/login" className="navbar__category-link">
