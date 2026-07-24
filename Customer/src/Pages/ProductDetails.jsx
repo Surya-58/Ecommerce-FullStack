@@ -8,7 +8,8 @@ import "../Styles/Pages/product-details.css";
 const ProductDetails = () => {
   const { id } = useParams();
   const { addToCart } = useContext(CartContext);
-  const { addToWishlist } = useContext(WishlistContext);
+  const { addToWishlist, removeFromWishlist, isInWishlist } =
+    useContext(WishlistContext);
 
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -34,6 +35,8 @@ const ProductDetails = () => {
     ? Math.round(((product.mrp - product.price) / product.mrp) * 100)
     : 0;
 
+  const wishlistAdded = product ? isInWishlist(product.id) : false;
+
   return (
     <div className="container">
       <h1>ProductDetails</h1>
@@ -57,14 +60,10 @@ const ProductDetails = () => {
               <div className="pdp-price">
                 <span className="text-price">{product.price}</span>
                 {product.mrp && (
-                  <span className="text-price-mrp">
-                    {product.mrp}
-                  </span>
+                  <span className="text-price-mrp">{product.mrp}</span>
                 )}
                 {discount > 0 && (
-                  <span className="text-discount">
-                    {discount}% off
-                  </span>
+                  <span className="text-discount">{discount}% off</span>
                 )}
               </div>
 
@@ -98,15 +97,23 @@ const ProductDetails = () => {
                 </button>
               </div>
               <div className="pdp-info__actions">
-                <button 
-                className="btn btn-primary"
-                onClick={() => addToCart(product, quantity)}
+                <button
+                  className="btn btn-primary"
+                  onClick={() => addToCart(product, quantity)}
                 >
-                Add to Cart</button>
-                <button 
-                className="btn btn--secondary"
-                onClick={() => addToWishlist(product)}>
-                  Add to wishlist
+                  Add to Cart
+                </button>
+                <button
+                  className="btn btn--secondary"
+                  onClick={() =>
+                    wishlistAdded
+                      ? removeFromWishlist(product.id)
+                      : addToWishlist(product)
+                  }
+                >
+                  {wishlistAdded
+                    ? "❤️ Remove from Wishlist"
+                    : "🤍 Add to Wishlist"}
                 </button>
               </div>
               <div className="pdp-info__delivery">
@@ -120,26 +127,25 @@ const ProductDetails = () => {
               <div className="pdp-specs__body">
                 {product.description || "No description available"}
               </div>
+            </div>
+            <div className="pdp-specs__group">
+              <h3 className="pdp-specs__title">Product Information</h3>
+              <div className="pdp-specs__body">
+                <p>
+                  <strong>Category:</strong>
+                  {product.category}{" "}
+                </p>
+                <p>
+                  <strong>Brand:</strong> {product.brand}
+                </p>
+                <p>
+                  <strong>Weight:</strong> {product.quantity} {product.unit}
+                </p>
+                <p>
+                  <strong>Stock:</strong> {product.stock}
+                </p>
               </div>
-              <div className="pdp-specs__group">
-                <h3 className="pdp-specs__title">Product Information</h3>
-                <div className="pdp-specs__body">
-                  <p>
-                    <strong>Category:</strong>
-                    {product.category}{" "}
-                  </p>
-                  <p>
-                    <strong>Brand:</strong> {product.brand}
-                  </p>
-                  <p>
-                    <strong>Weight:</strong> {product.quantity} {product.unit}
-                  </p>
-                  <p>
-                    <strong>Stock:</strong> {product.stock}
-                  </p>
-                </div>
-              </div>
-            
+            </div>
           </div>
         </>
       )}
