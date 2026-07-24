@@ -55,19 +55,14 @@ const ProductDetails = () => {
               </div>
 
               <div className="pdp-price">
-                <span>{product.price}</span>
+                <span className="text-price">{product.price}</span>
                 {product.mrp && (
-                  <span
-                    style={{
-                      textDecoration: "line-through",
-                      marginLeft: "10px",
-                    }}
-                  >
+                  <span className="text-price-mrp">
                     {product.mrp}
                   </span>
                 )}
                 {discount > 0 && (
-                  <span style={{ marginLeft: "10px", color: "green" }}>
+                  <span className="text-discount">
                     {discount}% off
                   </span>
                 )}
@@ -80,7 +75,7 @@ const ProductDetails = () => {
                   {product.unit}
                 </span>
                 <span>
-                  <p>{product.stock > 0 ? "✅ In Stock" : "❌ Out of Stock"}</p>
+                  {product.stock > 0 ? "✅ In Stock" : "❌ Out of Stock"}
                 </span>
               </div>
 
@@ -103,8 +98,14 @@ const ProductDetails = () => {
                 </button>
               </div>
               <div className="pdp-info__actions">
-                <button onClick={() => addToCart(product, quantity)}>Add to Cart</button>
-                <button onClick={() => addToWishlist(product)}>
+                <button 
+                className="btn btn-primary"
+                onClick={() => addToCart(product, quantity)}
+                >
+                Add to Cart</button>
+                <button 
+                className="btn btn--secondary"
+                onClick={() => addToWishlist(product)}>
                   Add to wishlist
                 </button>
               </div>
@@ -118,6 +119,7 @@ const ProductDetails = () => {
               <h3 className="pdp-specs__title">Description</h3>
               <div className="pdp-specs__body">
                 {product.description || "No description available"}
+              </div>
               </div>
               <div className="pdp-specs__group">
                 <h3 className="pdp-specs__title">Product Information</h3>
@@ -137,7 +139,7 @@ const ProductDetails = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            
           </div>
         </>
       )}

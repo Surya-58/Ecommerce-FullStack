@@ -24,7 +24,9 @@ const ProductCard = ({ product }) => {
         <div className="product-card__quick-add">
           <button
             className="btn btn--primary btn--full"
-            onClick={() => addToCart(product)}
+            onClick={() => {
+              addToCart(product, 1);
+            }}
           >
             Add to cart
           </button>
@@ -36,28 +38,26 @@ const ProductCard = ({ product }) => {
         <h3 className="text-product-name">{product.name}</h3>
 
         <div className="product-card__meta">
-
-        <span className="text-rating">{product.rating}</span>
-        <span>({product.reviews})</span>
+          <span className="text-rating">{product.rating}</span>
+          <span>({product.reviews})</span>
         </div>
 
         <p className="text-caption">
           {product.quantity} {product.unit}
         </p>
         <div className="product-card__price-row">
-        <span className="text-price">₹{product.price}</span>
+          <span className="text-price">₹{product.price}</span>
 
-
-        {product.mrp && (<span className="text-price-mrp">₹{product.mrp}</span>)}
-        {discount > 0 && (
-          <p className="text-discount">{discount}%OFF</p>
-        )}
-      </div>
-      <div className="product-card__footer">
-        <Link to={`/products/${product.id}`}>
-          <button className="btn btn--primary btn--full">View Product</button>
-        </Link>
-      </div>
+          {product.mrp && (
+            <span className="text-price-mrp">₹{product.mrp}</span>
+          )}
+          {discount > 0 && <p className="text-discount">{discount}%OFF</p>}
+        </div>
+        <div className="product-card__footer">
+          <Link to={`/products/${product.id}`}>
+            <button className="btn btn--primary btn--full">View Product</button>
+          </Link>
+        </div>
       </div>
     </div>
   );
