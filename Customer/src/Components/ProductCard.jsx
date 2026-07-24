@@ -2,13 +2,21 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../Context/CartContext";
+import { WishlistContext } from "../Context/WishlistContext";
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useContext(CartContext);
+  const {
+    addToWishlist,
+    removeFromWishlist,
+    isInWishlist,
+  } = useContext(WishlistContext)
 
   const discount = product.mrp
     ? Math.round(((product.mrp - product.price) / product.mrp) * 100)
     : 0;
+
+    const wishlistAdded = isInWishlist(product.id)
   return (
     <div className="product-card">
       <div className="product-card__media">
@@ -19,7 +27,12 @@ const ProductCard = ({ product }) => {
           </div>
         )}
         <div className="product-card__wishlist">
-          <button className="btn-icon-circle">❤️</button>
+          <button className="btn-icon-circle"
+          onClick={()=>wishlistAdded ? removeFromWishlist(product.id) 
+            : addToWishlist(product)
+          }>
+            {wishlistAdded ? "❤️" : "🤍"}
+          </button>
         </div>
         <div className="product-card__quick-add">
           <button

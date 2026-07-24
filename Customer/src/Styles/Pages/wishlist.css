@@ -1,0 +1,53 @@
+/* ==========================================================================
+   ORCHARD — wishlist.css
+   Depends on: variables.css, global.css, utilities.css, animations.css,
+               buttons.css, home.css (for .product-card base)
+   ========================================================================== */
+
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-5);
+}
+
+/* Wishlist card extends .product-card with a remove control + move-to-cart footer */
+.wishlist-card { position: relative; }
+.wishlist-card__remove {
+  position: absolute;
+  top: var(--space-2); right: var(--space-2);
+  z-index: 1;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  color: var(--color-text-muted);
+  transition: all var(--duration-base) var(--ease-standard);
+}
+.wishlist-card__remove:hover { color: var(--color-danger); border-color: var(--color-danger); background: var(--color-danger-bg); }
+
+.wishlist-card__stock { margin-top: var(--space-1); }
+
+.wishlist-card__footer {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4) var(--space-4);
+}
+.wishlist-card__footer .btn { flex: 1; }
+
+/* Out-of-stock dimming, without hiding info */
+.wishlist-card--unavailable .product-card__media img { filter: grayscale(0.6); opacity: 0.7; }
+.wishlist-card--unavailable .wishlist-card__footer .btn--primary { pointer-events: none; opacity: 0.5; }
+
+/* ---------------------------------------------------------------------
+   Empty wishlist state
+   --------------------------------------------------------------------- */
+.wishlist-empty { display: flex; flex-direction: column; align-items: center; text-align: center; padding: var(--space-24) var(--space-6); gap: var(--space-4); }
+.wishlist-empty__illustration { width: 180px; height: 180px; opacity: 0.9; }
+.wishlist-empty__title { font-size: var(--text-section); font-weight: var(--weight-bold); }
+.wishlist-empty__subtitle { color: var(--color-text-secondary); max-width: 32ch; }
+
+@media (max-width: 560px) {
+  .wishlist-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+  .wishlist-card__footer { flex-direction: column; }
+}
