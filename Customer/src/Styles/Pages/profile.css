@@ -1,0 +1,100 @@
+/* ==========================================================================
+   ORCHARD — profile.css
+   Depends on: variables.css, global.css, utilities.css, animations.css,
+               buttons.css, forms.css
+   ========================================================================== */
+
+.profile-page { display: grid; grid-template-columns: 260px 1fr; gap: var(--space-8); align-items: start; }
+@media (max-width: 900px) { .profile-page { grid-template-columns: 1fr; } }
+
+/* ---------------------------------------------------------------------
+   Sidebar
+   --------------------------------------------------------------------- */
+.profile-sidebar {
+  position: sticky;
+  top: calc(var(--navbar-height) + var(--space-4));
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+}
+.profile-sidebar__header { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-3); padding-bottom: var(--space-5); border-bottom: 1px solid var(--color-border); margin-bottom: var(--space-4); }
+.profile-sidebar__avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--color-primary-100); }
+.profile-sidebar__name { font-weight: var(--weight-bold); }
+.profile-sidebar__email { font-size: var(--text-caption); color: var(--color-text-muted); }
+
+.profile-nav { display: flex; flex-direction: column; gap: var(--space-1); }
+.profile-nav__item {
+  display: flex; align-items: center; gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+  transition: all var(--duration-base) var(--ease-standard);
+}
+.profile-nav__item:hover { background: var(--color-bg); color: var(--color-text-primary); }
+.profile-nav__item--active { background: var(--color-primary-50); color: var(--color-primary-700); }
+.profile-nav__item--danger { color: var(--color-danger); margin-top: var(--space-3); border-top: 1px solid var(--color-border); border-radius: 0; padding-top: var(--space-4); }
+
+@media (max-width: 900px) {
+  .profile-sidebar { position: static; }
+  .profile-sidebar__header { display: none; }
+  .profile-nav { flex-direction: row; overflow-x: auto; gap: var(--space-2); }
+  .profile-nav__item { white-space: nowrap; }
+  .profile-nav__item--danger { border-top: none; margin-top: 0; padding-top: var(--space-3); }
+}
+
+/* ---------------------------------------------------------------------
+   Content panel
+   --------------------------------------------------------------------- */
+.profile-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-8);
+}
+.profile-panel__title { font-size: var(--text-category); font-weight: var(--weight-bold); margin-bottom: var(--space-6); }
+
+/* Personal info form */
+.profile-form { display: flex; flex-direction: column; gap: var(--space-5); max-width: 520px; }
+
+/* Address cards */
+.address-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-4); }
+.address-card { position: relative; padding: var(--space-5); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-card); }
+.address-card--default { border-color: var(--color-primary-400); }
+.address-card__tag { position: absolute; top: var(--space-3); right: var(--space-3); }
+.address-card__label { font-weight: var(--weight-semibold); margin-bottom: var(--space-2); }
+.address-card__text { font-size: var(--text-body-sm); color: var(--color-text-secondary); line-height: var(--leading-normal); margin-bottom: var(--space-4); }
+.address-card__actions { display: flex; gap: var(--space-4); font-size: var(--text-caption); font-weight: var(--weight-medium); }
+.address-card__actions button { color: var(--color-text-muted); }
+.address-card__actions button:hover { color: var(--color-primary-600); }
+
+/* Orders list */
+.order-row { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); margin-bottom: var(--space-3); flex-wrap: wrap; }
+.order-row__thumbs { display: flex; }
+.order-row__thumbs img { width: 48px; height: 48px; border-radius: var(--radius-xs); border: 2px solid var(--color-surface); object-fit: cover; margin-left: -12px; }
+.order-row__thumbs img:first-child { margin-left: 0; }
+.order-row__info { flex: 1; min-width: 160px; }
+.order-row__id { font-size: var(--text-caption); color: var(--color-text-muted); }
+.order-row__date { font-size: var(--text-caption); color: var(--color-text-muted); }
+.order-row__total { font-weight: var(--weight-bold); }
+
+/* Saved payment cards */
+.payment-card { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); margin-bottom: var(--space-3); }
+.payment-card__icon { width: 44px; height: 30px; border-radius: 4px; background: var(--color-bg); display: flex; align-items: center; justify-content: center; }
+.payment-card__number { font-family: var(--font-body); letter-spacing: var(--tracking-wide); font-size: var(--text-body-sm); }
+.payment-card__default { margin-left: auto; }
+
+/* Notification toggle rows */
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border); }
+.toggle-row__label { font-weight: var(--weight-medium); }
+.toggle-row__desc { font-size: var(--text-caption); color: var(--color-text-muted); }
+
+.switch { position: relative; width: 42px; height: 24px; flex-shrink: 0; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.switch__track { position: absolute; inset: 0; background: var(--color-border-strong); border-radius: var(--radius-full); transition: background var(--duration-base) var(--ease-standard); cursor: pointer; }
+.switch__track::before { content: ""; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: var(--color-white); border-radius: 50%; transition: transform var(--duration-base) var(--ease-standard); }
+.switch input:checked + .switch__track { background: var(--color-primary-500); }
+.switch input:checked + .switch__track::before { transform: translateX(18px); }
+.switch input:focus-visible + .switch__track { box-shadow: var(--shadow-focus); }

@@ -1,0 +1,47 @@
+/* ==========================================================================
+   ORCHARD — notfound.css
+   Depends on: variables.css, global.css, utilities.css, animations.css,
+               buttons.css, forms.css
+   ========================================================================== */
+
+.notfound-page {
+  min-height: calc(100vh - var(--navbar-height));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-16) var(--space-6);
+  gap: var(--space-5);
+}
+
+.notfound-page__illustration {
+  width: clamp(160px, 24vw, 240px);
+  height: clamp(160px, 24vw, 240px);
+  margin-bottom: var(--space-2);
+}
+
+.notfound-page__code {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 2rem + 6vw, 6rem);
+  font-weight: var(--weight-extrabold);
+  color: var(--color-primary-200);
+  line-height: 1;
+}
+
+.notfound-page__title { font-size: var(--text-section); font-weight: var(--weight-bold); }
+.notfound-page__subtitle { color: var(--color-text-secondary); max-width: 40ch; }
+
+.notfound-page__search { width: 100%; max-width: 480px; margin-block: var(--space-4); }
+
+.notfound-page__categories { display: flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center; margin-bottom: var(--space-4); }
+.notfound-page__category-pill {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+  transition: all var(--duration-base) var(--ease-standard);
+}
+.notfound-page__category-pill:hover { border-color: var(--color-primary-500); color: var(--color-primary-700); background: var(--color-primary-50); }

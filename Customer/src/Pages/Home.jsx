@@ -86,7 +86,7 @@ const Home = () => {
           <h2 className="text-section-title">
             Best Sellers
           </h2>
-          <Link className="section-header__link">
+          <Link to="/products" className="section-header__link">
           View All</Link>
         </div>
         <ProductGrid products={products.slice(8,12)} />
