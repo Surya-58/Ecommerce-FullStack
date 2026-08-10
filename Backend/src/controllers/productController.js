@@ -58,3 +58,49 @@ export const singleProduct = async(req, res) => {
         
     }
 }
+
+export const updateProduct = async(req, res) => {
+    try {
+        const product = await Product.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new : true}
+        )
+        
+        res.json({
+            success: true,
+            message: "Product Updated Successfully",
+            product
+        })
+    } catch (error) {
+        console.log(error);
+
+        res.json({
+            success: false,
+            message: error.message
+        })
+        
+    }
+}
+
+export const removeProduct = async(req, res) => {
+    try {
+
+        const product = await Product.findByIdAndDelete(req.params.id)
+
+        res.json({
+            success: true,
+            message: "Product Deleted Successfully",
+            product
+        })
+        
+    } catch (error) {
+        console.log(error);
+        
+        res.json({
+            success:false,
+            message:error.message
+        })
+        
+    }
+}
