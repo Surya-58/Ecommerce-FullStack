@@ -1,9 +1,23 @@
 import { response } from "express";
 import Product from "../models/productModel.js";
+import { uploadToCloudinary } from "../config/cloudinary.js";
 
 export const addProduct = async (req, res) => {
     try {
-        const product = await Product.create(req.body)
+        let imageUrl = ""
+
+        if(req.file){
+            const result = await uploadToCloudinary(req.file.buffer)
+            imageUrl = result.secure_url
+        }
+        const product = await Product.create({
+            name: req.body.name,
+            description: req.body.description,
+            price: req.body.price,
+            category: req.body.category,
+            stock: req.body.stock,
+            image: imageUrl
+        })
         
         res.json({
             success: true,
