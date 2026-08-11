@@ -11,11 +11,13 @@ const productSchema = new mongoose.Schema(
     description: {
       type: String,
       required: true,
+      trim: true,
     },
 
     price: {
       type: Number,
       required: true,
+      min: [0, "Price cannot be negative"],
     },
 
     image: {
@@ -26,11 +28,13 @@ const productSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
+      trim: true,
     },
 
     stock: {
       type: Number,
       default: 0,
+      min: [0, "Stock cannot be negative"],
     },
   },
   {
