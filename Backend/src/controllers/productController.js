@@ -18,7 +18,8 @@ export const addProduct = async (req, res) => {
             price: req.body.price,
             category: req.body.category,
             stock: req.body.stock,
-            image: imageUrl
+            image: imageUrl,
+            imagePublicId: imagePublicId,
         })
         
         res.json({
@@ -80,16 +81,43 @@ export const singleProduct = async(req, res) => {
 
 export const updateProduct = async(req, res) => {
     try {
-        const product = await Product.findByIdAndUpdate(
+        const product = await Product.findById(req.params.id)
+
+        if(!product){
+            return res.json({
+                success: false,
+                message: "Product Not Found"
+            })
+        }
+
+        let imageUrl = product.image;
+        let imagePublicId = product.imagePublicId;
+
+        if(req.file){
+            const result = await uploadToCloudinary(req.file.buffer)
+
+            imageUrl = result.secure_url
+            imagePublicId = result.public_id
+
+            if(product.imagePublicId){
+                await deleteFromCloudinary(product.imagePublicId)
+            }
+        }
+
+        const updatedProduct = await Product.findByIdAndUpdate(
             req.params.id,
-            req.body,
-            { new : true}
+            {
+                ...req.body,
+                image: imageUrl,
+                imagePubliicId: imagePublicId
+            },
+            { new:true, runValidators: true}
         )
-        
+
         res.json({
             success: true,
             message: "Product Updated Successfully",
-            product
+            product: updateProduct,
         })
     } catch (error) {
         console.log(error);

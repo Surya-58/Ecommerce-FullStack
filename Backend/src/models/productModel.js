@@ -25,6 +25,12 @@ const productSchema = new mongoose.Schema(
       default: "",
     },
 
+    imagePublicId: {
+      type: String,
+      default: "",
+
+    },
+
     category: {
       type: String,
       required: true,
