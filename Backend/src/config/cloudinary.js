@@ -30,4 +30,8 @@ export const uploadToCloudinary = async(fileBuffer) => {
     })
 }
 
+export const deleteFromCloudinary = async(publicId) => {
+    return await cloudinary.uploader.destroy(publicId)
+}
+
 export default connectCloudinary
