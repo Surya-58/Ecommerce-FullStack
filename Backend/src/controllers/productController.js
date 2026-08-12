@@ -45,12 +45,22 @@ export const addProduct = async (req, res) => {
 export const listProducts = async(req,res) => {
     try {
         const search = req.query.search || ""
-        const products = await Product.find({
-            name: {
+        const category = req.query.category || ""
+
+        const  filter = {}
+
+        if(search) {
+            filter.name = {
                 $regex: search,
                 $options: "i"
             }
-        })
+        }
+
+        if(category){
+            filter.category = category
+        }
+
+        const products = await Product.find(filter)
         res.json({
             success: true,
             products,
