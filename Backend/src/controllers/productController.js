@@ -44,7 +44,13 @@ export const addProduct = async (req, res) => {
 
 export const listProducts = async(req,res) => {
     try {
-        const products = await Product.find()
+        const search = req.query.search || ""
+        const products = await Product.find({
+            name: {
+                $regex: search,
+                $options: "i"
+            }
+        })
         res.json({
             success: true,
             products,
