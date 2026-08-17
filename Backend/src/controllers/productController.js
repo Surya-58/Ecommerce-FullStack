@@ -48,6 +48,9 @@ export const listProducts = async (req, res) => {
     const search = req.query.search || "";
     const category = req.query.category || "";
     const sort = req.query.sort || "";
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
 
     const filter = {};
 
@@ -72,9 +75,19 @@ export const listProducts = async (req, res) => {
         sortOption.price = -1
     }
 
-    const products = await Product.find(filter).sort(sortOption);
+    const products = await Product.find(filter)
+    .sort(sortOption)
+    .skip(skip)
+    .limit(limit);
+
+    const totalProducts = await Product.countDocuments(filter)
+    const totalPages = Math.ceil(totalProducts / limit)
     res.json({
       success: true,
+      page,
+      limit,
+      totalProducts,
+      totalPages,
       products,
     });
   } catch (error) {
