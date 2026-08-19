@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 
-const authMiddkeware = async(req,res,next) => {
+const authMiddleware = async(req,res,next) => {
     try {
         const token = req.headers.authorization
 
@@ -11,7 +11,7 @@ const authMiddkeware = async(req,res,next) => {
             })
         }
 
-        const actualToken = token.split(" "[1])
+        const actualToken = token.split(" ")[1]
 
         const decoded = jwt.verify(
             actualToken,
@@ -31,4 +31,4 @@ const authMiddkeware = async(req,res,next) => {
         })
     }
 }
-export default authMiddkeware
+export default authMiddleware 

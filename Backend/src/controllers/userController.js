@@ -91,3 +91,31 @@ export const loginUser = async(req,res) => {
     
   }
 }
+
+export const getProfile = async(req,res)=>{
+  try {
+
+    const user = await User.findById(req.userId).select("-password")
+
+    if(!user){
+      return res.json({
+        success: false,
+        message: "User not found"
+      })
+    }
+
+    res.json({
+      success: true,
+      user
+    })
+    
+  } catch (error) {
+    console.log(error);
+
+    res.json({
+      success: false,
+      message: error.message
+    })
+    
+  }
+}
