@@ -197,3 +197,34 @@ export const removeFromCart = async (req, res) => {
     });
   }
 };
+
+export const clearCart = async(req,res) => {
+  try {
+    const cart = await Cart.findOne({ userId: req.userId})
+    
+    if(!cart){
+      return res.json({
+        success: false,
+        message: "Cart not found"
+      })
+    }
+
+    cart.items = []
+
+    await cart.save()
+
+    res.json({
+      success: true,
+      message: "Cart cleared successfully",
+      cart,
+    })
+  } catch (error) {
+    console.log(error);
+
+    res.json({
+      success: false,
+      message: error.message
+    })
+    
+  }
+}
