@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef} from "react";
 import {
   getOrders,
   addOrder,
@@ -27,6 +27,8 @@ const Orders = () => {
   const [total, setTotal] = useState(0);
 
   const [statusFilter, setStatusFilter] = useState("All")
+
+  const formRef = useRef(null);
 
   const handleGetOrders = async () => {
     const data = await getOrders();
@@ -64,6 +66,10 @@ const Orders = () => {
   }, [price, quantity]);
 
   const handleAddOrder = async () => {
+    if (!customer || !product || !quantity || !price) {
+      setMessage("Please fill in all fields");
+      return;
+    }
     try {
       const order = {
         customer,
@@ -98,6 +104,7 @@ const Orders = () => {
     setPrice(order.price);
     setTotal(order.total);
     setStatus(order.status);
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const handleUpdateOrder = async () => {
@@ -128,6 +135,9 @@ const Orders = () => {
     }
   };
   const handleDelete = async(id) => {
+    if (!window.confirm("Are you sure you want to delete this product?")) {
+      return;
+    }
     try {
       await deleteOrder(id)
 
@@ -143,6 +153,7 @@ const Orders = () => {
 
   return (
     <div>
+      <div ref={formRef}>
       <OrderForm
         users={users}
         products={products}
@@ -161,6 +172,7 @@ const Orders = () => {
         handleUpdateOrder={handleUpdateOrder}
         editId={editId}
       />
+      </div>
       <select 
       className="input"
       value={statusFilter}

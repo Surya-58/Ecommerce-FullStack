@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import CategoryForm from "../components/CategoryForm";
 import CategoryTable from "../components/CategoryTable";
 import {
@@ -17,6 +17,7 @@ const Categories = () => {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const categoriesPerPage = 5;
+  const formRef = useRef(null);
 
   const indexOfLastCategory = currentPage * categoriesPerPage;
 
@@ -25,7 +26,7 @@ const Categories = () => {
   const filteredCategories = categories.filter((category) =>
     category.name.toLowerCase().includes(search.toLowerCase()),
   );
-   const totalPages = Math.ceil(filteredCategories.length / categoriesPerPage);
+  const totalPages = Math.ceil(filteredCategories.length / categoriesPerPage);
   const currentCategories = filteredCategories.slice(
     indexOfFirstCategory,
     indexOfLastCategory,
@@ -45,6 +46,10 @@ const Categories = () => {
   };
 
   const handleAddCategory = async () => {
+    if (!categoryName) {
+      setMessage("Please fill in Category Name");
+      return;
+    }
     try {
       const category = {
         name: categoryName,
@@ -62,8 +67,12 @@ const Categories = () => {
   const handleEdit = (category) => {
     setEditId(category.id);
     setCategoryName(category.name);
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
   const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this product?")) {
+      return;
+    }
     try {
       const data = await deleteCategory(id);
       console.log(data);
@@ -95,15 +104,16 @@ const Categories = () => {
     <div className="page">
       <div className="container">
         <h1 className="title">Category Manager</h1>
-
-        <CategoryForm
-          categoryName={categoryName}
-          setCategoryName={setCategoryName}
-          handleAddCategory={handleAddCategory}
-          handleUpdateCategory={handleUpdateCategory}
-          editId={editId}
-          message={message}
-        />
+        <div ref={formRef}>
+          <CategoryForm
+            categoryName={categoryName}
+            setCategoryName={setCategoryName}
+            handleAddCategory={handleAddCategory}
+            handleUpdateCategory={handleUpdateCategory}
+            editId={editId}
+            message={message}
+          />
+        </div>
 
         <label className="label">Search</label>
         <br />

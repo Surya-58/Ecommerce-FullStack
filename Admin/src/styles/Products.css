@@ -40,7 +40,7 @@
   background: #FFFFFF;
   color: #1C2127;
   outline: none;
-  width: 260px;
+  width: 100%;
   margin-top: 6px;
 }
 
@@ -159,4 +159,19 @@
   background-color: #E8633C;
   color: white;
   font-weight: bold;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px 24px;
+  margin-top: 10px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group-full {
+  grid-column: 1 / -1;
 }

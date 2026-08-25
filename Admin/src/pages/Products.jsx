@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../styles/Products.css";
 import ProductForm from "../components/ProductForm";
 import ProductTable from "../components/ProductTable";
@@ -22,10 +22,12 @@ const Products = () => {
   const [sortOrder, setSortOrder] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const productPerPage = 5;
-  const [image, setImage] = useState("")
-  const [category, setCategory] = useState("")
-  const [stock, setStock] = useState("")
-  const [feautured, setFeatured] = useState(false)
+  const [image, setImage] = useState("");
+  const [category, setCategory] = useState("");
+  const [stock, setStock] = useState("");
+  const [feautured, setFeatured] = useState(false);
+
+  const formRef = useRef(null);
 
   const filteredProducts = products.filter((product) => {
     const matchSearch = product.name
@@ -57,6 +59,9 @@ const Products = () => {
   const totalPages = Math.ceil(sortedProducts.length / productPerPage);
 
   const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this product?")) {
+      return;
+    }
     try {
       const data = await deleteProduct(id);
       console.log(data);
@@ -92,10 +97,10 @@ const Products = () => {
       setUnit("");
       setPrice("");
       setEditId(null);
-      setImage("")
-      setCategory("")
-      setStock("")
-      setFeatured(false)
+      setImage("");
+      setCategory("");
+      setStock("");
+      setFeatured(false);
     } catch (error) {
       console.log(error);
     }
@@ -109,8 +114,11 @@ const Products = () => {
     setPrice(product.price);
     setImage(product.image);
     setCategory(product.category);
-    setStock(product.stock)
-    setFeatured(product.feautured)
+    setStock(product.stock);
+    setFeatured(product.feautured);
+
+    // scroll the form into view
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const handleGetProducts = async () => {
@@ -124,6 +132,10 @@ const Products = () => {
   };
 
   const handleAddProduct = async () => {
+    if (!name || !category || !price) {
+      setMessage("Please fill in Product Name, Category and Price");
+      return;
+    }
     try {
       const product = {
         name,
@@ -145,10 +157,10 @@ const Products = () => {
       setQuantity("");
       setUnit("");
       setPrice("");
-      setImage("")
-      setCategory("")
-      setStock("")
-      setFeatured(false)
+      setImage("");
+      setCategory("");
+      setStock("");
+      setFeatured(false);
     } catch (error) {
       console.log(error);
     }
@@ -163,7 +175,7 @@ const Products = () => {
     <div className="page">
       <div className="container">
         <h1 className="title">Product Manager</h1>
-
+        <div ref={formRef}>
         <ProductForm
           name={name}
           setName={setName}
@@ -186,8 +198,8 @@ const Products = () => {
           setStock={setStock}
           feautured={feautured}
           setFeatured={setFeatured}
-
         />
+        </div>
         <label className="label">Search Product</label>
         <br />
 

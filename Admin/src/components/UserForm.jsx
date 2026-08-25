@@ -17,55 +17,57 @@ const UserForm = (
     }
 ) => {
   return (
-    <div>
-        <label className='label'>Name</label>
-        <br/>
-        <input
-        className='input'
-        type='text'
-        placeholder='Enter name'
-        value={name}
-        onChange={(e)=>setName(e.target.value)} 
-        />
-        <br/>
+    <div className="form-grid">
 
-        <label className='label'>Email</label>
-        <br/>
-        <input 
-        className='input'
-        type='text'
-        placeholder='Enter email'
-        value={email}
-        onChange={(e)=>setEmail(e.target.value)} />
-        <br/>
+        <div className="form-group">
+          <label className='label'>Name</label>
+          <input
+          className='input'
+          type='text'
+          placeholder='Enter name'
+          value={name}
+          onChange={(e)=>setName(e.target.value)} 
+          />
+        </div>
 
-        <label className='label'>Phone</label>
-        <br/>
-        <input 
-        className='input'
-        type='text'
-        placeholder='Enter phone'
-        value={phone}
-        onChange={(e)=>setPhone(e.target.value)} />
-        <br/>
+        <div className="form-group">
+          <label className='label'>Email</label>
+          <input 
+          className='input'
+          type='text'
+          placeholder='Enter email'
+          value={email}
+          onChange={(e)=>setEmail(e.target.value)} />
+        </div>
 
+        <div className="form-group">
+          <label className='label'>Phone</label>
+          <input 
+          className='input'
+          type='text'
+          placeholder='Enter phone'
+          value={phone}
+          onChange={(e)=>setPhone(e.target.value)} />
+        </div>
 
-        <label className='label'>Role</label>
-        <br/>
-        <select 
-        className='input'
-        value={role}
-        onChange={(e)=>setRole(e.target.value)} >
-            <option value="Customer">Customer</option>
-            <option value="Admin">Admin</option>
-            <option value="Vendor">Vendor</option>
-        </select>
-        <br/>
+        <div className="form-group">
+          <label className='label'>Role</label>
+          <select 
+          className='input'
+          value={role}
+          onChange={(e)=>setRole(e.target.value)} >
+              <option value="Customer">Customer</option>
+              <option value="Admin">Admin</option>
+              <option value="Vendor">Vendor</option>
+          </select>
+        </div>
 
-        <button className='btn-primary' onClick={editId ? handleUpdateUser : handleAddUser }>
-            {editId ? "Update User" : "Add User"}
-        </button>
-        <p>{message}</p>
+        <div className="form-group-full">
+          <button className='btn-primary' onClick={editId ? handleUpdateUser : handleAddUser }>
+              {editId ? "Update User" : "Add User"}
+          </button>
+          <p className="message">{message}</p>
+        </div>
     
     </div>
   )

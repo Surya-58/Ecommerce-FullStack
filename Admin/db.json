@@ -45,17 +45,6 @@
       "featured": true
     },
     {
-      "id": "6",
-      "name": "Red Label Tea",
-      "quantity": 500,
-      "unit": "g",
-      "price": 310,
-      "category": "Beverages",
-      "image": "https://picsum.photos/100?6",
-      "stock": 44,
-      "featured": false
-    },
-    {
       "id": "7",
       "name": "Maggi Noodles",
       "quantity": 70,
@@ -234,8 +223,8 @@
       "name": "Beverages"
     },
     {
-      "id": "3",
-      "name": "Snacks"
+      "name": "Snacks",
+      "id": "3"
     },
     {
       "id": "4",
