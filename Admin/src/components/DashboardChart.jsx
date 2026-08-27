@@ -29,7 +29,14 @@ const DashboardChart = () => {
       },
     ],
   };
-  return <Bar data={data} />;
+  return (
+    <div style={{ height: "320px" }}>
+      <Bar
+        data={data}
+        options={{ maintainAspectRatio: false, responsive: true }}
+      />
+    </div>
+  );
 };
 
 export default DashboardChart;

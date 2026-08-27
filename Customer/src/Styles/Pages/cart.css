@@ -3,12 +3,10 @@
    Depends on: variables.css, global.css, utilities.css, animations.css,
                buttons.css, forms.css
    ========================================================================== */
-
+.cart-page__title { grid-column: 1 / -1; }
 .cart-page { display: grid; grid-template-columns: 1fr 380px; gap: var(--space-8); align-items: start; }
 @media (max-width: 900px) { .cart-page { grid-template-columns: 1fr; } }
-* {
-  align-items: end;
-}
+
 /* ---------------------------------------------------------------------
    Cart item list
    --------------------------------------------------------------------- */

@@ -16,10 +16,7 @@ const ProductDetails = () => {
 
   const handleGetProduct = async () => {
     try {
-      console.log("fetching data");
-
       const data = await getProductById(id);
-      console.log("fetched:", data);
 
       setProduct(data);
     } catch (error) {
@@ -29,17 +26,23 @@ const ProductDetails = () => {
 
   useEffect(() => {
     handleGetProduct();
-  }, []);
+  }, [id]);
 
   const discount = product?.mrp
     ? Math.round(((product.mrp - product.price) / product.mrp) * 100)
     : 0;
 
   const wishlistAdded = product ? isInWishlist(product.id) : false;
+  if (!product) {
+    return (
+      <div className="container">
+        <p>Loading product...</p>
+      </div>
+    );
+}
 
   return (
     <div className="container">
-      <h1>ProductDetails</h1>
 
       {product && (
         <>
@@ -98,10 +101,11 @@ const ProductDetails = () => {
               </div>
               <div className="pdp-info__actions">
                 <button
-                  className="btn btn-primary"
+                  className="btn btn--primary"
                   onClick={() => addToCart(product, quantity)}
+                  disabled={product.stock <= 0}
                 >
-                  Add to Cart
+                  {product.stock <= 0 ? "Out of Stock" : "Add to Cart"}
                 </button>
                 <button
                   className="btn btn--secondary"

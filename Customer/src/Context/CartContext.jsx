@@ -3,9 +3,14 @@ import React, { useState, createContext, useEffect } from "react";
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
-  console.log("CartProvider Rendered");
-  
+  const [cart, setCart] = useState(() => {
+    const storedCart = localStorage.getItem("cart");
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   const increaseQuantity = (id) => {
     const updatedCart = cart.map((item) => {
@@ -69,9 +74,6 @@ const CartProvider = ({ children }) => {
       ]);
     }
   };
-  useEffect(()=>{
-    console.log("cart updated:",cart);
-  },[cart])
 
   return (
     <CartContext.Provider

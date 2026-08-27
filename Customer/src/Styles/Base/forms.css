@@ -11,11 +11,16 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  width: 100%;
+  text-align: left;
 }
 .field__label {
   font-size: var(--text-body-sm);
   font-weight: var(--weight-medium);
   color: var(--color-text-primary);
+  align-self: flex-start;
+  width: 100%;
+  text-align: left;
 }
 .field__hint { font-size: var(--text-caption); color: var(--color-text-muted); }
 .field__error { font-size: var(--text-caption); color: var(--color-danger); display: none; }

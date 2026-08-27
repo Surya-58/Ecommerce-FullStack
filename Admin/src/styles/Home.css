@@ -3,6 +3,7 @@
     grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
     gap:20px;
     margin-top:30px;
+    align-items:start;
 }
 
 .dashboard-card{
@@ -26,4 +27,7 @@
 .dashboard-card h1{
     color:#E8633C;
     font-size:36px;
+}
+.dashboard-full-width {
+    grid-column: 1 / -1;
 }

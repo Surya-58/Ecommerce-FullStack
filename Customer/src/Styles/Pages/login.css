@@ -48,7 +48,7 @@
 
 .auth-card__form { display: flex; flex-direction: column; gap: var(--space-5); }
 
-.auth-card__row { display: flex; align-items: center; justify-content: space-between; font-size: var(--text-body-sm); }
+.auth-card__row { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: var(--space-4); font-size: var(--text-body-sm); }
 .auth-card__forgot { color: var(--color-primary-600); font-weight: var(--weight-medium); }
 .auth-card__forgot:hover { text-decoration: underline; }
 
@@ -63,3 +63,9 @@
 .auth-card__footer { text-align: center; margin-top: var(--space-6); font-size: var(--text-body-sm); color: var(--color-text-secondary); }
 .auth-card__footer a { color: var(--color-primary-600); font-weight: var(--weight-semibold); }
 .auth-card__footer a:hover { text-decoration: underline; }
+
+.field-error {
+  color: #d92d20;
+  font-size: 13px;
+  margin : 4px 0 12px;
+}

@@ -83,14 +83,8 @@ const Navbar = () => {
           >
             Cart
             {cart.length > 0 && (
-              <span className="navbar__badge">
-                {cart.length}
-              </span>
+              <span className="navbar__badge">{cart.length}</span>
             )}
-          </NavLink>
-
-          <NavLink to="/login" className="navbar__category-link">
-            Login
           </NavLink>
         </div>
 
@@ -115,9 +109,9 @@ const Navbar = () => {
                         My Profile
                       </Link>
 
-                      <button onClick={() => setShowMenu(false)}>
+                      <Link to="/profile" onClick={() => setShowMenu(false)}>
                         My Orders
-                      </button>
+                      </Link>
 
                       <button
                         onClick={() => {

@@ -23,7 +23,6 @@
       "featured": true
     },
     {
-      "id": "4",
       "name": "Tata Salt",
       "quantity": 1,
       "unit": "kg",
@@ -31,7 +30,8 @@
       "category": "Groceries",
       "image": "https://picsum.photos/100?4",
       "stock": 46,
-      "featured": true
+      "feautured": true,
+      "id": "4"
     },
     {
       "id": "5",
@@ -211,6 +211,171 @@
       "category": "Groceries",
       "image": "https://picsum.photos/100?20",
       "id": "rvobdSSUyCs"
+    },
+    {
+      "id": "21",
+      "name": "Fortune Sunflower Oil",
+      "quantity": 1,
+      "unit": "L",
+      "price": 185,
+      "category": "Groceries",
+      "image": "https://picsum.photos/100?21",
+      "stock": 52,
+      "featured": true
+    },
+    {
+      "id": "22",
+      "name": "India Gate Basmati Rice",
+      "quantity": 5,
+      "unit": "kg",
+      "price": 540,
+      "category": "Groceries",
+      "image": "https://picsum.photos/100?22",
+      "stock": 28,
+      "featured": true
+    },
+    {
+      "id": "23",
+      "name": "Toor Dal",
+      "quantity": 1,
+      "unit": "kg",
+      "price": 160,
+      "category": "Groceries",
+      "image": "https://picsum.photos/100?23",
+      "stock": 60,
+      "featured": false
+    },
+    {
+      "id": "24",
+      "name": "Real Mixed Fruit Juice",
+      "quantity": 1,
+      "unit": "L",
+      "price": 110,
+      "category": "Beverages",
+      "image": "https://picsum.photos/100?24",
+      "stock": 40,
+      "featured": false
+    },
+    {
+      "id": "25",
+      "name": "Bournvita",
+      "quantity": 500,
+      "unit": "g",
+      "price": 245,
+      "category": "Beverages",
+      "image": "https://picsum.photos/100?25",
+      "stock": 33,
+      "featured": true
+    },
+    {
+      "id": "26",
+      "name": "Lay's Classic Salted",
+      "quantity": 52,
+      "unit": "g",
+      "price": 20,
+      "category": "Snacks",
+      "image": "https://picsum.photos/100?26",
+      "stock": 75,
+      "featured": false
+    },
+    {
+      "id": "27",
+      "name": "Haldiram's Bhujia",
+      "quantity": 200,
+      "unit": "g",
+      "price": 55,
+      "category": "Snacks",
+      "image": "https://picsum.photos/100?27",
+      "stock": 48,
+      "featured": false
+    },
+    {
+      "id": "28",
+      "name": "Cadbury Dairy Milk",
+      "quantity": 55,
+      "unit": "g",
+      "price": 40,
+      "category": "Snacks",
+      "image": "https://picsum.photos/100?28",
+      "stock": 90,
+      "featured": true
+    },
+    {
+      "id": "29",
+      "name": "Head & Shoulders Shampoo",
+      "quantity": 340,
+      "unit": "ml",
+      "price": 350,
+      "category": "Personal Care",
+      "image": "https://picsum.photos/100?29",
+      "stock": 25,
+      "featured": false
+    },
+    {
+      "id": "30",
+      "name": "Nivea Body Lotion",
+      "quantity": 400,
+      "unit": "ml",
+      "price": 320,
+      "category": "Personal Care",
+      "image": "https://picsum.photos/100?30",
+      "stock": 30,
+      "featured": false
+    },
+    {
+      "id": "31",
+      "name": "Sensodyne Toothpaste",
+      "quantity": 100,
+      "unit": "g",
+      "price": 140,
+      "category": "Personal Care",
+      "image": "https://picsum.photos/100?31",
+      "stock": 35,
+      "featured": false
+    },
+    {
+      "id": "32",
+      "name": "Vim Dishwash Bar",
+      "quantity": 130,
+      "unit": "g",
+      "price": 20,
+      "category": "Household",
+      "image": "https://picsum.photos/100?32",
+      "stock": 80,
+      "featured": false
+    },
+    {
+      "id": "33",
+      "name": "Harpic Toilet Cleaner",
+      "quantity": 1,
+      "unit": "L",
+      "price": 195,
+      "category": "Household",
+      "image": "https://picsum.photos/100?33",
+      "stock": 44,
+      "featured": true
+    },
+    {
+      "id": "34",
+      "name": "Lizol Floor Cleaner",
+      "quantity": 975,
+      "unit": "ml",
+      "price": 210,
+      "category": "Household",
+      "image": "https://picsum.photos/100?34",
+      "stock": 38,
+      "featured": false
+    },
+    {
+      "id": "35",
+      "name": "Good Knight Mosquito Coil",
+      "quantity": 10,
+      "unit": "g",
+      "price": 45,
+      "category": "Household",
+      "image": "https://picsum.photos/100?35",
+      "stock": 55,
+      "featured": false
     }
   ],
   "categories": [
@@ -294,6 +459,54 @@
       "password": "12345",
       "role": "Customer",
       "id": "p8XV6orWlR8"
+    },
+    {
+      "name": "John",
+      "email": "john123@gmail.com",
+      "phone": "123454",
+      "password": "123123",
+      "role": "Customer",
+      "id": "jQvVyh9KhVk"
+    },
+    {
+      "id": "9",
+      "name": "Divya",
+      "email": "divya.r@gmail.com",
+      "phone": "9845123670",
+      "password": "divya123",
+      "role": "Customer"
+    },
+    {
+      "id": "10",
+      "name": "Mohan",
+      "email": "mohan.k@gmail.com",
+      "phone": "9871234560",
+      "password": "mohan123",
+      "role": "Customer"
+    },
+    {
+      "id": "11",
+      "name": "Lakshmi",
+      "email": "lakshmi.n@gmail.com",
+      "phone": "9900112233",
+      "password": "lakshmi123",
+      "role": "Customer"
+    },
+    {
+      "id": "12",
+      "name": "Arjun",
+      "email": "arjun.v@gmail.com",
+      "phone": "9786543210",
+      "password": "arjun123",
+      "role": "Vendor"
+    },
+    {
+      "id": "13",
+      "name": "Meena",
+      "email": "meena.s@gmail.com",
+      "phone": "9345671289",
+      "password": "meena123",
+      "role": "Customer"
     }
   ],
   "orders": [
@@ -386,6 +599,69 @@
       "price": 115,
       "total": 345,
       "status": "Pending"
+    },
+    {
+      "id": "11",
+      "customer": "Divya",
+      "product": "Fortune Sunflower Oil",
+      "quantity": 2,
+      "price": 185,
+      "total": 370,
+      "status": "Pending"
+    },
+    {
+      "id": "12",
+      "customer": "Mohan",
+      "product": "India Gate Basmati Rice",
+      "quantity": 1,
+      "price": 540,
+      "total": 540,
+      "status": "Processing"
+    },
+    {
+      "id": "13",
+      "customer": "Lakshmi",
+      "product": "Bournvita",
+      "quantity": 2,
+      "price": 245,
+      "total": 490,
+      "status": "Shipped"
+    },
+    {
+      "id": "14",
+      "customer": "Arjun",
+      "product": "Haldiram's Bhujia",
+      "quantity": 3,
+      "price": 55,
+      "total": 165,
+      "status": "Delivered"
+    },
+    {
+      "id": "15",
+      "customer": "Meena",
+      "product": "Harpic Toilet Cleaner",
+      "quantity": 1,
+      "price": 195,
+      "total": 195,
+      "status": "Pending"
+    },
+    {
+      "id": "16",
+      "customer": "Surya",
+      "product": "Cadbury Dairy Milk",
+      "quantity": 4,
+      "price": 40,
+      "total": 160,
+      "status": "Delivered"
+    },
+    {
+      "id": "17",
+      "customer": "Rahul",
+      "product": "Nivea Body Lotion",
+      "quantity": 1,
+      "price": 320,
+      "total": 320,
+      "status": "Cancelled"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
