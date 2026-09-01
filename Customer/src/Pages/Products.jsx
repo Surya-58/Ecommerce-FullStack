@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getProducts } from "../Services/api";
+import { getProducts } from "../Services/productApi";
 import ProductGrid from "../Components/ProductGrid";
 import searchIcon from "../Assets/icons/icon-search.png";
 import xIcon from "../Assets/icons/icon-x.png";
@@ -39,14 +39,14 @@ const Products = () => {
   if(sortBy === "nameAZ"){
     sortedProducts.sort((a,b) => a.name.localeCompare(b.name))
   }
-  if(sortBy === "priceLow"){
+  if(sortBy === "nameZA"){
     sortedProducts.sort((a,b) => b.name.localeCompare(a.name))
   }
 
   const handleGetProducts = async () => {
     try {
       const data = await getProducts();
-      setProducts(data);
+      setProducts(data.products);
     } catch (error) {
       console.log(error);
     }
