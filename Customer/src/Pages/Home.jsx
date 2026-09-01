@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CategorySection from "../Components/CategorySection";
-import { getProducts } from "../Services/api";
+import { getProducts } from "../Services/productApi";
 import ProductGrid from "../Components/ProductGrid";
 import "../Styles/Pages/home.css";
 import WhyChooseUs from "../Components/WhyChooseUs";
@@ -12,7 +12,9 @@ const Home = () => {
   const handleGetProducts = async () => {
     try {
       const data = await getProducts();
-      setProducts(data);
+      console.log("PRODUCT API RESPONSE:", data);
+console.log("PRODUCTS:", data.products);
+      setProducts(data.products);
     } catch (error) {
       console.log(error);
     }
