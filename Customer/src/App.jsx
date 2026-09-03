@@ -11,6 +11,8 @@ import Products from "./Pages/Products";
 import Profile from "./Pages/Profile";
 import Register from "./Pages/Register";
 import Wishlist from "./Pages/Wishlist";
+import Orders from "./Pages/Orders";
+import Checkout from "./Pages/Checkout";
 
 const App = () => {
   return (
@@ -24,6 +26,8 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />

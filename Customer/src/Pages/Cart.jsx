@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { CartContext } from "../Context/CartContext";
 import "../Styles/Pages/cart.css";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const {
@@ -9,6 +10,8 @@ const Cart = () => {
     decreaseQuantity,
     removeFromCart,
   } = useContext(CartContext);
+
+  const navigate = useNavigate();
 
   console.log(cart);
 
@@ -158,7 +161,9 @@ const Cart = () => {
           </span>
         </div>
 
-        <button className="btn btn--primary">
+        <button 
+        className="btn btn--primary"
+        onClick={() => navigate("/checkout")}>
           Proceed to Checkout
         </button>
       </div>
