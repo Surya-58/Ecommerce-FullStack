@@ -507,6 +507,14 @@
       "phone": "9345671289",
       "password": "meena123",
       "role": "Customer"
+    },
+    {
+      "name": "Cena",
+      "email": "cena@gmail.com",
+      "phone": "1234456789",
+      "password": "123123",
+      "role": "Customer",
+      "id": "IMtm4IP-al8"
     }
   ],
   "orders": [

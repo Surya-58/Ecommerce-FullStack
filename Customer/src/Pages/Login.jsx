@@ -1,5 +1,5 @@
 import React, { use, useState, useContext } from "react";
-import { getUsers } from "../Services/userApi";
+import { loginUser } from "../Services/userApi";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 import "../Styles/Pages/login.css";
@@ -14,25 +14,34 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const handleLogin = async () => {
-    setError("");
-    if (!email || !password) {
-      alert("Please fill all fields");
-      return;
-    }
+  setError("");
 
-    const users = await getUsers();
+  if (!email || !password) {
+    setError("Please fill all fields");
+    return;
+  }
 
-    const user = users.find(
-      (item) => item.email === email && item.password === password,
+  try {
+    const data = await loginUser(email, password);
+
+    console.log("Login Response:", data);
+
+    // Save JWT token
+    localStorage.setItem("token", data.token);
+
+    // Save user
+    setCurrentUser(data.user);
+    localStorage.setItem(
+      "currentUser",
+      JSON.stringify(data.user)
     );
-    if (!user) {
-      alert("Invalid Email or Password");
-      return;
-    }
-    setCurrentUser(user);
-    localStorage.setItem("currentUser", JSON.stringify(user));
+
     navigate("/");
-  };
+  } catch (error) {
+    console.log("Login Error:", error);
+    setError(error.message);
+  }
+};
 
   return (
     <div className="auth-page">

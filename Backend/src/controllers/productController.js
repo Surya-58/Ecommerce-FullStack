@@ -142,12 +142,12 @@ export const updateProduct = async (req, res) => {
       }
     }
 
-    const updatedProduct = await Product.findByIdAndUpdate(
+    const updateProduct = await Product.findByIdAndUpdate(
       req.params.id,
       {
         ...req.body,
         image: imageUrl,
-        imagePubliicId: imagePublicId,
+        imagePublicId: imagePublicId,
       },
       { new: true, runValidators: true },
     );
