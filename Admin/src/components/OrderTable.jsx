@@ -1,50 +1,103 @@
-import React from 'react'
+import React from "react";
 
-const OrderTable = ({
-    orders,
-    handleEdit,
-    handleDelete,
-}) => {
-
+const OrderTable = ({ orders, handleStatusChange }) => {
   return (
-    <table className='table'>
-        <thead>
+    <div>
+      {orders.length === 0 ? (
+        <p>No orders found.</p>
+      ) : (
+        <table>
+          <thead>
             <tr>
-                <th className="th">Customer</th>
-                <th className="th">Product</th>
-                <th className="th">Quantity</th>
-                <th className="th">Price</th>
-                <th className="th">Total</th>
-                <th className="th">Status</th>
-                <th className="th">Actions</th>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Products</th>
+              <th>Total</th>
+              <th>Payment</th>
+              <th>Payment Status</th>
+              <th>Order Status</th>
+              <th>Action</th>
             </tr>
-        </thead>
-        <tbody>
-           {orders.map((order)=> (
-            <tr key={order.id} >
-                <td className="td">{order.customer}</td>
-                <td className="td">{order.product}</td>
-                <td className="td">{order.quantity}</td>
-                <td className="td">{order.price}</td>
-                <td className="td">{order.total}</td>
-                <td className="td">{order.status}</td>
-                <td className="td">
-                    <button 
-                    className="btn-small"
-                    onClick={()=>handleEdit(order)}>
-                    Edit
-                    </button>
-                    <button className="btn-small-danger"
-                    onClick={()=>handleDelete(order.id)}>
-                        Delete
-                    </button>
-                </td>
-                </tr>
-           ))}
-            
-        </tbody>
-    </table>
-  )
-}
+          </thead>
 
-export default OrderTable
+          <tbody>
+            {orders.map((order) => (
+              <tr key={order._id}>
+                <td>
+                  #{order._id}
+                </td>
+
+                <td>
+                  <p>{order.address?.name}</p>
+                  <small>{order.address?.phone}</small>
+                </td>
+
+                <td>
+                  {order.items?.map((item) => (
+                    <div key={item._id}>
+                      {item.name} × {item.quantity}
+                    </div>
+                  ))}
+                </td>
+
+                <td>
+                  ₹{order.amount}
+                </td>
+
+                <td>
+                  {order.paymentMethod}
+                </td>
+
+                <td>
+                  {order.paymentStatus}
+                </td>
+
+                <td>
+                  {order.orderStatus}
+                </td>
+
+                <td>
+                  <select
+                    value={order.orderStatus}
+                    onChange={(e) =>
+                      handleStatusChange(
+                        order._id,
+                        e.target.value
+                      )
+                    }
+                  >
+                    <option value="Order Placed">
+                      Order Placed
+                    </option>
+
+                    <option value="Processing">
+                      Processing
+                    </option>
+
+                    <option value="Shipped">
+                      Shipped
+                    </option>
+
+                    <option value="Out for Delivery">
+                      Out for Delivery
+                    </option>
+
+                    <option value="Delivered">
+                      Delivered
+                    </option>
+
+                    <option value="Cancelled">
+                      Cancelled
+                    </option>
+                  </select>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+};
+
+export default OrderTable;

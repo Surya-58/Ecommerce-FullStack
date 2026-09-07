@@ -26,7 +26,7 @@ const ProductTable = (
           <tbody className="table-body">
             {
               products.map((product)=>(
-                <tr key={product.id}>
+                <tr key={product._id}>
                   <td className="td">
                     <img 
                       src={product.image} 
@@ -49,7 +49,7 @@ const ProductTable = (
                     <button className="btn-small" onClick={()=>handleEdit(product)} >Edit</button>
                   </td>
                   <td className="td">
-                    <button className="btn-small-danger" onClick={()=>handleDelete(product.id)} >Delete</button>
+                    <button className="btn-small-danger" onClick={()=>handleDelete(product._id)} >Delete</button>
                   </td>
 
                 </tr>

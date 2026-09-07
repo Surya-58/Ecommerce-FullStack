@@ -2,12 +2,7 @@ import React from "react";
 import DashboardCard from "../components/DashboardCard";
 import "../styles/Home.css";
 import { useState, useEffect } from "react";
-import {
-  getCategories,
-  getOrders,
-  getProducts,
-  getUsers,
-} from "../services/api";
+import { getOrders, getProducts, getUsers } from "../services/api";
 import RecentOrders from "../components/RecentOrders";
 import DashboardChart from "../components/DashboardChart";
 
@@ -15,29 +10,27 @@ const Home = () => {
   const [products, setProducts] = useState([]);
   const [users, setUsers] = useState([]);
   const [orders, setOrders] = useState([]);
-  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const loadDashboard = async () => {
-      const [productsData, usersData, ordersData, categoriesData] =
-        await Promise.all([
-          getProducts(),
-          getUsers(),
-          getOrders(),
-          getCategories(),
-        ]);
+      const [productsData, usersData, ordersData] = await Promise.all([
+        getProducts(),
+        getUsers(),
+        getOrders(),
+      ]);
+
       setProducts(productsData);
       setUsers(usersData);
       setOrders(ordersData);
-      setCategories(categoriesData);
     };
     loadDashboard();
   }, []);
 
   const revenue = orders.reduce((acc, order) => {
-    return acc + order.total;
+    return acc + order.amount;
   }, 0);
 
+  const categories = [ ...new Set(products.map((product) => product.category))];
   return (
     <div>
       <h1>Dashboard</h1>
