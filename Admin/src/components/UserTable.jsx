@@ -21,7 +21,7 @@ const UserTable = (
 
       <tbody className="table-body">
         {users.map((user) => (
-          <tr key={user.id}>
+          <tr key={user._id}>
           <td className="td">{user.name}</td>
           <td className="td">{user.email} </td>
           <td className="td">{user.phone}</td>
@@ -31,7 +31,7 @@ const UserTable = (
             <button className='btn-small' onClick={()=>handleEdit(user)} >
               Edit
             </button>
-            <button className="btn-small-danger" onClick={()=>handleDelete(user.id)}>
+            <button className="btn-small-danger" onClick={()=>handleDelete(user._id)}>
               Delete
             </button>
           </td>
