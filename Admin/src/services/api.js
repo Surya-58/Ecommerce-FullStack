@@ -1,18 +1,29 @@
 const PRODUCT_URL = "http://localhost:3000/products";
 const CATEGORY_URL = "http://localhost:3000/categories";
 const USER_URL = "http://localhost:3000/users";
-const ORDER_URL = "http://localhost:3000/orders"
+const ORDER_URL = "http://localhost:5000/api/order"
 
-export const getOrders = async() =>{
+export const getOrders = async () => {
   try {
-    const response = await fetch(ORDER_URL)
-    return await response.json()
-    
+    const response = await fetch(`${ORDER_URL}/all`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "Failed to fetch orders");
+    }
+
+    return data.orders;
   } catch (error) {
-    console.log(error);
-    
+    console.log("Get Orders Error:", error);
+    throw error;
   }
-}
+};
 export const addOrder = async(order) => {
   try {
     const response = await fetch(ORDER_URL,{
@@ -29,21 +40,31 @@ export const addOrder = async(order) => {
     
   }
 }
-export const updateOrder = async(id,order) => {
+export const updateOrder = async (id, order) => {
   try {
-    const response = await fetch(`${ORDER_URL}/${id}`,{
-      method : "PUT",
-      headers : {
-        "Content-Type" : "application/json"
+    const response = await fetch(`${ORDER_URL}/${id}/status`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body : JSON.stringify(order)
-    })
-    return await response.json()
-    
+      body: JSON.stringify({
+        orderStatus: order.orderStatus,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "Failed to update order");
+    }
+
+    return data;
   } catch (error) {
-    console.log(error);   
+    console.log("Update Order Error:", error);
+    throw error;
   }
-}
+};
 export const deleteOrder = async(id) =>{
   try {
     const response = await fetch(`${ORDER_URL}/${id}`,{
