@@ -1,0 +1,148 @@
+.order-details-page {
+  padding-top: 40px;
+  padding-bottom: 60px;
+}
+
+.order-details-back {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 15px;
+  margin-bottom: 25px;
+}
+
+.order-details-title {
+  font-size: 32px;
+  margin-bottom: 30px;
+}
+
+.order-details-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 25px;
+}
+
+.order-details-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.order-details-card h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.order-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.order-info p {
+  margin: 5px 0;
+}
+
+.order-info__label {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.order-info__value {
+  font-weight: 600;
+}
+
+.order-status {
+  display: inline-block;
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.order-product {
+  display: flex;
+  gap: 18px;
+  padding: 18px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.order-product:last-child {
+  border-bottom: none;
+}
+
+.order-product__image {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.order-product__info {
+  flex: 1;
+}
+
+.order-product__name {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.order-product__meta {
+  color: #6b7280;
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.order-product__price {
+  font-weight: 600;
+}
+
+.delivery-address p {
+  margin: 6px 0;
+  color: #4b5563;
+}
+
+.delivery-address__name {
+  font-weight: 600;
+  color: #111827 !important;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 14px 0;
+}
+
+.price-row--total {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 18px;
+  margin-top: 20px;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.payment-info p {
+  margin: 8px 0;
+}
+
+@media (max-width: 768px) {
+  .order-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .order-info {
+    grid-template-columns: 1fr;
+  }
+
+  .order-details-title {
+    font-size: 26px;
+  }
+
+  .order-product__image {
+    width: 70px;
+    height: 70px;
+  }
+}

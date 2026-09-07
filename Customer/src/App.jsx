@@ -13,6 +13,7 @@ import Register from "./Pages/Register";
 import Wishlist from "./Pages/Wishlist";
 import Orders from "./Pages/Orders";
 import Checkout from "./Pages/Checkout";
+import OrderDetails from "./Pages/OrderDetails";
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/orders/:orderId" element={<OrderDetails />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />
