@@ -11,6 +11,7 @@ import {
 
 const Products = () => {
   const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState("");
   const [unit, setUnit] = useState("");
   const [price, setPrice] = useState("");
@@ -75,40 +76,47 @@ const Products = () => {
   };
 
   const handleUpdate = async () => {
-    try {
-      const product = {
-        name,
-        quantity,
-        unit,
-        price,
-        category,
-        image,
-        stock,
-        feautured,
-      };
-      const data = await updateProduct(editId, product);
-      console.log(data);
+  try {
+    const formData = new FormData();
 
-      setMessage("product updated successfully ");
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("category", category);
+    formData.append("stock", stock);
 
-      handleGetProducts();
-      setName("");
-      setQuantity("");
-      setUnit("");
-      setPrice("");
-      setEditId(null);
-      setImage("");
-      setCategory("");
-      setStock("");
-      setFeatured(false);
-    } catch (error) {
-      console.log(error);
+    // Only send image if a new image was selected
+    if (image instanceof File) {
+      formData.append("image", image);
     }
-  };
 
+    const data = await updateProduct(editId, formData);
+
+    console.log(data);
+
+    setMessage("Product updated successfully");
+
+    await handleGetProducts();
+
+    setName("");
+    setDescription("");
+    setQuantity("");
+    setUnit("");
+    setPrice("");
+    setEditId(null);
+    setImage("");
+    setCategory("");
+    setStock("");
+    setFeatured(false);
+  } catch (error) {
+    console.log(error);
+    setMessage(error.message);
+  }
+};
   const handleEdit = (product) => {
-    setEditId(product.id);
+    setEditId(product._id);
     setName(product.name);
+    setDescription(product.description);
     setQuantity(product.quantity);
     setUnit(product.unit);
     setPrice(product.price);
@@ -132,28 +140,32 @@ const Products = () => {
   };
 
   const handleAddProduct = async () => {
-    if (!name || !category || !price) {
-      setMessage("Please fill in Product Name, Category and Price");
+    if (!name || !description || !category || !price) {
+      setMessage(
+        "Please fill in Product Name, Description, Category and Price",
+      );
       return;
     }
     try {
-      const product = {
-        name,
-        quantity,
-        unit,
-        price,
-        category,
-        image,
-        stock,
-        feautured,
-      };
+      const formData = new FormData();
 
-      const data = await addProduct(product);
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("category", category);
+      formData.append("stock", stock);
+
+      if (image) {
+        formData.append("image", image);
+      }
+
+      const data = await addProduct(formData);
       console.log(data);
 
       setMessage("Product Added Successfully");
       handleGetProducts();
       setName("");
+      setDescription("");
       setQuantity("");
       setUnit("");
       setPrice("");
@@ -176,29 +188,31 @@ const Products = () => {
       <div className="container">
         <h1 className="title">Product Manager</h1>
         <div ref={formRef}>
-        <ProductForm
-          name={name}
-          setName={setName}
-          quantity={quantity}
-          setQuantity={setQuantity}
-          unit={unit}
-          setUnit={setUnit}
-          price={price}
-          setPrice={setPrice}
-          message={message}
-          editId={editId}
-          handleAddProduct={handleAddProduct}
-          handleUpdate={handleUpdate}
-          handleGetProducts={handleGetProducts}
-          image={image}
-          setImage={setImage}
-          category={category}
-          setCategory={setCategory}
-          stock={stock}
-          setStock={setStock}
-          feautured={feautured}
-          setFeatured={setFeatured}
-        />
+          <ProductForm
+            name={name}
+            setName={setName}
+            description={description}
+            setDescription={setDescription}
+            quantity={quantity}
+            setQuantity={setQuantity}
+            unit={unit}
+            setUnit={setUnit}
+            price={price}
+            setPrice={setPrice}
+            message={message}
+            editId={editId}
+            handleAddProduct={handleAddProduct}
+            handleUpdate={handleUpdate}
+            handleGetProducts={handleGetProducts}
+            image={image}
+            setImage={setImage}
+            category={category}
+            setCategory={setCategory}
+            stock={stock}
+            setStock={setStock}
+            feautured={feautured}
+            setFeatured={setFeatured}
+          />
         </div>
         <label className="label">Search Product</label>
         <br />

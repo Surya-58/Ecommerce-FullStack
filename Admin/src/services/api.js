@@ -1,4 +1,4 @@
-const PRODUCT_URL = "http://localhost:5000/api/product/list";
+const PRODUCT_URL = "http://localhost:5000/api/product";
 const CATEGORY_URL = "http://localhost:5000/api/category";
 const USER_URL = "http://localhost:3000/users";
 const ORDER_URL = "http://localhost:5000/api/order";
@@ -224,7 +224,7 @@ export const deleteCategory = async (id) => {
 
 export const getProducts = async () => {
   try {
-    const response = await fetch(PRODUCT_URL);
+    const response = await fetch(`${PRODUCT_URL}/list`);
 
     const data = await response.json();
 
@@ -241,16 +241,21 @@ export const getProducts = async () => {
 
 export const addProduct = async (product) => {
   try {
-    const response = await fetch(PRODUCT_URL, {
+    const response = await fetch(`${PRODUCT_URL}/add`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(product),
+      body: product,
     });
-    return await response.json();
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "Failed to add product");
+    }
+
+    return data;
   } catch (error) {
-    console.log(error);
+    console.log("Add Product Error:", error);
+    throw error;
   }
 };
 
@@ -258,23 +263,37 @@ export const updateProduct = async (id, product) => {
   try {
     const response = await fetch(`${PRODUCT_URL}/${id}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(product),
+      body: product,
     });
-    return await response.json();
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "Failed to update product");
+    }
+
+    return data;
   } catch (error) {
-    console.log(error);
+    console.log("Update Product Error:", error);
+    throw error;
   }
 };
+
 export const deleteProduct = async (id) => {
   try {
     const response = await fetch(`${PRODUCT_URL}/${id}`, {
       method: "DELETE",
     });
-    return await response.json();
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "Failed to delete product");
+    }
+
+    return data;
   } catch (error) {
-    console.log(error);
+    console.log("Delete Product Error:", error);
+    throw error;
   }
 };
