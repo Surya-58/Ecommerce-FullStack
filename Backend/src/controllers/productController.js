@@ -173,17 +173,31 @@ export const updateProduct = async (req, res) => {
 
 export const removeProduct = async (req, res) => {
   try {
-    const product = await Product.findByIdAndDelete(req.params.id);
+    const product = await Product.findById(req.params.id);
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: "Product Not Found",
+      });
+    }
+
+    // Delete image from Cloudinary
+    if (product.imagePublicId) {
+      await deleteFromCloudinary(product.imagePublicId);
+    }
+
+    // Delete product from MongoDB
+    await Product.findByIdAndDelete(req.params.id);
 
     res.json({
       success: true,
       message: "Product Deleted Successfully",
-      product,
     });
   } catch (error) {
     console.log(error);
 
-    res.json({
+    res.status(500).json({
       success: false,
       message: error.message,
     });
