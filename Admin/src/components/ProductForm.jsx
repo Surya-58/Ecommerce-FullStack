@@ -6,10 +6,7 @@ const ProductForm = ({
   setName,
   description,
   setDescription,
-  quantity,
-  setQuantity,
-  unit,
-  setUnit,
+  categories,
   price,
   setPrice,
   handleAddProduct,
@@ -25,8 +22,6 @@ const ProductForm = ({
   setCategory,
   stock,
   setStock,
-  feautured,
-  setFeatured,
 }) => {
   return (
     <div>
@@ -61,23 +56,13 @@ const ProductForm = ({
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value="">Select Category</option>
-            <option value="Groceries">Groceries</option>
-            <option value="Beverages">Beverages</option>
-            <option value="Snacks">Snacks</option>
-            <option value="Personal">Personal</option>
-            <option value="Household">Household</option>
-          </select>
-        </div>
 
-        <div className="form-group">
-          <label className="label">Quantity</label>
-          <input
-            className="input"
-            type="number"
-            placeholder="Enter Quantity"
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-          />
+            {categories.map((category) => (
+              <option key={category._id} value={category.name}>
+                {category.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="form-group">
@@ -89,21 +74,6 @@ const ProductForm = ({
             value={stock}
             onChange={(e) => setStock(e.target.value)}
           />
-        </div>
-
-        <div className="form-group">
-          <label className="label">Unit</label>
-          <select
-            className="input"
-            value={unit}
-            onChange={(e) => setUnit(e.target.value)}
-          >
-            <option> Select Unit</option>
-            <option>ml</option>
-            <option>L</option>
-            <option>kg</option>
-            <option>g</option>
-          </select>
         </div>
 
         <div className="form-group">
@@ -127,16 +97,6 @@ const ProductForm = ({
           />
         </div>
 
-        <div className="form-group form-group-full">
-          <label className="label">
-            <input
-              type="checkbox"
-              checked={feautured}
-              onChange={(e) => setFeatured(e.target.checked)}
-            />{" "}
-            Feautured Product
-          </label>
-        </div>
       </div>
 
       <button

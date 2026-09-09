@@ -65,7 +65,7 @@ const Categories = () => {
   };
 
   const handleEdit = (category) => {
-    setEditId(category.id);
+    setEditId(category._id);
     setCategoryName(category.name);
     formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };

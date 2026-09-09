@@ -4,6 +4,7 @@ import ProductForm from "../components/ProductForm";
 import ProductTable from "../components/ProductTable";
 import {
   getProducts,
+  getCategories,
   addProduct,
   updateProduct,
   deleteProduct,
@@ -12,33 +13,35 @@ import {
 const Products = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [unit, setUnit] = useState("");
   const [price, setPrice] = useState("");
   const [message, setMessage] = useState("");
   const [products, setProducts] = useState([]);
   const [editId, setEditId] = useState(null);
   const [search, setSearch] = useState("");
-  const [filterUnit, setFilterUnit] = useState("All");
   const [sortOrder, setSortOrder] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const productPerPage = 5;
   const [image, setImage] = useState("");
   const [category, setCategory] = useState("");
   const [stock, setStock] = useState("");
-  const [feautured, setFeatured] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   const formRef = useRef(null);
 
+  const handleGetCategories = async () => {
+    try {
+      const data = await getCategories();
+      setCategories(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const filteredProducts = products.filter((product) => {
-    const matchSearch = product.name
-      .toLowerCase()
-      .includes(search.toLowerCase());
-
-    const matchUnit = filterUnit === "All" || product.unit === filterUnit;
-
-    return matchSearch && matchUnit;
-  });
+  return product.name
+    .toLowerCase()
+    .includes(search.toLowerCase());
+});
 
   const sortedProducts = [...filteredProducts];
   if (sortOrder === "lowToHigh") {
@@ -100,14 +103,11 @@ const Products = () => {
 
     setName("");
     setDescription("");
-    setQuantity("");
-    setUnit("");
     setPrice("");
     setEditId(null);
     setImage("");
     setCategory("");
     setStock("");
-    setFeatured(false);
   } catch (error) {
     console.log(error);
     setMessage(error.message);
@@ -117,13 +117,10 @@ const Products = () => {
     setEditId(product._id);
     setName(product.name);
     setDescription(product.description);
-    setQuantity(product.quantity);
-    setUnit(product.unit);
     setPrice(product.price);
     setImage(product.image);
     setCategory(product.category);
     setStock(product.stock);
-    setFeatured(product.feautured);
 
     // scroll the form into view
     formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -166,13 +163,10 @@ const Products = () => {
       handleGetProducts();
       setName("");
       setDescription("");
-      setQuantity("");
-      setUnit("");
       setPrice("");
       setImage("");
       setCategory("");
       setStock("");
-      setFeatured(false);
     } catch (error) {
       console.log(error);
     }
@@ -180,6 +174,7 @@ const Products = () => {
 
   useEffect(() => {
     handleGetProducts();
+    handleGetCategories();
   }, []);
   console.log(products);
 
@@ -193,10 +188,6 @@ const Products = () => {
             setName={setName}
             description={description}
             setDescription={setDescription}
-            quantity={quantity}
-            setQuantity={setQuantity}
-            unit={unit}
-            setUnit={setUnit}
             price={price}
             setPrice={setPrice}
             message={message}
@@ -210,8 +201,7 @@ const Products = () => {
             setCategory={setCategory}
             stock={stock}
             setStock={setStock}
-            feautured={feautured}
-            setFeatured={setFeatured}
+            categories={categories}
           />
         </div>
         <label className="label">Search Product</label>
@@ -224,22 +214,6 @@ const Products = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <br />
-
-        <label className="label">Filter by Unit</label>
-        <br />
-
-        <select
-          className="input"
-          value={filterUnit}
-          onChange={(e) => setFilterUnit(e.target.value)}
-        >
-          <option value="All">All units</option>
-          <option value="kg">kg</option>
-          <option value="g">g</option>
-          <option value="L">L</option>
-          <option value="ml">ml</option>
-        </select>
         <br />
 
         <label className="label"> Sort by price </label>
