@@ -7,7 +7,7 @@ const Users = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [role, setRole] = useState("Customer");
+  const [role, setRole] = useState("customer");
 
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState("");
@@ -17,12 +17,13 @@ const Users = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 5;
   const formRef = useRef(null);
+  const [password, setPassword] = useState("");
 
   const filteredUsers = users.filter((user) => {
     const matchSearch = user.name.toLowerCase().includes(search.toLowerCase());
 
     const matchRole = filterRole === "All" || user.role === filterRole;
-    return matchSearch & matchRole;
+    return matchSearch && matchRole;
   });
 
   const indexOfLastUser = currentPage * usersPerPage;
@@ -31,8 +32,6 @@ const Users = () => {
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
 
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
-
-  useEffect;
 
   const handleGetUsers = async () => {
     try {
@@ -52,16 +51,19 @@ const Users = () => {
       const user = {
         name,
         email,
+        password,
         phone,
         role,
       };
-      const data = await addUser(user);
+      const token = localStorage.getItem("token");
+      const data = await addUser(user, token);
       console.log(data);
       setMessage("User Added Successfully");
       handleGetUsers();
 
       setName("");
       setEmail("");
+      setPassword("")
       setPhone("");
       setRole("");
     } catch (error) {
@@ -70,7 +72,7 @@ const Users = () => {
   };
 
   const handleEdit = (user) => {
-    setEditId(user.id);
+    setEditId(user._id);
     setName(user.name);
     setEmail(user.email);
     setPhone(user.phone);
@@ -83,19 +85,21 @@ const Users = () => {
       const user = {
         name,
         email,
+        password,
         phone,
         role,
       };
-
-      const data = await updateUser(editId, user);
+      const token = localStorage.getItem("token");
+      const data = await updateUser(editId, user, token);
       console.log(data);
       setMessage("User Updated Successfully");
       handleGetUsers();
       setEditId(null);
       setName("");
       setEmail("");
+      setPassword("")
       setPhone("");
-      setRole("Customer");
+      setRole("customer");
     } catch (error) {
       console.log(error);
     }
@@ -106,7 +110,8 @@ const Users = () => {
       return;
     }
     try {
-      const data = await deleteUser(id);
+      const token = localStorage.getItem("token");
+      const data = await deleteUser(id, token);
       console.log(data);
       setMessage("User Deleted Successfully");
       handleGetUsers();
@@ -116,7 +121,7 @@ const Users = () => {
   };
 
   useEffect(() => {
-    handleGetUsers(1);
+    handleGetUsers();
   }, [search, filterRole]);
 
   return (
@@ -130,6 +135,8 @@ const Users = () => {
             setName={setName}
             email={email}
             setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
             phone={phone}
             setPhone={setPhone}
             role={role}
@@ -150,7 +157,6 @@ const Users = () => {
           <option value="All">All</option>
           <option value="Customer">Customer</option>
           <option value="Admin">Admin</option>
-          <option value="Vendor">Vendor</option>
         </select>
         <br />
 

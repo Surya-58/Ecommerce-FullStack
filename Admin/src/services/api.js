@@ -1,6 +1,6 @@
 const PRODUCT_URL = "http://localhost:5000/api/product";
 const CATEGORY_URL = "http://localhost:5000/api/category";
-const USER_URL = "http://localhost:3000/users";
+const USER_URL = "http://localhost:5000/api/user";
 const ORDER_URL = "http://localhost:5000/api/order";
 
 export const getOrders = async () => {
@@ -95,39 +95,59 @@ export const getUsers = async () => {
     throw error;
   }
 };
-export const addUser = async (user) => {
-  try {
-    const response = await fetch(USER_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
-    return await response.json();
-  } catch (error) {
-    console.log(error);
+export const addUser = async (user, token) => {
+  const response = await fetch(`${USER_URL}/add`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(user),
+  });
+
+  const data = await response.json();
+
+  if (!data.success) {
+    throw new Error(data.message || "Failed to add user");
   }
+
+  return data;
 };
-export const updateUser = async (id, user) => {
-  try {
-    const response = await fetch(`${USER_URL}/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
-    return await response.json();
-  } catch (error) {
-    console.log(error);
+
+export const updateUser = async (id, user, token) => {
+  const response = await fetch(`${USER_URL}/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(user),
+  });
+
+  const data = await response.json();
+
+  if (!data.success) {
+    throw new Error(data.message || "Failed to update user");
   }
+
+  return data;
 };
-export const deleteUser = async (id) => {
+
+export const deleteUser = async (id, token) => {
   const response = await fetch(`${USER_URL}/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
-  return await response.json();
+
+  const data = await response.json();
+
+  if (!data.success) {
+    throw new Error(data.message || "Failed to delete user");
+  }
+
+  return data;
 };
 
 export const getCategories = async () => {

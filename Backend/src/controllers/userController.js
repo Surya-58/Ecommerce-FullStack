@@ -53,10 +53,7 @@ export const loginUser = async (req, res) => {
       });
     }
 
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      user.password
-    );
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
       return res.json({
@@ -73,7 +70,7 @@ export const loginUser = async (req, res) => {
       process.env.JWT_SECRET,
       {
         expiresIn: "7d",
-      }
+      },
     );
 
     res.json({
@@ -137,82 +134,192 @@ export const updateProfile = async (req, res) => {
       },
     ).select("-password");
 
-    if(!user){
+    if (!user) {
       return res.json({
         success: false,
-        message: "User not found"
-      })
+        message: "User not found",
+      });
     }
 
     res.json({
       success: true,
       message: "Profile Updated Successfully",
-      user
-    })
-  } catch (error) {
-    console.log(error);
-
-    res.json({
-      success:false,
-      message: error.message
-    })
-  }
-};
-
-export const changePassword = async(req,res) => {
-  try {
-
-    const {currentPassword, newPassword} = req.body
-
-    const user = await User.findById(req.userId)
-
-    if(!user){
-      return res.json({
-        success: false,
-        message: "User not found"
-      })
-    }
-
-    const isPasswordCorrect = await bcrypt.compare(
-      currentPassword,
-      user.password
-    )
-    
-    if(!isPasswordCorrect){
-      return res.json({
-        success: false,
-        message: "Current password is incorrect"
-      })
-    }
-
-    const hashedPassword = await bcrypt.hash(newPassword, 10)
-
-    user.password = hashedPassword
-
-    await user.save()
-
-    res.json({
-      success: true,
-      message : "Password Changed Successfully"
-    })
-
+      user,
+    });
   } catch (error) {
     console.log(error);
 
     res.json({
       success: false,
-      message : error.message
-    })
-    
+      message: error.message,
+    });
   }
-}
+};
+
+export const changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    const user = await User.findById(req.userId);
+
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const isPasswordCorrect = await bcrypt.compare(
+      currentPassword,
+      user.password,
+    );
+
+    if (!isPasswordCorrect) {
+      return res.json({
+        success: false,
+        message: "Current password is incorrect",
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    user.password = hashedPassword;
+
+    await user.save();
+
+    res.json({
+      success: true,
+      message: "Password Changed Successfully",
+    });
+  } catch (error) {
+    console.log(error);
+
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({}).select("-password").sort({ createdAt: -1 });
+    const users = await User.find({})
+      .select("-password")
+      .sort({ createdAt: -1 });
 
     res.json({
       success: true,
       users,
+    });
+  } catch (error) {
+    console.log(error);
+
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+export const addUser = async (req, res) => {
+  try {
+    const { name, email, password, role } = req.body;
+
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return res.json({
+        success: false,
+        message: "User already exists",
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      role: role || "customer",
+    });
+
+    res.json({
+      success: true,
+      message: "User Added Successfully",
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const updateUser = async (req, res) => {
+  try {
+    const { name, email, password, role } = req.body;
+
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    user.name = name;
+    user.email = email;
+    user.role = role;
+
+    if (password) {
+      user.password = await bcrypt.hash(password, 10);
+    }
+
+    await user.save();
+
+    res.json({
+      success: true,
+      message: "User Updated Successfully",
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    await User.findByIdAndDelete(req.params.id);
+
+    res.json({
+      success: true,
+      message: "User Deleted Successfully",
     });
   } catch (error) {
     console.log(error);
