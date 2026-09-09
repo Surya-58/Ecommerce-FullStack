@@ -17,13 +17,13 @@ const CategoryTable = (
         </thead>
         <tbody className='table-body'>
             {categories.map((category)=>(
-                 <tr key={category.id}>
+                 <tr key={category._id}>
                 <td className='td'>{category.name}</td>
                 <td className='td'>
                     <button className='btn-small'
                     onClick={()=>handleEdit(category)}>Edit</button>
                     <button className='btn-small-danger'
-                    onClick={()=>handleDelete(category.id)}>Delete</button>
+                    onClick={()=>handleDelete(category._id)}>Delete</button>
 
                 </td>
             </tr>
