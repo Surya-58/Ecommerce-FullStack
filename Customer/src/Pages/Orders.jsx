@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getMyOrdersApi } from "../Services/orderApi";
-
+import { getMyOrdersApi, cancelOrderApi } from "../Services/orderApi";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -24,6 +23,27 @@ const Orders = () => {
       setError(error.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCancelOrder = async (orderId) => {
+    const confirmCancel = window.confirm(
+      "Are you sure you want to cancel this order?",
+    );
+
+    if (!confirmCancel) {
+      return;
+    }
+
+    try {
+      await cancelOrderApi(orderId);
+
+      alert("Order cancelled successfully");
+
+      getOrders();
+    } catch (error) {
+      console.log("Cancel Order Error:", error);
+      setError(error.message);
     }
   };
 
@@ -50,7 +70,6 @@ const Orders = () => {
 
   return (
     <div className="container orders-page">
-
       <div className="orders-page__header">
         <h1>My Orders</h1>
         <p>View and track your recent orders</p>
@@ -70,81 +89,65 @@ const Orders = () => {
         </div>
       ) : (
         <div className="orders-list">
-
           {orders.map((order) => (
             <div className="order-card" key={order._id}>
-
               <div className="order-card__header">
-
                 <div>
-                  <p className="order-card__label">
-                    Order ID
-                  </p>
+                  <p className="order-card__label">Order ID</p>
 
-                  <h3 className="order-card__id">
-                    #{order._id}
-                  </h3>
+                  <h3 className="order-card__id">#{order._id}</h3>
                 </div>
 
                 <div className="order-card__status">
-                  <span>
-                    {order.orderStatus}
-                  </span>
+                  <span>{order.orderStatus}</span>
                 </div>
-
               </div>
 
               <div className="order-card__details">
-
                 <div>
-                  <p className="order-card__label">
-                    Total Amount
-                  </p>
+                  <p className="order-card__label">Total Amount</p>
 
-                  <p className="order-card__value">
-                    ₹{order.amount}
-                  </p>
+                  <p className="order-card__value">₹{order.amount}</p>
                 </div>
 
                 <div>
-                  <p className="order-card__label">
-                    Payment
-                  </p>
+                  <p className="order-card__label">Payment</p>
 
-                  <p className="order-card__value">
-                    {order.paymentMethod}
-                  </p>
+                  <p className="order-card__value">{order.paymentMethod}</p>
                 </div>
 
                 <div>
-                  <p className="order-card__label">
-                    Payment Status
-                  </p>
+                  <p className="order-card__label">Payment Status</p>
 
-                  <p className="order-card__value">
-                    {order.paymentStatus}
-                  </p>
+                  <p className="order-card__value">{order.paymentStatus}</p>
                 </div>
-
               </div>
 
               <div className="order-card__footer">
-
                 <button
                   className="btn btn--secondary"
                   onClick={() => navigate(`/orders/${order._id}`)}
                 >
                   View Details
                 </button>
-
+                {![
+                  "Shipped",
+                  "Out for Delivery",
+                  "Delivered",
+                  "Cancelled",
+                ].includes(order.orderStatus) && (
+                  <button
+                    className="btn btn--danger"
+                    onClick={() => handleCancelOrder(order._id)}
+                  >
+                    Cancel Order
+                  </button>
+                )}
               </div>
-
             </div>
           ))}
-
         </div>
       )}
-
     </div>
   );
 };

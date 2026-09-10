@@ -1,14 +1,19 @@
+import mongoose from "mongoose";
 import Order from "../models/orderModel.js";
 import Cart from "../models/cartModel.js";
 import Product from "../models/productModel.js";
 
 export const createOrder = async (req, res) => {
+  const session = await mongoose.startSession();
+
   try {
+    session.startTransaction();
+
     const { address, paymentMethod } = req.body;
 
-    const cart = await Cart.findOne({ userId: req.userId }).populate(
-      "items.productId",
-    );
+    const cart = await Cart.findOne({ userId: req.userId })
+      .populate("items.productId")
+      .session(session);
 
     if (!cart || cart.items.length === 0) {
       return res.json({
@@ -56,21 +61,27 @@ export const createOrder = async (req, res) => {
 
       product.stock -= item.quantity;
 
-      await product.save();
+      await product.save({ session });
     }
 
-    const order = await Order.create({
-      userId: req.userId,
-      items: orderItems,
-      amount,
-      address,
-      paymentMethod: paymentMethod || "COD",
-      paymentStatus: "Pending",
-      orderStatus: "Order Placed",
-    });
+    const [order] = await Order.create(
+      [
+        {
+          userId: req.userId,
+          items: orderItems,
+          amount,
+          address,
+          paymentMethod: paymentMethod || "COD",
+          paymentStatus: "Pending",
+          orderStatus: "Order Placed",
+        },
+      ],
+      { session },
+    );
 
     cart.items = [];
-    await cart.save();
+    await cart.save({ session });
+    await session.commitTransaction();
 
     res.json({
       success: true,
@@ -78,12 +89,16 @@ export const createOrder = async (req, res) => {
       order,
     });
   } catch (error) {
+    await session.abortTransaction();
+
     console.log(error);
 
     res.json({
       success: false,
       message: error.message,
     });
+  } finally {
+    session.endSession();
   }
 };
 
@@ -155,6 +170,7 @@ export const cancelOrder = async (req, res) => {
 
     if (
       order.orderStatus === "Shipped" ||
+      order.orderStatus === "Out for Delivery" ||
       order.orderStatus === "Delivered" ||
       order.orderStatus === "Cancelled"
     ) {

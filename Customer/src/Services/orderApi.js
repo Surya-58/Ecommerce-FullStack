@@ -56,3 +56,20 @@ export const createOrderApi = async (orderData) => {
 
   return data;
 };
+
+export const cancelOrderApi = async (orderId) => {
+  const response = await fetch(`${BASE_URL}/cancel/${orderId}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok || !data.success) {
+    throw new Error(data.message || "Failed to cancel order");
+  }
+
+  return data;
+};
