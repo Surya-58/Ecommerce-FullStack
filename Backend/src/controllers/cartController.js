@@ -28,6 +28,19 @@ export const addToCart = async (req, res) => {
           },
         ],
       });
+      if (quantity < 1) {
+        return res.json({
+          success: false,
+          message: "Quantity must be at least 1",
+        });
+      }
+
+      if (quantity > product.stock) {
+        return res.json({
+          success: false,
+          message: `Only ${product.stock} items available`,
+        });
+      }
       return res.json({
         success: true,
         message: "Product added to Cart",
@@ -40,7 +53,16 @@ export const addToCart = async (req, res) => {
     );
 
     if (existingItem) {
-      existingItem.quantity += quantity;
+      const newQuantity = existingItem.quantity + quantity;
+
+      if (newQuantity > product.stock) {
+        return res.json({
+          success: false,
+          message: `Only ${product.stock} items available`,
+        });
+      }
+
+      existingItem.quantity = newQuantity;
     } else {
       cart.items.push({
         productId,
@@ -129,6 +151,21 @@ export const updateCart = async (req, res) => {
         message: "Product not found in cart",
       });
     }
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+
+    if (quantity > product.stock) {
+      return res.json({
+        success: false,
+        message: `Only ${product.stock} items available`,
+      });
+    }
 
     item.quantity = quantity;
 
@@ -198,33 +235,32 @@ export const removeFromCart = async (req, res) => {
   }
 };
 
-export const clearCart = async(req,res) => {
+export const clearCart = async (req, res) => {
   try {
-    const cart = await Cart.findOne({ userId: req.userId})
-    
-    if(!cart){
+    const cart = await Cart.findOne({ userId: req.userId });
+
+    if (!cart) {
       return res.json({
         success: false,
-        message: "Cart not found"
-      })
+        message: "Cart not found",
+      });
     }
 
-    cart.items = []
+    cart.items = [];
 
-    await cart.save()
+    await cart.save();
 
     res.json({
       success: true,
       message: "Cart cleared successfully",
       cart,
-    })
+    });
   } catch (error) {
     console.log(error);
 
     res.json({
       success: false,
-      message: error.message
-    })
-    
+      message: error.message,
+    });
   }
-}
+};
