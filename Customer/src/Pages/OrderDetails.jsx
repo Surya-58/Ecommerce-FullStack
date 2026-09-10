@@ -153,14 +153,14 @@ const OrderDetails = () => {
 
                 <img
                   className="order-product__image"
-                  src={product?.image}
-                  alt={product?.name}
+                  src={item.image}
+                  alt={item.name}
                 />
 
                 <div className="order-product__info">
 
                   <h3 className="order-product__name">
-                    {product?.name}
+                    {item.name}
                   </h3>
 
                   <p className="order-product__meta">

@@ -30,6 +30,13 @@ export const createOrder = async (req, res) => {
         });
       }
 
+      if (product.stock < item.quantity) {
+        return res.json({
+          success: false,
+          message: `${product.name} has only ${product.stock} items in stock`,
+        });
+      }
+
       amount += product.price * item.quantity;
 
       orderItems.push({
@@ -39,6 +46,14 @@ export const createOrder = async (req, res) => {
         quantity: item.quantity,
         image: product.image,
       });
+    }
+
+    for (const item of cart.items) {
+      const product = await Product.findById(item.productId._id);
+
+      product.stock -= item.quantity;
+
+      await product.save();
     }
 
     const order = await Order.create({
@@ -69,28 +84,25 @@ export const createOrder = async (req, res) => {
   }
 };
 
-export const getMyOrder = async(req,res) => {
+export const getMyOrder = async (req, res) => {
   try {
-
     const orders = await Order.find({
       userId: req.userId,
-    }).sort({ createAt: -1})
+    }).sort({ createdAt: -1 });
 
     res.json({
       success: true,
       orders,
-    })
-    
+    });
   } catch (error) {
     console.log(error);
 
     res.json({
       success: false,
-      message: error.message
-    })
-    
+      message: error.message,
+    });
   }
-}
+};
 
 export const getOrderById = async (req, res) => {
   try {
@@ -112,7 +124,6 @@ export const getOrderById = async (req, res) => {
       success: true,
       order,
     });
-
   } catch (error) {
     console.log(error);
 
@@ -150,6 +161,15 @@ export const cancelOrder = async (req, res) => {
       });
     }
 
+    for (const item of order.items) {
+      const product = await Product.findById(item.productId);
+
+      if (product) {
+        product.stock += item.quantity;
+        await product.save();
+      }
+    }
+
     order.orderStatus = "Cancelled";
 
     await order.save();
@@ -159,7 +179,6 @@ export const cancelOrder = async (req, res) => {
       message: "Order cancelled successfully",
       order,
     });
-
   } catch (error) {
     console.log(error);
 
@@ -178,7 +197,6 @@ export const getAllOrders = async (req, res) => {
       success: true,
       orders,
     });
-
   } catch (error) {
     console.log(error);
 
@@ -198,6 +216,7 @@ export const updateOrderStatus = async (req, res) => {
       "Order Placed",
       "Processing",
       "Shipped",
+      "Out for Delivery",
       "Delivered",
       "Cancelled",
     ];
@@ -218,6 +237,17 @@ export const updateOrderStatus = async (req, res) => {
       });
     }
 
+    if (orderStatus === "Cancelled" && order.orderStatus !== "Cancelled") {
+      for (const item of order.items) {
+        const product = await Product.findById(item.productId);
+
+        if (product) {
+          product.stock += item.quantity;
+          await product.save();
+        }
+      }
+    }
+
     order.orderStatus = orderStatus;
 
     await order.save();
@@ -227,7 +257,6 @@ export const updateOrderStatus = async (req, res) => {
       message: "Order status updated successfully",
       order,
     });
-
   } catch (error) {
     console.log(error);
 
