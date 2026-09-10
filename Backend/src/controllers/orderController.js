@@ -17,7 +17,7 @@ export const createOrder = async (req, res) => {
       });
     }
 
-    let amount = 0;
+    let subtotal = 0;
     const orderItems = [];
 
     for (const item of cart.items) {
@@ -37,7 +37,7 @@ export const createOrder = async (req, res) => {
         });
       }
 
-      amount += product.price * item.quantity;
+      subtotal += product.price * item.quantity;
 
       orderItems.push({
         productId: product._id,
@@ -47,6 +47,9 @@ export const createOrder = async (req, res) => {
         image: product.image,
       });
     }
+
+    const deliveryCharge = subtotal >= 500 ? 0 : 40;
+    const amount = subtotal + deliveryCharge;
 
     for (const item of cart.items) {
       const product = await Product.findById(item.productId._id);
