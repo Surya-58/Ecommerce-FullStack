@@ -1,7 +1,11 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../Context/CartContext";
-import { createOrderApi } from "../Services/orderApi";
+import {
+  createOrderApi,
+  createRazorpayOrderApi,
+  verifyRazorpayPaymentApi,
+} from "../Services/orderApi";
 
 const Checkout = () => {
   const { cart } = useContext(CartContext);
@@ -41,23 +45,9 @@ const Checkout = () => {
   const handlePlaceOrder = async () => {
     setError("");
 
-    const {
-      name,
-      phone,
-      street,
-      city,
-      state,
-      pincode,
-    } = address;
+    const { name, phone, street, city, state, pincode } = address;
 
-    if (
-      !name ||
-      !phone ||
-      !street ||
-      !city ||
-      !state ||
-      !pincode
-    ) {
+    if (!name || !phone || !street || !city || !state || !pincode) {
       setError("Please fill all address fields");
       return;
     }
@@ -65,20 +55,84 @@ const Checkout = () => {
     try {
       setLoading(true);
 
-      const data = await createOrderApi({
-        address,
-        paymentMethod,
+      // COD
+      if (paymentMethod === "COD") {
+        const data = await createOrderApi({
+          address,
+          paymentMethod: "COD",
+        });
+
+        console.log("Order Created:", data);
+
+        alert("Order placed successfully!");
+        navigate("/orders");
+        return;
+      }
+
+      // ONLINE PAYMENT
+      const paymentData = await createRazorpayOrderApi(total);
+
+      const options = {
+        key: paymentData.key,
+        amount: paymentData.order.amount,
+        currency: paymentData.order.currency,
+        name: "ECommerce Store",
+        description: "Order Payment",
+        order_id: paymentData.order.id,
+
+        handler: async function (response) {
+          try {
+            const verificationData = await verifyRazorpayPaymentApi({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            });
+
+            console.log("Payment Verified:", verificationData);
+
+            const data = await createOrderApi({
+              address,
+              paymentMethod: "ONLINE",
+            });
+
+            console.log("Order Created:", data);
+
+            alert("Payment successful and order placed!");
+            navigate("/orders");
+          } catch (error) {
+            console.log("Payment Verification Error:", error);
+            setError(error.message);
+          } finally {
+            setLoading(false);
+          }
+        },
+
+        prefill: {
+          name: address.name,
+          contact: address.phone,
+        },
+
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      const razorpay = new window.Razorpay(options);
+
+      razorpay.on("payment.failed", function (response) {
+        console.log("Payment Failed:", response.error);
+
+        setError(
+          response.error.description || "Payment failed. Please try again.",
+        );
+
+        setLoading(false);
       });
 
-      console.log("Order Created:", data);
-
-      alert("Order placed successfully!");
-
-      navigate("/orders");
+      razorpay.open();
     } catch (error) {
       console.log("Place Order Error:", error);
       setError(error.message);
-    } finally {
       setLoading(false);
     }
   };
@@ -87,23 +141,16 @@ const Checkout = () => {
     return (
       <div className="container">
         <h1>Your cart is empty</h1>
-        <button onClick={() => navigate("/products")}>
-          Continue Shopping
-        </button>
+        <button onClick={() => navigate("/products")}>Continue Shopping</button>
       </div>
     );
   }
 
   return (
     <div className="container">
-
       <h1>Checkout</h1>
 
-      {error && (
-        <p style={{ color: "red" }}>
-          {error}
-        </p>
-      )}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
       <div>
         <h2>Delivery Address</h2>
@@ -165,9 +212,7 @@ const Checkout = () => {
             type="radio"
             value="COD"
             checked={paymentMethod === "COD"}
-            onChange={(e) =>
-              setPaymentMethod(e.target.value)
-            }
+            onChange={(e) => setPaymentMethod(e.target.value)}
           />
           Cash on Delivery
         </label>
@@ -177,9 +222,7 @@ const Checkout = () => {
             type="radio"
             value="ONLINE"
             checked={paymentMethod === "ONLINE"}
-            onChange={(e) =>
-              setPaymentMethod(e.target.value)
-            }
+            onChange={(e) => setPaymentMethod(e.target.value)}
           />
           Online Payment
         </label>
@@ -190,23 +233,14 @@ const Checkout = () => {
 
         <p>Subtotal: ₹{subtotal}</p>
 
-        <p>
-          Delivery:{" "}
-          {deliveryCharge === 0
-            ? "FREE"
-            : `₹${deliveryCharge}`}
-        </p>
+        <p>Delivery: {deliveryCharge === 0 ? "FREE" : `₹${deliveryCharge}`}</p>
 
         <h3>Total: ₹{total}</h3>
       </div>
 
-      <button
-        onClick={handlePlaceOrder}
-        disabled={loading}
-      >
+      <button onClick={handlePlaceOrder} disabled={loading}>
         {loading ? "Placing Order..." : "Place Order"}
       </button>
-
     </div>
   );
 };
