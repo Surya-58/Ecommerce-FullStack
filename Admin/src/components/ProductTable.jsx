@@ -19,7 +19,7 @@ const ProductTable = ({ products, handleEdit, handleDelete }) => {
             <tr key={product._id}>
               <td className="td">
                 {product.image ? (
-                  <img src={product.image} alt={product.name} />
+                  <img src={product.image} alt={product.name} className="product-thumb"/>
                 ) : (
                   <span>No Image</span>
                 )}

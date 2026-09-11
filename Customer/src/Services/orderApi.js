@@ -73,3 +73,36 @@ export const cancelOrderApi = async (orderId) => {
 
   return data;
 };
+
+export const createRazorpayOrderApi = async(amount) => {
+  const response = await fetch(`${BASE_URL.replace("/order", "/payment")}/create-order`,{
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify({amount}),
+  })
+
+  const data = await response.json()
+
+  if(!response.ok || !data.success){
+    throw new Error(data.message || "Failed to create payment order")
+  }
+
+  return data
+}
+
+export const verifyRazorpayPaymentApi = async(paymentData) => {
+  const response = await fetch(
+    `${BASE_URL.replace("/order","/payment")}/verify`,
+    {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+      body: JSON.stringify(paymentData),
+    }
+  )
+}

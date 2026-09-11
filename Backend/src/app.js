@@ -5,6 +5,7 @@ import cartRouter from "./routes/cartRoutes.js";
 import orderRouter from "./routes/orderRoutes.js";
 import wishlistRouter from "./routes/wishlistRoutes.js";
 import categoryRouter from "./routes/categoryRoutes.js";
+import paymentRouter from "./routes/paymentRoute.js"
 import cors from "cors";
 
 const app = express()
@@ -15,6 +16,8 @@ app.use(express.json())
 app.use("/api/product", productRouter)
 
 app.use("/api/user",userRouter)
+
+app.use("/api/payment",paymentRouter)
 
 app.use("/api/cart", cartRouter)
 

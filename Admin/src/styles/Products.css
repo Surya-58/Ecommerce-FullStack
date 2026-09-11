@@ -175,3 +175,9 @@
 .form-group-full {
   grid-column: 1 / -1;
 }
+.product-thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+}

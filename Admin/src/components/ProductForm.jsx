@@ -22,6 +22,7 @@ const ProductForm = ({
   setCategory,
   stock,
   setStock,
+  fileInputKey,
 }) => {
   return (
     <div>
@@ -93,6 +94,7 @@ const ProductForm = ({
             type="file"
             className="input"
             accept="image/*"
+            key={fileInputKey} // Reset file input when key changes
             onChange={(e) => setImage(e.target.files[0])}
           />
         </div>

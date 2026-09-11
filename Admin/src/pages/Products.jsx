@@ -25,6 +25,7 @@ const Products = () => {
   const [category, setCategory] = useState("");
   const [stock, setStock] = useState("");
   const [categories, setCategories] = useState([]);
+  const [fileInputKey, setFileInputKey] = useState(0); 
 
   const formRef = useRef(null);
 
@@ -108,6 +109,8 @@ const Products = () => {
     setImage("");
     setCategory("");
     setStock("");
+    setImage("")
+    setFileInputKey(prevKey => prevKey + 1); // Reset file input
   } catch (error) {
     console.log(error);
     setMessage(error.message);
@@ -167,6 +170,8 @@ const Products = () => {
       setImage("");
       setCategory("");
       setStock("");
+      setImage("")
+
     } catch (error) {
       console.log(error);
     }
