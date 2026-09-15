@@ -82,8 +82,10 @@ const Navbar = () => {
             }
           >
             Cart
-            {cart.length > 0 && (
-              <span className="navbar__badge">{cart.length}</span>
+            {cart.items?.length > 0 && (
+              <span className="navbar__badge">
+                {cart.items.reduce((total, item) => total + item.quantity, 0)}
+              </span>
             )}
           </NavLink>
         </div>
