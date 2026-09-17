@@ -13,7 +13,7 @@ const categoryRouter = express.Router();
 
 categoryRouter.post("/add", adminAuth, addCategory);
 
-categoryRouter.get("/list", adminAuth, getCategories);
+categoryRouter.get("/list", getCategories);
 
 categoryRouter.put("/:id", adminAuth, updateCategory);
 

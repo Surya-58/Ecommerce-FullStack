@@ -1,0 +1,204 @@
+/* ==========================================================================
+   ORCHARD — checkout.css
+   ========================================================================== */
+
+.checkout-page {
+  padding-bottom: var(--space-12);
+}
+
+.checkout-page__header {
+  margin-bottom: var(--space-6);
+}
+
+.checkout-page__title {
+  font-size: var(--text-page-title);
+  font-weight: var(--weight-extrabold);
+  margin-bottom: var(--space-2);
+}
+
+.checkout-page__subtitle {
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-sm);
+}
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.checkout-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+}
+
+.checkout-card__title {
+  font-size: var(--text-category);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--space-5);
+}
+
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.checkout-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.form-group label {
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.form-group input {
+  width: 100%;
+}
+
+.checkout-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  position: sticky;
+  top: calc(var(--navbar-height) + var(--space-4));
+}
+
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.payment-option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              background var(--duration-fast) var(--ease-standard);
+}
+
+.payment-option:hover {
+  border-color: var(--color-primary-400);
+}
+
+.payment-option--active {
+  border-color: var(--color-primary-500);
+  background: var(--color-primary-50);
+}
+
+.payment-option input {
+  margin-top: 3px;
+  accent-color: var(--color-primary-500);
+}
+
+.payment-option span {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.payment-option strong {
+  font-size: var(--text-body-sm);
+}
+
+.payment-option small {
+  color: var(--color-text-muted);
+  font-size: var(--text-caption);
+}
+
+.order-summary {
+  position: static;
+}
+
+.order-summary__title {
+  font-size: var(--text-category);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--space-4);
+}
+
+.order-summary__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+  padding-block: var(--space-2);
+}
+
+.order-summary__divider {
+  height: 1px;
+  background: var(--color-border);
+  margin-block: var(--space-3);
+}
+
+.order-summary__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-5);
+}
+
+.order-summary__total-label {
+  font-weight: var(--weight-semibold);
+}
+
+.order-summary__total-value {
+  font-size: var(--text-price-offer);
+  font-weight: var(--weight-extrabold);
+  color: var(--color-primary-700);
+}
+
+.checkout-submit {
+  width: 100%;
+}
+
+.checkout-error {
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-5);
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-body-sm);
+}
+
+@media (max-width: 900px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 560px) {
+  .checkout-card {
+    padding: var(--space-4);
+  }
+
+  .checkout-form__row {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-page__title {
+    font-size: var(--text-section);
+  }
+}

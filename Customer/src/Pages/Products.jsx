@@ -1,52 +1,67 @@
 import React, { useState, useEffect } from "react";
 import { getProducts } from "../Services/productApi";
+import { getCategories } from "../Services/categoryApi";
+import { useSearchParams } from "react-router-dom";
 import ProductGrid from "../Components/ProductGrid";
 import searchIcon from "../Assets/icons/icon-search.png";
 import xIcon from "../Assets/icons/icon-x.png";
 
+
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [searchParams] = useSearchParams();
+  const categoryFromUrl = searchParams.get("category");
   const [search, setSearch] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [inStockOnly, setInStockOnly] = useState(false);
   const [sortBy, setSortBy] = useState("");
-  
+
   const filteredProducts = products.filter((product) => {
     const matchedSearch = product.name
-    .toLowerCase()
-    .includes(search.toLocaleLowerCase())
+      .toLowerCase()
+      .includes(search.toLocaleLowerCase());
 
-    const matchesCategory = 
-    selectedCategories.length === 0 ||
-    selectedCategories.includes(product.category)
+    const matchesCategory =
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(product.category);
 
     const matchesPrice = product.price <= maxPrice;
 
     const matchesStock = !inStockOnly || product.stock > 0;
 
-    return matchedSearch && matchesCategory && matchesPrice  && matchesStock
-  })
+    return matchedSearch && matchesCategory && matchesPrice && matchesStock;
+  });
 
-  const sortedProducts = [...filteredProducts]
+  const sortedProducts = [...filteredProducts];
 
-  if(sortBy === "priceLow"){
-    sortedProducts.sort((a,b) => a.price - b.price)
+  if (sortBy === "priceLow") {
+    sortedProducts.sort((a, b) => a.price - b.price);
   }
-  if(sortBy === "priceHigh"){
-    sortedProducts.sort((a,b) => b.price - a.price)
+  if (sortBy === "priceHigh") {
+    sortedProducts.sort((a, b) => b.price - a.price);
   }
-  if(sortBy === "nameAZ"){
-    sortedProducts.sort((a,b) => a.name.localeCompare(b.name))
+  if (sortBy === "nameAZ") {
+    sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
   }
-  if(sortBy === "nameZA"){
-    sortedProducts.sort((a,b) => b.name.localeCompare(a.name))
+  if (sortBy === "nameZA") {
+    sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
   }
 
   const handleGetProducts = async () => {
     try {
       const data = await getProducts();
       setProducts(data.products);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleGetCategories = async () => {
+    try {
+      const data = await getCategories();
+      setCategories(data.categories || []);
     } catch (error) {
       console.log(error);
     }
@@ -64,7 +79,16 @@ const Products = () => {
 
   useEffect(() => {
     handleGetProducts();
+    handleGetCategories();
   }, []);
+
+  useEffect(() => {
+    if (categoryFromUrl) {
+      setSelectedCategories([categoryFromUrl]);
+    } else {
+      setSelectedCategories([]);
+    }
+  }, [categoryFromUrl]);
 
   return (
     <div className="products-page container">
@@ -108,10 +132,10 @@ const Products = () => {
         </div>
 
         <div className="select-wrap">
-          <select 
-          className="select"
-          value={sortBy}
-          onChange={(e) => setSortBy(e.target.value)}
+          <select
+            className="select"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
           >
             <option value="">Sort By</option>
             <option value="priceLow">Price : Low to High</option>
@@ -131,56 +155,30 @@ const Products = () => {
           <div className="filter-group">
             <h4 className="filter-group__title">Categories</h4>
 
-            <label className="checkbox">
-              <input type="checkbox"
-              checked={selectedCategories.includes("Groceries")}
-              onChange={() => handleCategoryChange("Groceries")} />
-              <span className="checkbox__box"></span>
-              Groceries
-            </label>
-
-            <label className="checkbox">
-              <input type="checkbox"
-              checked={selectedCategories.includes("Beverages")}
-              onChange={() => handleCategoryChange("Beverages")} />
-              <span className="checkbox__box"></span>
-              Beverages
-            </label>
-
-            <label className="checkbox">
-              <input type="checkbox"
-              checked={selectedCategories.includes("Snacks")}
-              onChange={() => handleCategoryChange("Snacks")} />
-              <span className="checkbox__box"></span>
-              Snacks
-            </label>
-
-            <label className="checkbox">
-              <input type="checkbox"
-              checked={selectedCategories.includes("Dairy")}
-              onChange={() => handleCategoryChange("Dairy")} />
-              <span className="checkbox__box"></span>
-              Dairy
-            </label>
-
-            <label className="checkbox">
-              <input type="checkbox" 
-              checked={selectedCategories.includes("Personal Care")}
-              onChange={() => handleCategoryChange("Personal Care")}/>
-              <span className="checkbox__box"></span>
-              Personal Care
-            </label>
+            {categories.map((category) => (
+              <label className="checkbox" key={category._id}>
+                <input
+                  type="checkbox"
+                  checked={selectedCategories.includes(category.name)}
+                  onChange={() => handleCategoryChange(category.name)}
+                />
+                <span className="checkbox__box"></span>
+                {category.name}
+              </label>
+            ))}
           </div>
 
           <div className="filter-group">
             <h4 className="filter-group__title">Price</h4>
 
-            <input type="range" 
-            className="range-slider" 
-            min="0" 
-            max="1000"
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(Number(e.target.value))} />
+            <input
+              type="range"
+              className="range-slider"
+              min="0"
+              max="1000"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(Number(e.target.value))}
+            />
 
             <div className="filter-price__values">
               <span>₹0</span>
@@ -192,9 +190,11 @@ const Products = () => {
             <h4 className="filter-group__title">Availability</h4>
 
             <label className="checkbox">
-              <input type="checkbox"
-              checked={inStockOnly}
-              onChange={(e) => setInStockOnly(e.target.checked)} />
+              <input
+                type="checkbox"
+                checked={inStockOnly}
+                onChange={(e) => setInStockOnly(e.target.checked)}
+              />
               <span className="checkbox__box"></span>
               In Stock Only
             </label>
