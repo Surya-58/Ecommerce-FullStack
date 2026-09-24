@@ -8,10 +8,15 @@ const categorySchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    icon: {
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const Category = mongoose.model("Category", categorySchema);

@@ -1,13 +1,20 @@
 import React, { useEffect, useState, useRef } from "react";
 import UserForm from "../components/UserForm";
 import UserTable from "../components/UserTable";
-import { getUsers, addUser, updateUser, deleteUser } from "../services/api";
+import {
+  getUsers,
+  addUser,
+  updateUser,
+  deleteUser,
+} from "../services/api";
+import "../styles/Users.css";
 
 const Users = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [role, setRole] = useState("customer");
+  const [password, setPassword] = useState("");
 
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState("");
@@ -15,23 +22,9 @@ const Users = () => {
   const [search, setSearch] = useState("");
   const [filterRole, setFilterRole] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
+
   const usersPerPage = 5;
   const formRef = useRef(null);
-  const [password, setPassword] = useState("");
-
-  const filteredUsers = users.filter((user) => {
-    const matchSearch = user.name.toLowerCase().includes(search.toLowerCase());
-
-    const matchRole = filterRole === "All" || user.role === filterRole;
-    return matchSearch && matchRole;
-  });
-
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-
-  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
-
-  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
 
   const handleGetUsers = async () => {
     try {
@@ -42,11 +35,47 @@ const Users = () => {
     }
   };
 
+  useEffect(() => {
+    handleGetUsers();
+  }, []);
+
+  const filteredUsers = users.filter((user) => {
+    const matchSearch = user.name
+      .toLowerCase()
+      .includes(search.toLowerCase());
+
+    const matchRole =
+      filterRole === "All" || user.role === filterRole;
+
+    return matchSearch && matchRole;
+  });
+
+  const totalPages = Math.ceil(
+    filteredUsers.length / usersPerPage
+  );
+
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+
+  const currentUsers = filteredUsers.slice(
+    indexOfFirstUser,
+    indexOfLastUser
+  );
+
+  const customerCount = users.filter(
+    (user) => user.role === "customer"
+  ).length;
+
+  const adminCount = users.filter(
+    (user) => user.role === "admin"
+  ).length;
+
   const handleAddUser = async () => {
     if (!name || !email || !phone) {
       setMessage("Please fill in Name, Email and Phone");
       return;
     }
+
     try {
       const user = {
         name,
@@ -55,17 +84,20 @@ const Users = () => {
         phone,
         role,
       };
+
       const token = localStorage.getItem("token");
-      const data = await addUser(user, token);
-      console.log(data);
+
+      await addUser(user, token);
+
       setMessage("User Added Successfully");
-      handleGetUsers();
+
+      await handleGetUsers();
 
       setName("");
       setEmail("");
-      setPassword("")
+      setPassword("");
       setPhone("");
-      setRole("");
+      setRole("customer");
     } catch (error) {
       console.log(error);
     }
@@ -77,7 +109,12 @@ const Users = () => {
     setEmail(user.email);
     setPhone(user.phone);
     setRole(user.role);
-    formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setPassword("");
+
+    formRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   const handleUpdateUser = async () => {
@@ -89,15 +126,19 @@ const Users = () => {
         phone,
         role,
       };
+
       const token = localStorage.getItem("token");
-      const data = await updateUser(editId, user, token);
-      console.log(data);
+
+      await updateUser(editId, user, token);
+
       setMessage("User Updated Successfully");
-      handleGetUsers();
+
+      await handleGetUsers();
+
       setEditId(null);
       setName("");
       setEmail("");
-      setPassword("")
+      setPassword("");
       setPhone("");
       setRole("customer");
     } catch (error) {
@@ -106,30 +147,80 @@ const Users = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this product?")) {
+    if (!window.confirm("Are you sure you want to delete this user?")) {
       return;
     }
+
     try {
       const token = localStorage.getItem("token");
-      const data = await deleteUser(id, token);
-      console.log(data);
+
+      await deleteUser(id, token);
+
       setMessage("User Deleted Successfully");
-      handleGetUsers();
+
+      await handleGetUsers();
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    handleGetUsers();
+    setCurrentPage(1);
   }, [search, filterRole]);
 
   return (
-    <div className="page">
-      <div className="container">
-        <h1 className="title">User Manager</h1>
+    <div className="users-page">
 
-        <div ref={formRef}>
+      <div className="users-header">
+        <div>
+          <p className="users-eyebrow">QuickCart Admin</p>
+
+          <h1>User Manager</h1>
+
+          <p className="users-subtitle">
+            Manage customers and administrators in your store.
+          </p>
+        </div>
+      </div>
+
+      <div className="users-summary">
+
+        <div className="user-summary-card">
+          <span>All Users</span>
+          <strong>{users.length}</strong>
+        </div>
+
+        <div className="user-summary-card">
+          <span>Customers</span>
+          <strong>{customerCount}</strong>
+        </div>
+
+        <div className="user-summary-card">
+          <span>Admins</span>
+          <strong>{adminCount}</strong>
+        </div>
+
+      </div>
+
+      <div
+        className="users-form-card"
+        ref={formRef}
+      >
+        <div className="users-form-header">
+          <div>
+            <h2>
+              {editId ? "Update User" : "Add New User"}
+            </h2>
+
+            <p>
+              {editId
+                ? "Update the selected user's information."
+                : "Create a new customer or administrator account."}
+            </p>
+          </div>
+        </div>
+
+        <div className="users-form-body">
           <UserForm
             name={name}
             setName={setName}
@@ -147,61 +238,94 @@ const Users = () => {
             message={message}
           />
         </div>
+      </div>
 
-        <label className="label">Filter by Role</label>
-        <select
-          className="input"
-          value={filterRole}
-          onChange={(e) => setFilterRole(e.target.value)}
-        >
-          <option value="All">All</option>
-          <option value="Customer">Customer</option>
-          <option value="Admin">Admin</option>
-        </select>
-        <br />
+      <div className="users-toolbar">
 
-        <label className="label">Search User</label>
-        <br />
+        <div>
+          <h2>Users</h2>
 
-        <input
-          type="text"
-          className="input"
-          placeholder="Search User"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <br />
+          <p>
+            {filteredUsers.length}{" "}
+            {filteredUsers.length === 1
+              ? "user"
+              : "users"}
+          </p>
+        </div>
 
-        <UserTable
-          users={currentUsers}
-          handleEdit={handleEdit}
-          handleDelete={handleDelete}
-        />
+        <div className="users-filters">
 
-        <div className="pagination">
-          <button
-            onClick={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 1}
+          <input
+            type="text"
+            className="users-search"
+            placeholder="Search users..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+
+          <select
+            className="users-filter"
+            value={filterRole}
+            onChange={(e) => setFilterRole(e.target.value)}
           >
-            Previous
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => (
+            <option value="All">All Roles</option>
+            <option value="customer">Customer</option>
+            <option value="admin">Admin</option>
+          </select>
+
+        </div>
+      </div>
+
+      <UserTable
+        users={currentUsers}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
+
+      <div className="users-pagination">
+
+        <button
+          onClick={() =>
+            setCurrentPage(currentPage - 1)
+          }
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+
+        {Array.from(
+          { length: totalPages },
+          (_, index) => (
             <button
               key={index}
-              className={currentPage === index + 1 ? "active-page" : ""}
-              onClick={() => setCurrentPage(index + 1)}
+              className={
+                currentPage === index + 1
+                  ? "active-page"
+                  : ""
+              }
+              onClick={() =>
+                setCurrentPage(index + 1)
+              }
             >
               {index + 1}
             </button>
-          ))}
-          <button
-            onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-        </div>
+          )
+        )}
+
+        <button
+          onClick={() =>
+            setCurrentPage(currentPage + 1)
+          }
+          disabled={
+            currentPage === totalPages ||
+            totalPages === 0
+          }
+        >
+          Next
+        </button>
+
       </div>
+
     </div>
   );
 };

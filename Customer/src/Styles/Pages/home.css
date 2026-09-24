@@ -36,6 +36,22 @@
 .hero__subtitle { color: var(--color-text-secondary); max-width: 42ch; margin-bottom: var(--space-6); font-size: var(--text-body); }
 .hero__ctas { display: flex; gap: var(--space-3); flex-wrap: wrap; }
 
+.hero__title {
+  color: #166534;
+  text-shadow:
+    1px 1px 0 #dce8df,
+    2px 2px 0 #c9d9cd,
+    3px 3px 6px rgba(20, 60, 35, 0.15);
+}
+
+.hero__title span {
+  color: #0f766e;
+  text-shadow:
+    1px 1px 0 #d7e8e5,
+    2px 2px 0 #bfdad6,
+    3px 3px 6px rgba(15, 70, 65, 0.15);
+}
+
 .hero__image {
   border-radius: var(--radius-leaf);
   overflow: hidden;
@@ -272,4 +288,71 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+/* Why Choose QuickCart */
+
+.why-choose-us {
+  margin-top: var(--space-10);
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+.why-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-5);
+  text-align: center;
+  transition:
+    transform var(--duration-base) var(--ease-spring),
+    box-shadow var(--duration-base) var(--ease-standard),
+    border-color var(--duration-base) var(--ease-standard);
+}
+
+.why-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary-200);
+}
+
+.why-card__icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-4);
+  border-radius: 50%;
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.why-card h3 {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-body-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
+}
+
+.why-card p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-sm);
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
 }

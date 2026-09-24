@@ -12,8 +12,6 @@ const Home = () => {
   const handleGetProducts = async () => {
     try {
       const data = await getProducts();
-      console.log("PRODUCT API RESPONSE:", data);
-console.log("PRODUCTS:", data.products);
       setProducts(data.products);
     } catch (error) {
       console.log(error);
@@ -28,7 +26,7 @@ console.log("PRODUCTS:", data.products);
     <div className="container">
       <section className="hero">
         <div>
-          <p className="hero__eyebrow">🛒 Fresh Grocery • Daily Essentials</p>
+          <p className="hero__eyebrow hero__title text-hero">🛒 Fresh Grocery • Daily Essentials</p>
 
           <h1 className="hero__title text-hero">
             Fresh groceries <span>at your doorstep</span>
@@ -58,7 +56,7 @@ console.log("PRODUCTS:", data.products);
         <CategorySection />
       </section>
 
-      <section className="home-products section-spacing" >
+      <section className="home-products section-spacing">
         <div className="section-header">
           <h2 className="text-section-title">Featured Products</h2>
 
@@ -80,18 +78,19 @@ console.log("PRODUCTS:", data.products);
         </div>
 
         <ProductGrid
-          products={products.filter((product) => product.featured)}
+          products={products
+            .filter((product) => product.price <= 100)
+            .slice(0, 4)}
         />
       </section>
       <section className="best-sellers section-spacing">
         <div className="section-header">
-          <h2 className="text-section-title">
-            Best Sellers
-          </h2>
+          <h2 className="text-section-title">Best Sellers</h2>
           <Link to="/products" className="section-header__link">
-          View All</Link>
+            View All
+          </Link>
         </div>
-        <ProductGrid products={products.slice(8,12)} />
+        <ProductGrid products={products.slice(4, 8)} />
       </section>
 
       <WhyChooseUs />

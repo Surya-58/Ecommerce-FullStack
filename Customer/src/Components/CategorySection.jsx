@@ -1,14 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  Apple,
+  Carrot,
+  CupSoda,
+  Milk,
+  Cookie,
+  SprayCan,
+  Wheat,
+  Beef,
+  Snowflake,
+  CakeSlice,
+  Coffee,
+  Package,
+} from "lucide-react";
 import { getCategories } from "../Services/categoryApi";
 
 const categoryIcons = {
-  Fruits: "🍎",
-  Vegetables: "🥦",
-  Beverages: "🥤",
-  Dairy: "🥛",
-  Snacks: "🍪",
-  Household: "🧴",
+  apple: Apple,
+  carrot: Carrot,
+  "cup-soda": CupSoda,
+  milk: Milk,
+  cookie: Cookie,
+  "spray-can": SprayCan,
+  wheat: Wheat,
+  beef: Beef,
+  snowflake: Snowflake,
+  "cake-slice": CakeSlice,
+  coffee: Coffee,
+  package: Package,
 };
 
 const CategorySection = () => {
@@ -32,19 +52,23 @@ const CategorySection = () => {
       <h2>Shop by Categories</h2>
 
       <div className="categories">
-        {categories.map((category) => (
-          <Link
-            key={category._id}
-            to={`/products?category=${encodeURIComponent(category.name)}`}
-            className="category-tile"
-          >
-            <div className="category-tile__icon">
-              {categoryIcons[category.name] || "🛒"}
-            </div>
+        {categories.map((category) => {
+          const Icon = categoryIcons[category.icon] || Package;
 
-            <p className="category-tile__label">{category.name}</p>
-          </Link>
-        ))}
+          return (
+            <Link
+              key={category._id}
+              to={`/products?category=${encodeURIComponent(category.name)}`}
+              className="category-tile"
+            >
+              <div className="category-tile__icon">
+                <Icon size={34} strokeWidth={1.8} />
+              </div>
+
+              <p className="category-tile__label">{category.name}</p>
+            </Link>
+          );
+        })}
       </div>
     </section>
   );

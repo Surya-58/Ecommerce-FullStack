@@ -17,11 +17,10 @@ const UserForm = ({
   message,
 }) => {
   return (
-    <div className="form-grid">
-      <div className="form-group">
-        <label className="label">Name</label>
+    <div className="users-form-grid">
+      <div className="users-form-group">
+        <label>Name</label>
         <input
-          className="input"
           type="text"
           placeholder="Enter name"
           value={name}
@@ -29,32 +28,29 @@ const UserForm = ({
         />
       </div>
 
-      <div className="form-group">
-        <label className="label">Email</label>
+      <div className="users-form-group">
+        <label>Email</label>
         <input
-          className="input"
-          type="text"
+          type="email"
           placeholder="Enter email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
 
-      <div className="form-group">
-        <label className="label">Password</label>
+      <div className="users-form-group">
+        <label>Password</label>
         <input
-          className="input"
           type="password"
-          placeholder="Enter password"
+          placeholder={editId ? "Enter new password" : "Enter password"}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
 
-      <div className="form-group">
-        <label className="label">Phone</label>
+      <div className="users-form-group">
+        <label>Phone</label>
         <input
-          className="input"
           type="text"
           placeholder="Enter phone"
           value={phone}
@@ -62,10 +58,9 @@ const UserForm = ({
         />
       </div>
 
-      <div className="form-group">
-        <label className="label">Role</label>
+      <div className="users-form-group">
+        <label>Role</label>
         <select
-          className="input"
           value={role}
           onChange={(e) => setRole(e.target.value)}
         >
@@ -74,15 +69,20 @@ const UserForm = ({
         </select>
       </div>
 
-      <div className="form-group-full">
+      <div className="users-form-action">
         <button
-          className="btn-primary"
+          className="users-primary-button"
           onClick={editId ? handleUpdateUser : handleAddUser}
         >
           {editId ? "Update User" : "Add User"}
         </button>
-        <p className="message">{message}</p>
       </div>
+
+      {message && (
+        <p className="users-message">
+          {message}
+        </p>
+      )}
     </div>
   );
 };

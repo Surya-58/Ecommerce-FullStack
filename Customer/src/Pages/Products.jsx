@@ -6,7 +6,6 @@ import ProductGrid from "../Components/ProductGrid";
 import searchIcon from "../Assets/icons/icon-search.png";
 import xIcon from "../Assets/icons/icon-x.png";
 
-
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);

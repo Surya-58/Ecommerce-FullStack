@@ -1,19 +1,30 @@
+import {
+  Truck,
+  Leaf,
+  ShieldCheck,
+  RefreshCcw,
+} from "lucide-react";
+
 const features = [
   {
     title: "Fast Delivery",
-    description: "Delivered to your doorstep in minutes.",
+    description: "Fresh groceries delivered quickly to your doorstep.",
+    icon: Truck,
   },
   {
     title: "Fresh Products",
-    description: "Handpicked fresh groceries every day.",
+    description: "Quality fruits, vegetables and daily essentials.",
+    icon: Leaf,
   },
   {
     title: "Secure Payment",
-    description: "Safe and trusted online payments.",
+    description: "Safe and secure payment options for every order.",
+    icon: ShieldCheck,
   },
   {
     title: "Easy Returns",
-    description: "Simple replacement and return process.",
+    description: "Simple replacement and hassle-free support.",
+    icon: RefreshCcw,
   },
 ];
 
@@ -22,24 +33,26 @@ const WhyChooseUs = () => {
     <section className="why-choose-us section-spacing">
       <div className="section-header">
         <h2 className="text-section-title">
-          Why Shop With Us?
+          Why Choose QuickCart?
         </h2>
       </div>
 
       <div className="why-grid">
-        {features.map((feature) => (
-          <div className="why-card" key={feature.title}>
+        {features.map((feature) => {
+          const Icon = feature.icon;
 
-            <div className="why-card__icon">
-              Icon
+          return (
+            <div className="why-card" key={feature.title}>
+              <div className="why-card__icon">
+                <Icon size={30} strokeWidth={1.8} />
+              </div>
+
+              <h3>{feature.title}</h3>
+
+              <p>{feature.description}</p>
             </div>
-
-            <h3>{feature.title}</h3>
-
-            <p>{feature.description}</p>
-
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

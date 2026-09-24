@@ -1,0 +1,565 @@
+/* =================================
+   Categories Page
+================================= */
+
+.categories-page {
+  width: 100%;
+}
+
+/* =================================
+   Category Form Card
+================================= */
+
+.categories-form-card {
+  width: 100%;
+  margin-bottom: 24px;
+
+  background: #ffffff;
+  border: 1px solid #e2e9e4;
+  border-radius: 14px;
+
+  box-shadow: 0 4px 18px rgba(24, 58, 37, 0.06);
+
+  overflow: hidden;
+}
+
+.categories-form-header {
+  padding: 24px;
+
+  border-bottom: 1px solid #edf1ee;
+}
+
+.categories-form-header h1 {
+  margin: 0;
+
+  color: #17291e;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+}
+
+.categories-form-header p {
+  margin: 6px 0 0;
+
+  color: #7a877f;
+  font-size: 13px;
+}
+
+/* =================================
+   Form Area
+================================= */
+
+.categories-form-body {
+  padding: 24px;
+}
+
+.categories-form-body label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #4f5e55;
+
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.categories-input {
+  width: 100%;
+  height: 42px;
+
+  box-sizing: border-box;
+
+  padding: 0 12px;
+
+  border: 1px solid #dce5df;
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #17291e;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.categories-input:focus {
+  border-color: #168044;
+
+  box-shadow: 0 0 0 3px rgba(22, 128, 68, 0.1);
+}
+
+.categories-input::placeholder {
+  color: #a0aaa4;
+}
+
+.categories-form-button {
+  margin-top: 16px;
+
+  min-height: 42px;
+
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #168044;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.categories-form-button:hover {
+  background: #116b38;
+
+  transform: translateY(-1px);
+}
+
+.categories-message {
+  margin: 12px 0 0;
+
+  color: #168044;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* =================================
+   Search
+================================= */
+
+.categories-search {
+  margin-bottom: 20px;
+
+  padding: 20px 24px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e9e4;
+  border-radius: 14px;
+
+  box-shadow: 0 4px 18px rgba(24, 58, 37, 0.06);
+}
+
+.categories-search label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #4f5e55;
+
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.categories-search-input {
+  width: 100%;
+  height: 42px;
+
+  box-sizing: border-box;
+
+  padding: 0 12px;
+
+  border: 1px solid #dce5df;
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #17291e;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+}
+
+.categories-search-input:focus {
+  border-color: #168044;
+
+  box-shadow: 0 0 0 3px rgba(22, 128, 68, 0.1);
+}
+
+/* =================================
+   Category Table
+================================= */
+
+.categories-table-card {
+  width: 100%;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e9e4;
+  border-radius: 14px;
+
+  box-shadow: 0 4px 18px rgba(24, 58, 37, 0.06);
+
+  overflow: hidden;
+}
+
+.categories-table-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 24px;
+
+  border-bottom: 1px solid #edf1ee;
+}
+
+.categories-table-header h2 {
+  margin: 0;
+
+  color: #17291e;
+
+  font-size: 19px;
+  font-weight: 750;
+}
+
+.categories-table-header p {
+  margin: 5px 0 0;
+
+  color: #7a877f;
+
+  font-size: 13px;
+}
+
+.categories-count {
+  padding: 7px 11px;
+
+  border-radius: 999px;
+
+  background: #e9f7ed;
+
+  color: #168044;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.categories-table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+.categories-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  min-width: 500px;
+}
+
+.categories-table th {
+  padding: 14px 24px;
+
+  background: #f8faf8;
+
+  color: #718078;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-align: left;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.05em;
+
+  border-bottom: 1px solid #e8eee9;
+}
+
+.categories-table td {
+  padding: 17px 24px;
+
+  color: #34423a;
+
+  font-size: 14px;
+
+  border-bottom: 1px solid #edf1ee;
+
+  vertical-align: middle;
+}
+
+.categories-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.categories-table tbody tr:hover {
+  background: #fafcfb;
+}
+
+.categories-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.category-name {
+  color: #17291e;
+
+  font-weight: 700;
+}
+
+.categories-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+.category-edit-button,
+.category-delete-button {
+  min-height: 32px;
+
+  padding: 0 11px;
+
+  border-radius: 7px;
+
+  font-family: inherit;
+
+  font-size: 12px;
+  font-weight: 650;
+
+  cursor: pointer;
+}
+
+.category-edit-button {
+  border: 1px solid #cfe0d4;
+
+  background: #ffffff;
+
+  color: #168044;
+}
+
+.category-edit-button:hover {
+  background: #e9f7ed;
+
+  border-color: #b8d3bf;
+}
+
+.category-delete-button {
+  border: 1px solid #f0cccc;
+
+  background: #ffffff;
+
+  color: #dc2626;
+}
+
+.category-delete-button:hover {
+  background: #fdecec;
+
+  border-color: #e8aaaa;
+}
+
+/* =================================
+   Pagination
+================================= */
+
+.categories-pagination {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 20px;
+}
+
+.categories-pagination button {
+  min-width: 36px;
+  height: 36px;
+
+  padding: 0 10px;
+
+  border: 1px solid #dce5df;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #59675f;
+
+  font-family: inherit;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.categories-pagination button:hover {
+  background: #f1f8f3;
+
+  color: #168044;
+}
+
+.categories-pagination .active-page {
+  background: #168044;
+
+  border-color: #168044;
+
+  color: #ffffff;
+}
+
+/* =================================
+   Responsive
+================================= */
+
+@media (max-width: 650px) {
+  .categories-form-header,
+  .categories-form-body {
+    padding: 18px;
+  }
+
+  .categories-table-header {
+    padding: 18px;
+  }
+
+  .categories-table th,
+  .categories-table td {
+    padding: 14px 18px;
+  }
+}
+/* =========================
+   Category Form
+========================= */
+
+.categories-form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.categories-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.categories-form-group label {
+  color: #59675f;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.categories-input {
+  width: 100%;
+  height: 42px;
+  padding: 0 13px;
+  border: 1px solid #d8e2db;
+  border-radius: 8px;
+  background: #fff;
+  color: #334139;
+  font-size: 13px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.categories-input::placeholder {
+  color: #9aa59f;
+}
+
+.categories-input:focus {
+  border-color: #168044;
+  box-shadow: 0 0 0 3px rgba(22, 128, 68, 0.08);
+}
+
+
+/* =========================
+   Category Icon Selector
+========================= */
+
+.category-icon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.category-icon-option {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #d8e2db;
+  border-radius: 9px;
+
+  background: #fff;
+  color: #68766e;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.category-icon-option:hover {
+  color: #168044;
+  background: #f1f8f3;
+  border-color: #b9d8c3;
+  transform: translateY(-2px);
+}
+
+.category-icon-option--active {
+  color: #168044;
+  background: #e9f7ed;
+  border-color: #168044;
+  box-shadow: 0 0 0 2px rgba(22, 128, 68, 0.08);
+}
+
+
+/* =========================
+   Form Button
+========================= */
+
+.categories-form-button {
+  align-self: flex-start;
+
+  min-height: 42px;
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #168044;
+  color: #fff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.categories-form-button:hover {
+  background: #126b39;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(22, 128, 68, 0.18);
+}
+
+.categories-form-button:active {
+  transform: translateY(0);
+}

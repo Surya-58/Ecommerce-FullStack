@@ -80,7 +80,7 @@
      Display / UI: Manrope (geometric, friendly, confident headlines)
      Body / Data:  Inter (neutral workhorse for prices, forms, lists)
      --------------------------------------------------------------------- */
-  --font-display: "Manrope", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body:    "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Fluid type scale — clamp(min, preferred, max) */

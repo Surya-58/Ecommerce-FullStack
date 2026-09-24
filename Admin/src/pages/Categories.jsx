@@ -8,9 +8,11 @@ import {
   updateCategory,
   deleteCategory,
 } from "../services/api";
+import "../styles/Categories.css";
 
 const Categories = () => {
   const [categoryName, setCategoryName] = useState("");
+  const [categoryIcon, setCategoryIcon] = useState("");
   const [categories, setCategories] = useState([]);
   const [message, setMessage] = useState("");
   const [editId, setEditId] = useState(null);
@@ -50,15 +52,26 @@ const Categories = () => {
       setMessage("Please fill in Category Name");
       return;
     }
+
+    if (!categoryIcon) {
+      setMessage("Please select a Category Icon");
+      return;
+    }
+
     try {
       const category = {
         name: categoryName,
+        icon: categoryIcon,
       };
+
       const data = await addCategory(category);
       console.log(data);
+
       setMessage("Category Added Successfully");
       handleGetCategories();
+
       setCategoryName("");
+      setCategoryIcon("");
     } catch (error) {
       console.log(error);
     }
@@ -67,7 +80,12 @@ const Categories = () => {
   const handleEdit = (category) => {
     setEditId(category._id);
     setCategoryName(category.name);
-    formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setCategoryIcon(category.icon || "");
+
+    formRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this product?")) {
@@ -84,15 +102,30 @@ const Categories = () => {
   };
 
   const handleUpdateCategory = async () => {
+    if (!categoryName) {
+      setMessage("Please fill in Category Name");
+      return;
+    }
+
+    if (!categoryIcon) {
+      setMessage("Please select a Category Icon");
+      return;
+    }
+
     try {
       const category = {
         name: categoryName,
+        icon: categoryIcon,
       };
+
       const data = await updateCategory(editId, category);
       console.log(data);
+
       setMessage("Category Updated Successfully");
       handleGetCategories();
+
       setCategoryName("");
+      setCategoryIcon("");
       setEditId(null);
     } catch (error) {
       console.log(error);
@@ -101,48 +134,55 @@ const Categories = () => {
   console.log(categoryName);
 
   return (
-    <div className="page">
-      <div className="container">
-        <h1 className="title">Category Manager</h1>
-        <div ref={formRef}>
+    <div className="categories-page">
+      <div className="categories-form-card">
+        <div className="categories-form-header">
+          <h1>Category Manager</h1>
+          <p>Add and manage the categories in your store.</p>
+        </div>
+
+        <div className="categories-form-body" ref={formRef}>
           <CategoryForm
             categoryName={categoryName}
             setCategoryName={setCategoryName}
+            categoryIcon={categoryIcon}
+            setCategoryIcon={setCategoryIcon}
             handleAddCategory={handleAddCategory}
             handleUpdateCategory={handleUpdateCategory}
             editId={editId}
             message={message}
           />
         </div>
+      </div>
 
-        <label className="label">Search</label>
-        <br />
+      <div className="categories-search">
+        <label>Search Categories</label>
 
         <input
-          className="input"
+          className="categories-search-input"
           type="text"
-          placeholder="Search Category"
+          placeholder="Search category..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+      </div>
 
-        <CategoryTable
-          categories={currentCategories}
-          handleEdit={handleEdit}
-          handleDelete={handleDelete}
-        />
+      <CategoryTable
+        categories={currentCategories}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
 
-        <div className="pagination">
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index}
-              className={currentPage === index + 1 ? "active-page" : ""}
-              onClick={() => setCurrentPage(index + 1)}
-            >
-              {index + 1}
-            </button>
-          ))}
-        </div>
+      <div className="categories-pagination">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index}
+            className={currentPage === index + 1 ? "active-page" : ""}
+            onClick={() => setCurrentPage(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
       </div>
     </div>
   );

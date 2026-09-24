@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getOrders, updateOrder } from "../services/api";
 import OrderTable from "../components/OrderTable";
+import "../styles/Orders.css";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -53,31 +54,91 @@ const Orders = () => {
           (order) => order.orderStatus === statusFilter
         );
 
+  const processingCount = orders.filter(
+    (order) => order.orderStatus === "Processing"
+  ).length;
+
+  const deliveredCount = orders.filter(
+    (order) => order.orderStatus === "Delivered"
+  ).length;
+
+  const cancelledCount = orders.filter(
+    (order) => order.orderStatus === "Cancelled"
+  ).length;
+
   if (loading) {
-    return <p>Loading orders...</p>;
+    return (
+      <div className="orders-page">
+        <div className="orders-loading">Loading orders...</div>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h2>Orders</h2>
+    <div className="orders-page">
+      <div className="orders-header">
+        <div>
+          <p className="orders-eyebrow">QuickCart Admin</p>
+          <h1>Orders</h1>
+          <p className="orders-subtitle">
+            Manage and track customer orders.
+          </p>
+        </div>
+      </div>
 
-      {message && <p>{message}</p>}
+      <div className="orders-summary">
+        <div className="order-summary-card">
+          <span className="order-summary-label">All Orders</span>
+          <strong>{orders.length}</strong>
+        </div>
 
-      <select
-        className="input"
-        value={statusFilter}
-        onChange={(e) => setStatusFilter(e.target.value)}
-      >
-        <option value="All">All Status</option>
-        <option value="Order Placed">Order Placed</option>
-        <option value="Processing">Processing</option>
-        <option value="Shipped">Shipped</option>
-        <option value="Out for Delivery">
-          Out for Delivery
-        </option>
-        <option value="Delivered">Delivered</option>
-        <option value="Cancelled">Cancelled</option>
-      </select>
+        <div className="order-summary-card">
+          <span className="order-summary-label">Processing</span>
+          <strong>{processingCount}</strong>
+        </div>
+
+        <div className="order-summary-card">
+          <span className="order-summary-label">Delivered</span>
+          <strong>{deliveredCount}</strong>
+        </div>
+
+        <div className="order-summary-card">
+          <span className="order-summary-label">Cancelled</span>
+          <strong>{cancelledCount}</strong>
+        </div>
+      </div>
+
+      {message && (
+        <div className="orders-message">
+          {message}
+        </div>
+      )}
+
+      <div className="orders-toolbar">
+        <div>
+          <h2>Order List</h2>
+          <p>
+            {filteredOrders.length}{" "}
+            {filteredOrders.length === 1 ? "order" : "orders"}
+          </p>
+        </div>
+
+        <select
+          className="orders-filter"
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+        >
+          <option value="All">All Status</option>
+          <option value="Order Placed">Order Placed</option>
+          <option value="Processing">Processing</option>
+          <option value="Shipped">Shipped</option>
+          <option value="Out for Delivery">
+            Out for Delivery
+          </option>
+          <option value="Delivered">Delivered</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
 
       <OrderTable
         orders={filteredOrders}

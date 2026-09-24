@@ -18,6 +18,7 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [editId, setEditId] = useState(null);
   const [search, setSearch] = useState("");
+  const [sort, setSort] = useState("");
   const [sortOrder, setSortOrder] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const productPerPage = 5;
@@ -25,7 +26,7 @@ const Products = () => {
   const [category, setCategory] = useState("");
   const [stock, setStock] = useState("");
   const [categories, setCategories] = useState([]);
-  const [fileInputKey, setFileInputKey] = useState(0); 
+  const [fileInputKey, setFileInputKey] = useState(0);
 
   const formRef = useRef(null);
 
@@ -36,13 +37,11 @@ const Products = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const filteredProducts = products.filter((product) => {
-  return product.name
-    .toLowerCase()
-    .includes(search.toLowerCase());
-});
+    return product.name.toLowerCase().includes(search.toLowerCase());
+  });
 
   const sortedProducts = [...filteredProducts];
   if (sortOrder === "lowToHigh") {
@@ -80,42 +79,41 @@ const Products = () => {
   };
 
   const handleUpdate = async () => {
-  try {
-    const formData = new FormData();
+    try {
+      const formData = new FormData();
 
-    formData.append("name", name);
-    formData.append("description", description);
-    formData.append("price", price);
-    formData.append("category", category);
-    formData.append("stock", stock);
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("category", category);
+      formData.append("stock", stock);
 
-    // Only send image if a new image was selected
-    if (image instanceof File) {
-      formData.append("image", image);
+      // Only send image if a new image was selected
+      if (image instanceof File) {
+        formData.append("image", image);
+      }
+
+      const data = await updateProduct(editId, formData);
+
+      console.log(data);
+
+      setMessage("Product updated successfully");
+
+      await handleGetProducts();
+
+      setName("");
+      setDescription("");
+      setPrice("");
+      setEditId(null);
+      setImage("");
+      setCategory("");
+      setStock("");
+      setFileInputKey((prevKey) => prevKey + 1); // Reset file input
+    } catch (error) {
+      console.log(error);
+      setMessage(error.message);
     }
-
-    const data = await updateProduct(editId, formData);
-
-    console.log(data);
-
-    setMessage("Product updated successfully");
-
-    await handleGetProducts();
-
-    setName("");
-    setDescription("");
-    setPrice("");
-    setEditId(null);
-    setImage("");
-    setCategory("");
-    setStock("");
-    setImage("")
-    setFileInputKey(prevKey => prevKey + 1); // Reset file input
-  } catch (error) {
-    console.log(error);
-    setMessage(error.message);
-  }
-};
+  };
   const handleEdit = (product) => {
     setEditId(product._id);
     setName(product.name);
@@ -170,8 +168,7 @@ const Products = () => {
       setImage("");
       setCategory("");
       setStock("");
-      setImage("")
-
+      setFileInputKey((prevKey) => prevKey + 1); // Reset file input
     } catch (error) {
       console.log(error);
     }
@@ -184,7 +181,7 @@ const Products = () => {
   console.log(products);
 
   return (
-    <div className="page">
+    <div className="products-page">
       <div className="container">
         <h1 className="title">Product Manager</h1>
         <div ref={formRef}>
@@ -207,31 +204,29 @@ const Products = () => {
             stock={stock}
             setStock={setStock}
             categories={categories}
+            fileInputKey={fileInputKey}
           />
         </div>
-        <label className="label">Search Product</label>
-        <br />
+        <div className="products-toolbar">
+          <div className="products-search">
+            <label>Search Products</label>
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
 
-        <input
-          className="input"
-          type="text"
-          placeholder="Search product..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <br />
-
-        <label className="label"> Sort by price </label>
-        <select
-          className="input"
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value)}
-        >
-          <option value="">None</option>
-          <option value="lowToHigh">Low to High</option>
-          <option value="highToLow">High to Low</option>
-        </select>
-        <br />
+          <div className="products-sort">
+            <label>Sort by Price</label>
+            <select value={sort} onChange={(e) => setSort(e.target.value)}>
+              <option value="">None</option>
+              <option value="priceLow">Price: Low to High</option>
+              <option value="priceHigh">Price: High to Low</option>
+            </select>
+          </div>
+        </div>
 
         <div className="pagination">
           {Array.from({ length: totalPages }, (_, index) => (

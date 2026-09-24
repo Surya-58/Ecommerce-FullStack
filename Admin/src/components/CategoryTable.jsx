@@ -1,37 +1,69 @@
-import React from 'react'
+import React from "react";
 
-const CategoryTable = (
-    {
-        categories,
-        handleEdit,
-        handleDelete,
-    }
-) => {
+const CategoryTable = ({ categories, handleEdit, handleDelete }) => {
   return (
-    <table className='table'>
-        <thead>
+    <div className="categories-table-card">
+      <div className="categories-table-header">
+        <div>
+          <h2>Categories</h2>
+          <p>Manage the categories available in your store.</p>
+        </div>
+
+        <span className="categories-count">
+          {categories.length} categories
+        </span>
+      </div>
+
+      <div className="categories-table-wrapper">
+        <table className="categories-table">
+          <thead>
             <tr>
-                <th className='th'>Category</th>
-                <th className='th'>Actions</th>
+              <th>Category</th>
+              <th>Actions</th>
             </tr>
-        </thead>
-        <tbody className='table-body'>
-            {categories.map((category)=>(
-                 <tr key={category._id}>
-                <td className='td'>{category.name}</td>
-                <td className='td'>
-                    <button className='btn-small'
-                    onClick={()=>handleEdit(category)}>Edit</button>
-                    <button className='btn-small-danger'
-                    onClick={()=>handleDelete(category._id)}>Delete</button>
+          </thead>
 
+          <tbody>
+            {categories.length === 0 ? (
+              <tr>
+                <td colSpan="2" className="products-empty">
+                  No categories found
                 </td>
-            </tr>
+              </tr>
+            ) : (
+              categories.map((category) => (
+                <tr key={category._id}>
+                  <td>
+                    <span className="category-name">
+                      {category.name}
+                    </span>
+                  </td>
 
-            ))}
-        </tbody>
-    </table>
-  )
-}
+                  <td>
+                    <div className="categories-actions">
+                      <button
+                        className="category-edit-button"
+                        onClick={() => handleEdit(category)}
+                      >
+                        Edit
+                      </button>
 
-export default CategoryTable
+                      <button
+                        className="category-delete-button"
+                        onClick={() => handleDelete(category._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default CategoryTable;

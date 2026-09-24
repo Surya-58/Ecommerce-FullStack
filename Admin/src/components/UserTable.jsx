@@ -1,48 +1,88 @@
-import React from 'react'
+import React from "react";
 
-const UserTable = (
-  {
-    users,
-    handleEdit,
-    handleDelete,
-  }
-) => {
+const UserTable = ({ users, handleEdit, handleDelete }) => {
+  const getRoleClass = (role) => {
+    if (role === "admin") {
+      return "user-role user-role--admin";
+    }
+
+    return "user-role user-role--customer";
+  };
+
   return (
-    <table className="table">
-      <thead>
-        <tr>
-          <th className="th">Name</th>
-          <th className="th">Email</th>
-          <th className="th">Phone</th>
-          <th className="th">Role</th>
-          <th className="th">Actions</th>
-        </tr>
-      </thead>
+    <div className="users-table-card">
+      <div className="users-table-wrapper">
+        {users.length === 0 ? (
+          <div className="users-empty">
+            <h3>No users found</h3>
+            <p>
+              There are no users matching your search or filter.
+            </p>
+          </div>
+        ) : (
+          <table className="users-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Role</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
 
-      <tbody className="table-body">
-        {users.map((user) => (
-          <tr key={user._id}>
-          <td className="td">{user.name}</td>
-          <td className="td">{user.email} </td>
-          <td className="td">{user.phone}</td>
-          <td className="td">{user.role}</td>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user._id}>
+                  <td>
+                    <strong className="user-name">
+                      {user.name}
+                    </strong>
+                  </td>
 
-          <td className="td">
-            <button className='btn-small' onClick={()=>handleEdit(user)} >
-              Edit
-            </button>
-            <button className="btn-small-danger" onClick={()=>handleDelete(user._id)}>
-              Delete
-            </button>
-          </td>
-        </tr>
+                  <td>
+                    <span className="user-email">
+                      {user.email}
+                    </span>
+                  </td>
 
-        ))}
-      
-        
-      </tbody>
-    </table>
-  )
-}
+                  <td>
+                    <span className="user-phone">
+                      {user.phone || "-"}
+                    </span>
+                  </td>
 
-export default UserTable
+                  <td>
+                    <span className={getRoleClass(user.role)}>
+                      {user.role}
+                    </span>
+                  </td>
+
+                  <td>
+                    <div className="users-actions">
+                      <button
+                        className="user-edit-button"
+                        onClick={() => handleEdit(user)}
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        className="user-delete-button"
+                        onClick={() => handleDelete(user._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default UserTable;

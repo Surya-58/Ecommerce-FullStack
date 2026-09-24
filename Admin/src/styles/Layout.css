@@ -1,61 +1,254 @@
-.navbar{
-    height:60px;
-    background:#222;
-    color:white;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:0 20px;
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    z-index:100;
+/* ================================
+   Admin Navbar
+================================ */
+
+.navbar {
+  height: 72px;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #ffffff;
+  border-bottom: 1px solid #e2e9e4;
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.nav-links{
-    display:flex;
-    gap:20px;
+/* Brand */
+
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  color: inherit;
+  text-decoration: none;
 }
 
-.nav-links a{
-    color:white;
-    text-decoration:none;
+.navbar__logo {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #e9f7ed;
+  color: #168044;
+
+  border-radius: 11px;
 }
 
-.layout{
-    display:flex;
-    padding-top:60px;
-    height:100vh;
-    box-sizing:border-box;
+.navbar__brand h2 {
+  margin: 0;
+
+  color: #17291e;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.1;
 }
 
-.sidebar{
-    width:220px;
-    flex-shrink:0;
-    height:calc(100vh - 60px);
-    position:fixed;
-    top:60px;
-    left:0;
-    background:#f5f5f5;
-    display:flex;
-    flex-direction:column;
-    padding:20px;
-    gap:15px;
-    overflow-y:auto;
-    box-sizing:border-box;
+.navbar__brand span {
+  display: block;
+  margin-top: 3px;
+
+  color: #7a877f;
+  font-size: 11px;
+  font-weight: 600;
 }
 
-.sidebar a{
-    text-decoration:none;
-    color:black;
+/* Navigation */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.content{
-    flex:1;
-    margin-left:220px;
-    padding:20px;
-    height:calc(100vh - 60px);
-    overflow-y:auto;
-    box-sizing:border-box;
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 9px 13px;
+
+  color: #66736b;
+  text-decoration: none;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #168044;
+  background: #f1f8f3;
+}
+
+.nav-link--active {
+  color: #168044;
+  background: #e9f7ed;
+}
+
+/* Responsive */
+
+@media (max-width: 650px) {
+  .navbar {
+    height: 64px;
+    padding: 0 16px;
+  }
+
+  .navbar__brand span {
+    display: none;
+  }
+
+  .navbar__brand h2 {
+    font-size: 16px;
+  }
+
+  .nav-link {
+    padding: 8px;
+  }
+
+  .nav-link span {
+    display: none;
+  }
+}
+/* ================================
+   Admin Layout
+================================ */
+
+.layout {
+  display: flex;
+  padding-top: 72px;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+/* ================================
+   Sidebar
+================================ */
+
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+
+  height: calc(100vh - 72px);
+
+  position: fixed;
+  top: 72px;
+  left: 0;
+
+  background: #ffffff;
+  border-right: 1px solid #e2e9e4;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 24px 14px;
+  gap: 6px;
+
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  min-height: 44px;
+  padding: 0 14px;
+
+  text-decoration: none;
+
+  color: #59675f;
+
+  border-radius: 9px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.sidebar a svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
+.sidebar a:hover {
+  color: #168044;
+  background: #f1f8f3;
+}
+
+.sidebar a.active {
+  color: #ffffff;
+  background: #168044;
+  box-shadow: 0 4px 10px rgba(22, 128, 68, 0.18);
+}
+
+.sidebar a.active:hover {
+  background: #168044;
+  color: #ffffff;
+}
+
+/* ================================
+   Main Content
+================================ */
+
+.content {
+  flex: 1;
+
+  margin-left: 220px;
+  padding: 28px;
+
+  height: calc(100vh - 72px);
+
+  overflow-y: auto;
+  box-sizing: border-box;
+
+  background: #f8faf8;
+}
+
+/* ================================
+   Responsive
+================================ */
+
+@media (max-width: 650px) {
+  .sidebar {
+    width: 72px;
+    padding: 20px 10px;
+  }
+
+  .sidebar a {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .sidebar a svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .sidebar a {
+    font-size: 0;
+  }
+
+  .content {
+    margin-left: 72px;
+    padding: 18px;
+  }
 }
