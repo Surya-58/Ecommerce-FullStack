@@ -6,7 +6,7 @@ Stage 1 - Application Completion / Stabilization
 
 ## Current Task
 
-Establishing the current project state before production preparation.
+Production configuration and application stabilization.
 
 ## Completed
 
@@ -61,6 +61,23 @@ Establishing the current project state before production preparation.
 - [x] Household
 - [x] 24 products added
 
+### Production Preparation
+
+- [x] Admin frontend API URLs centralized using `VITE_API_URL`
+- [x] Admin login API migrated to environment-based API URL
+- [x] Admin product/category/user/order APIs migrated
+- [x] Admin `.env.local` configured
+- [x] Admin functionality tested after API URL migration
+- [x] Customer frontend API URLs centralized using `VITE_API_URL`
+- [x] Customer `.env.local` configured
+- [x] Customer cart API migrated
+- [x] Customer category API migrated
+- [x] Customer order API migrated
+- [x] Customer product API migrated
+- [x] Customer user API migrated
+- [x] Customer wishlist API migrated
+- [x] Customer functionality tested after API URL migration
+
 ## Technologies Currently Used
 
 - React
@@ -96,7 +113,7 @@ Establishing the current project state before production preparation.
 
 ## Production Preparation
 
-- [ ] Centralize frontend API base URLs
+- [x] Centralize frontend API base URLs
 - [ ] Configure development and production environment variables
 - [ ] Configure production CORS
 - [ ] Verify frontend production builds
@@ -130,22 +147,46 @@ Establishing the current project state before production preparation.
 - MongoDB is hosted on MongoDB Atlas.
 - Cloudinary is used for image storage.
 - Razorpay is used for online payments.
-- Some frontend service files may still use `http://localhost:5000/api`.
-- These API URLs must be centralized before production deployment.
+- Admin and Customer frontends now use `VITE_API_URL`.
+- Development API URL is currently configured through `.env.local`.
+- `.env.local` files must never be committed to Git.
+- Production API URL will be configured separately during production deployment.
 - PROJECT_STATUS.md must be updated after every meaningful completed milestone.
+
+## Current Important Files
+
+### Admin
+
+- `Admin/.env.local`
+- `Admin/src/services/api.js`
+- `Admin/src/pages/Login.jsx`
+
+### Customer
+
+- `Customer/.env.local`
+- `Customer/src/Services/cartApi.js`
+- `Customer/src/Services/categoryApi.js`
+- `Customer/src/Services/orderApi.js`
+- `Customer/src/Services/productApi.js`
+- `Customer/src/Services/userApi.js`
+- `Customer/src/Services/wishlistApi.js`
 
 ## Known Issues / Pending Work
 
-- [ ] Review current repository for remaining application issues.
-- [ ] Review frontend API URL configuration.
-- [ ] Review production environment configuration.
-- [ ] Review CORS configuration.
+- [ ] Configure separate development and production environment variables.
+- [ ] Review backend CORS configuration for production.
+- [ ] Verify Admin production build.
+- [ ] Verify Customer production build.
+- [ ] Verify backend production configuration.
 - [ ] Prepare application for Docker.
+- [ ] Review remaining application issues before deployment.
 
 ## Next Step
 
-Inspect the current repository and identify the remaining application/production-preparation work before making deployment changes.
+Configure development and production environment variables correctly and prepare the application for production builds.
 
 ## Git
 
-PROJECT_STATUS.md is part of the repository and should be committed to GitHub.
+- `PROJECT_STATUS.md` is part of the repository and should be committed to GitHub.
+- `.env.local` files must remain ignored and must not be committed.
+- Commit meaningful completed milestones rather than every individual file change.

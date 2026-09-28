@@ -1,7 +1,9 @@
-const PRODUCT_URL = "http://localhost:5000/api/product";
-const CATEGORY_URL = "http://localhost:5000/api/category";
-const USER_URL = "http://localhost:5000/api/user";
-const ORDER_URL = "http://localhost:5000/api/order";
+const API_URL= import.meta.env.VITE_API_URL
+
+const PRODUCT_URL = `${API_URL}/product`
+const CATEGORY_URL = `${API_URL}/category`;
+const USER_URL = `${API_URL}/user`;
+const ORDER_URL = `${API_URL}/order`;
 
 export const getOrders = async () => {
   try {
@@ -76,7 +78,7 @@ export const deleteOrder = async (id) => {
 
 export const getUsers = async () => {
   try {
-    const response = await fetch("http://localhost:5000/api/user/all", {
+    const response = await fetch(`${USER_URL}/all`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,

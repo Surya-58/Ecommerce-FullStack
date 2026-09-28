@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000/api/category";
+const BASE_URL = `${import.meta.env.VITE_API_URL}/category`;
 
 export const getCategories = async () => {
   const response = await fetch(`${BASE_URL}/list`);
